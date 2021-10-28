@@ -1,0 +1,377 @@
+﻿@media screen and (max-width: 991px) {
+    /*.carousel-inner .item .ib-caption {
+        position: static;
+        text-align: center;
+        top: auto;
+        bottom: auto;
+        padding: 10px 0px;
+        color: #fff;
+        background-color: #330B41;
+        border:none;
+        outline:none;
+    }
+
+        .carousel-inner .item .ib-caption h1 {
+            margin: 0px;
+            font-size: 3em;
+        }
+
+        .carousel-inner .item .ib-caption h3 {
+            margin-bottom: 0px;
+            font-size: 1.2em;
+        }*/
+
+    .navbar-brand img {
+        margin-right: 0px;
+    }
+
+    .main-header {
+        background-image: url('../img/Main header.png');
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+    }
+
+    .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+        border: none;
+        MARGIN-TOP: 14PX;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        margin-right: 0px;
+    }
+
+    .navbar-nav {
+        float: none;
+    }
+
+    .navbar-brand img {
+        margin-left: 0px;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-color: transparent;
+    }
+
+        .navbar-default .navbar-toggle:hover {
+            background-color: transparent;
+        }
+
+    button, input, optgroup, select, textarea {
+        font-family: Spongeboy Me Bob;
+        color: #DC1019;
+        font-size: 18px;
+    }
+
+    .pic {
+        margin-left: 0px;
+    }
+
+    .game-img {
+        margin-bottom: 5%;
+    }
+
+    .navbar {
+        margin-bottom: 0px;
+    }
+
+    .navbar-default {
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+    }
+
+    .navbar-static-top {
+        position: relative;
+    }
+
+    .game-img .collectables {
+        margin-right: 0px;
+    }
+
+    .game-img {
+        margin-bottom: 25px;
+        margin-left: 0px;
+    }
+
+    .coleectibles-img {
+        width: 100%;
+        margin-top: 10%;
+        margin-right: 0px;
+        margin-left: 0px;
+        margin-bottom: 0px;
+    }
+
+    .icons {
+        margin-right: 26%;
+    }
+
+    .Policies {
+        text-align: center;
+        font-family: Spongeboy Me Bob;
+        color: #FCD61F;
+    }
+
+    .navbar-brand img {
+        margin-right: 0px;
+    }
+
+    .main-header {
+        background-image: url('../img/Main header.png');
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+    }
+
+    .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+        MARGIN-TOP: 14PX;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        margin-right: 0px;
+    }
+
+    .navbar-nav {
+        float: none;
+    }
+
+    .navbar-brand img {
+        margin-left: 0px;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-color: transparent;
+    }
+
+        .navbar-default .navbar-toggle:hover {
+            background-color: transparent;
+        }
+
+    button, input, optgroup, select, textarea {
+        font-family: Spongeboy Me Bob;
+        color: #DC1019;
+        font-size: 18px;
+    }
+
+    .pic {
+        margin-left: 0px;
+    }
+
+    .game-img {
+        margin-bottom: 5%;
+    }
+
+    .navbar {
+        margin-bottom: 0px;
+    }
+
+    .navbar-default {
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+    }
+
+    .navbar-static-top {
+        position: relative;
+    }
+
+    .img .collectables {
+        margin-right: 0px;
+    }
+
+    .game-img {
+        margin-bottom: 25px;
+        margin-left: 0px;
+    }
+
+    .collectibles-img {
+        width: 100%;
+        margin-top: 10%;
+        margin-right: 0px;
+        margin-left: 0px;
+        margin-bottom: 0px;
+    }
+
+    .icons {
+        margin-left: 26%;
+    }
+
+    .icons {
+        margin-right: 26%;
+    }
+
+    .Policies {
+        text-align: center;
+        font-family: Spongeboy Me Bob;
+        color: #DC1019;
+    }
+
+    .policy-li {
+        float: none;
+    }
+
+        .policy-li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 0px;
+            text-decoration: none;
+        }
+
+    .Policies-heading {
+        color: white;
+        font-family: Harabara Mais Demo;
+    }
+
+    .seperation::after {
+        display: none;
+    }
+
+    .ul-tab {
+        padding-left: 0px;
+    }
+
+    .li-image-tab {
+        width: 300px;
+        height: 300px;
+        display: inline-block;
+        background-position: center;
+        background-size: cover;
+        list-style-type: none;
+        border-color: #330B41;
+        position: relative;
+    }
+
+    .image-tab-heading {
+        bottom: 20%;
+        padding: 10px;
+        color: white;
+        font-family: Spongeboy Me Bob;
+        text-align: center;
+    }
+
+    .tab-list {
+        list-style-type: none;
+        padding: 2%;
+    }
+
+    .red {
+        margin-top: 5%;
+    }
+
+    .tabcolumn {
+        padding: 0px;
+    }
+
+    /*Product List Css for mobiles and ipad*/
+
+
+
+    /*End Product List Css for mobiles and ipad*/
+
+    /*Blog List Css for mobiles and ipad*/
+
+
+    .cultindian {
+        font-family: Spongeboy Me Bob;
+        text-align: center;
+        margin-top: 7%;
+    }
+
+    .article-name {
+        font-family: Spongeboy Me Bob;
+        color: #330B41;
+        padding: 3px;
+    }
+
+    .listrow {
+        margin-top: 20px;
+    }
+
+    .blog-list {
+        list-style-type: none;
+        display: block;
+        list-style-type: none;
+        display: inline-block;
+    }
+
+    .blog-list {
+        margin-top: 5%;
+    }
+
+    .list-ul {
+        padding-left: 0px;
+    }
+
+    .listrow {
+        padding-left: 0px;
+    }
+
+    /*End Blog List Css for Mobiles and ipad*/
+
+    /*Article Css for Mobile and ipad*/
+    .package-background {
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    #recomended-article {
+        position: static;
+    }
+
+        #recomended-article #recommendedarticlelist {
+            display: block;
+        }
+
+    #article-image img {
+        padding: 0px;
+    }
+
+    /*End Article Css*/
+
+    /*Product Css for Mobile and ipad*/
+
+    .productpagerow {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .productdescription {
+        padding: 0px;
+    }
+
+    /*End Product Page Css*/
+
+    /*Gags Css for mobile and ipad*/
+    .gags {
+        margin-top: 40px;
+    }
+    /*login page css*/
+    .login-page {
+        padding: 45px;
+    }
+
+    /*contact-us*/
+    .rowstyle {
+        padding-top: 45px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar .navbar-brand {
+        padding: 20px 15px;
+    }
+
+    .navbar .nav:not(.navbar-right) > li > a {
+        padding: 20px 15px;
+    }
+
+    .navbar-form {
+        margin-top: 14px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+}

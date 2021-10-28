@@ -1,0 +1,867 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\indiabobbles\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\indiabobbles\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FC6EF716-3AB1-49C9-8A91-EDA88161371B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>IndiaBobbles</RootNamespace>
+    <AssemblyName>IndiaBobbles</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44366</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>IndiaBobbles.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>IndiaBobbles.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Authentication.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Cookies, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Authentication.Cookies.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Authentication.Core.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Cryptography.Internal.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.DataProtection.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.DataProtection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Http.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Http.Extensions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.WebUtilities.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.FileProviders.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.ObjectPool.2.2.0\lib\netstandard2.0\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.WebEncoders, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Extensions.WebEncoders.2.2.0\lib\netstandard2.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Xml, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Security.Cryptography.Xml.4.5.0\lib\net461\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Security.Permissions.4.5.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\indiabobbles\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\indiabobbles\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\indiabobbles\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\indiabobbles\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\indiabobbles\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\indiabobbles\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Collections.Specialized" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Web" />
+    <Import Include="System.Web.Caching" />
+    <Import Include="System.Web.Mvc" />
+    <Import Include="System.Web.Mvc.Ajax" />
+    <Import Include="System.Web.Mvc.Html" />
+    <Import Include="System.Web.Routing" />
+    <Import Include="System.Web.SessionState" />
+    <Import Include="System.Web.Security" />
+    <Import Include="System.Web.Profile" />
+    <Import Include="System.Web.UI" />
+    <Import Include="System.Web.UI.WebControls" />
+    <Import Include="System.Web.UI.WebControls.WebParts" />
+    <Import Include="System.Web.UI.HtmlControls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.vb" />
+    <Compile Include="App_Start\FilterConfig.vb" />
+    <Compile Include="App_Start\RouteConfig.vb" />
+    <Compile Include="App_Start\WebApiConfig.vb" />
+    <Compile Include="Article.vb" />
+    <Compile Include="CacheManager.vb" />
+    <Compile Include="Category.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CategoryTag.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AccountController.vb" />
+    <Compile Include="Controllers\ArticlesController.vb" />
+    <Compile Include="Controllers\CartController.vb" />
+    <Compile Include="Controllers\CategoryTagsController.vb" />
+    <Compile Include="Controllers\OrdersController.vb" />
+    <Compile Include="Controllers\ProductController.vb" />
+    <Compile Include="CookieWorker.vb" />
+    <Compile Include="CouponCode.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomDataSource.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomPage.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\DTO.vb" />
+    <Compile Include="EmailMessage.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum.vb" />
+    <Compile Include="Global.asax.vb">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="IBModel.Context.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IBModel.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="IBModel.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Link.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Member.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberStatu.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Controllers\HomeController.vb" />
+    <Compile Include="Order.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderItem.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderManager.vb" />
+    <Compile Include="PageComment.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Post.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PostStatu.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductPhoto.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductTag.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TopStory.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserInRole.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Utility.vb" />
+    <Compile Include="WebsiteSetting.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="IBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>IBModel.Designer.vb</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Agni\images\back.png" />
+    <Content Include="Agni\images\bd1.png" />
+    <Content Include="Agni\images\bd10.png" />
+    <Content Include="Agni\images\bd11.png" />
+    <Content Include="Agni\images\bd12.png" />
+    <Content Include="Agni\images\bd13.png" />
+    <Content Include="Agni\images\bd14.png" />
+    <Content Include="Agni\images\bd2.png" />
+    <Content Include="Agni\images\bd3.png" />
+    <Content Include="Agni\images\bd4.png" />
+    <Content Include="Agni\images\bd5.png" />
+    <Content Include="Agni\images\bd6.png" />
+    <Content Include="Agni\images\bd7.png" />
+    <Content Include="Agni\images\bd8.png" />
+    <Content Include="Agni\images\bd9.png" />
+    <Content Include="Agni\images\bg1 - orig.png" />
+    <Content Include="Agni\images\bg1-old.png" />
+    <Content Include="Agni\images\bg1.jpg" />
+    <Content Include="Agni\images\bg1.png" />
+    <Content Include="Agni\images\bg2.jpg" />
+    <Content Include="Agni\images\bg2.png" />
+    <Content Include="Agni\images\Bgbuildings_Sprite.png" />
+    <Content Include="Agni\images\enemy1.png" />
+    <Content Include="Agni\images\explode - orig.png" />
+    <Content Include="Agni\images\explode.jpg" />
+    <Content Include="Agni\images\explode.png" />
+    <Content Include="Agni\images\favicon.ico" />
+    <Content Include="Agni\images\friend1.png" />
+    <Content Include="Agni\images\fullvolume.png" />
+    <Content Include="Agni\images\ground.png" />
+    <Content Include="Agni\images\icon.png" />
+    <Content Include="Agni\images\launcher.png" />
+    <Content Include="Agni\images\milestone.png" />
+    <Content Include="Agni\images\next.png" />
+    <Content Include="Agni\images\novolume.png" />
+    <Content Include="Agni\images\panicker.png" />
+    <Content Include="Agni\images\pointer.png" />
+    <Content Include="Agni\images\popup - Copy.png" />
+    <Content Include="Agni\images\popup.png" />
+    <Content Include="Agni\images\rain.png" />
+    <Content Include="Agni\images\restart.png" />
+    <Content Include="Agni\images\rubble.png" />
+    <Content Include="Agni\images\smoke-puff.png" />
+    <Content Include="Agni\images\spacer.png" />
+    <Content Include="Agni\images\start.png" />
+    <Content Include="Agni\images\startscreen - orig.jpg" />
+    <Content Include="Agni\images\startscreen.jpg" />
+    <Content Include="Agni\images\StoreLogo.png" />
+    <Content Include="Agni\index.html" />
+    <Content Include="Agni\js\gl.js" />
+    <Content Include="Agni\js\phaser.min.js" />
+    <Content Include="Agni\sounds\Agni.mp3" />
+    <Content Include="Agni\sounds\Agni.ogg" />
+    <Content Include="Agni\sounds\bg.mp3" />
+    <Content Include="Agni\sounds\bg.ogg" />
+    <Content Include="Agni\sounds\click.mp3" />
+    <Content Include="Agni\sounds\click.ogg" />
+    <Content Include="Agni\sounds\Enemy rocket flying 1.mp3" />
+    <Content Include="Agni\sounds\Exp-bd.mp3" />
+    <Content Include="Agni\sounds\Exp-bd.ogg" />
+    <Content Include="Agni\sounds\Exp-hit.mp3" />
+    <Content Include="Agni\sounds\Exp-hit.ogg" />
+    <Content Include="Agni\sounds\Exp.mp3" />
+    <Content Include="Agni\sounds\Exp.ogg" />
+    <Content Include="IBModel.edmx.diagram">
+      <DependentUpon>IBModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Agni\.vs\Agni\config\applicationhost.config" />
+    <Content Include="Agni\.vs\Agni\v16\.suo" />
+    <Content Include="Agni\.vs\slnx.sqlite" />
+    <Content Include="Agni\.vs\VSWorkspaceState.json" />
+    <Content Include="Agni\fonts\armalite.ttf" />
+    <Content Include="MeteorTreasure2\images\Popup.psd" />
+    <Content Include="MeteorTreasure\images\Popup.psd" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="IBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IBModel.edmx</DependentUpon>
+      <LastGenOutput>IBModel.Context.vb</LastGenOutput>
+    </Content>
+    <Content Include="IBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IBModel.edmx</DependentUpon>
+      <LastGenOutput>IBModel.vb</LastGenOutput>
+    </Content>
+    <Content Include="MeteorTreasure2\default.html" />
+    <Content Include="MeteorTreasure2\images\background.png" />
+    <Content Include="MeteorTreasure2\images\BG_1366x768.jpg" />
+    <Content Include="MeteorTreasure2\images\dirtlayer.png" />
+    <Content Include="MeteorTreasure2\images\Efx_Explosion_v02.png" />
+    <Content Include="MeteorTreasure2\images\favicon.ico" />
+    <Content Include="MeteorTreasure2\images\fullvolume.png" />
+    <Content Include="MeteorTreasure2\images\ground.png" />
+    <Content Include="MeteorTreasure2\images\Ground_1366x768.png" />
+    <Content Include="MeteorTreasure2\images\ib-background.jpg" />
+    <Content Include="MeteorTreasure2\images\icon2.png" />
+    <Content Include="MeteorTreasure2\images\left.png" />
+    <Content Include="MeteorTreasure2\images\logo.scale-100.png" />
+    <Content Include="MeteorTreasure2\images\Meteor_Sprites.png" />
+    <Content Include="MeteorTreasure2\images\novolume.png" />
+    <Content Include="MeteorTreasure2\images\pause.png" />
+    <Content Include="MeteorTreasure2\images\play.png" />
+    <Content Include="MeteorTreasure2\images\Popup-old.png" />
+    <Content Include="MeteorTreasure2\images\Popup.png" />
+    <Content Include="MeteorTreasure2\images\redgem-sprite.png" />
+    <Content Include="MeteorTreasure2\images\right.png" />
+    <Content Include="MeteorTreasure2\images\Rover_Sprites.png" />
+    <Content Include="MeteorTreasure2\images\Rover_Sprites_95x120_v03.png" />
+    <Content Include="MeteorTreasure2\images\Rover_Sprites_old.png" />
+    <Content Include="MeteorTreasure2\images\score-panel.png" />
+    <Content Include="MeteorTreasure2\images\smalllogo.scale-100.png" />
+    <Content Include="MeteorTreasure2\images\Splash-Screen.jpg" />
+    <Content Include="MeteorTreasure2\images\splashscreen.scale-100.png" />
+    <Content Include="MeteorTreasure2\images\SplashScreen_1200.png" />
+    <Content Include="MeteorTreasure2\images\Sprites_50x50.png" />
+    <Content Include="MeteorTreasure2\images\Sprites_64x64.png" />
+    <Content Include="MeteorTreasure2\images\Sprites_BlueGem_42x50.png" />
+    <Content Include="MeteorTreasure2\images\Sprites_Explosion_v02.png" />
+    <Content Include="MeteorTreasure2\images\storelogo.scale-100.png" />
+    <Content Include="MeteorTreasure2\js\default.js" />
+    <Content Include="MeteorTreasure2\js\main.js" />
+    <Content Include="MeteorTreasure2\js\main.min.js" />
+    <Content Include="MeteorTreasure2\js\phaser.js" />
+    <Content Include="MeteorTreasure2\sound\BGM.mp3" />
+    <Content Include="MeteorTreasure2\sound\Collecting gems.mp3" />
+    <Content Include="MeteorTreasure2\sound\Explosion 2.mp3" />
+    <Content Include="MeteorTreasure2\sound\Game ending.mp3" />
+    <Content Include="MeteorTreasure2\sound\Game over 1.mp3" />
+    <Content Include="MeteorTreasure2\sound\Gem Collecting 3.mp3" />
+    <Content Include="MeteorTreasure2\sound\Music theme 2 sci fi.mp3" />
+    <Content Include="MeteorTreasure2\sound\Rover moving 3.mp3" />
+    <Content Include="MeteorTreasure2\sound\Rover Moving 5.mp3" />
+    <Content Include="MeteorTreasure2\sound\Rover moving new 3.mp3" />
+    <Content Include="MeteorTreasure2\sound\Rover moving.mp3" />
+    <Content Include="MeteorTreasure2\sound\Sci Fi theme 3.mp3" />
+    <Content Include="MeteorTreasure2\sound\Sci Fi theme 4.mp3" />
+    <Content Include="MeteorTreasure2\sound\Start Button 3.mp3" />
+    <Content Include="MeteorTreasure2\sound\Start button.mp3" />
+    <Content Include="MeteorTreasure\images\background.png" />
+    <Content Include="MeteorTreasure\images\BG_1366x768.jpg" />
+    <Content Include="MeteorTreasure\images\dirtlayer.png" />
+    <Content Include="MeteorTreasure\images\Efx_Explosion_v02.png" />
+    <Content Include="MeteorTreasure\images\favicon.ico" />
+    <Content Include="MeteorTreasure\images\fullvolume.png" />
+    <Content Include="MeteorTreasure\images\ground.png" />
+    <Content Include="MeteorTreasure\images\Ground_1366x768.png" />
+    <Content Include="MeteorTreasure\images\ib-background.jpg" />
+    <Content Include="MeteorTreasure\images\icon2.png" />
+    <Content Include="MeteorTreasure\images\left.png" />
+    <Content Include="MeteorTreasure\images\logo.scale-100.png" />
+    <Content Include="MeteorTreasure\images\Meteor_Sprites.png" />
+    <Content Include="MeteorTreasure\images\novolume.png" />
+    <Content Include="MeteorTreasure\images\pause.png" />
+    <Content Include="MeteorTreasure\images\play.png" />
+    <Content Include="MeteorTreasure\images\Popup-old.png" />
+    <Content Include="MeteorTreasure\images\Popup.png" />
+    <Content Include="MeteorTreasure\images\redgem-sprite.png" />
+    <Content Include="MeteorTreasure\images\right.png" />
+    <Content Include="MeteorTreasure\images\Rover_Sprites.png" />
+    <Content Include="MeteorTreasure\images\Rover_Sprites_95x120_v03.png" />
+    <Content Include="MeteorTreasure\images\Rover_Sprites_old.png" />
+    <Content Include="MeteorTreasure\images\score-panel.png" />
+    <Content Include="MeteorTreasure\images\smalllogo.scale-100.png" />
+    <Content Include="MeteorTreasure\images\Splash-Screen.jpg" />
+    <Content Include="MeteorTreasure\images\splashscreen.scale-100.png" />
+    <Content Include="MeteorTreasure\images\SplashScreen_1200.png" />
+    <Content Include="MeteorTreasure\images\Sprites_50x50.png" />
+    <Content Include="MeteorTreasure\images\Sprites_64x64.png" />
+    <Content Include="MeteorTreasure\images\Sprites_BlueGem_42x50.png" />
+    <Content Include="MeteorTreasure\images\Sprites_Explosion_v02.png" />
+    <Content Include="MeteorTreasure\images\storelogo.scale-100.png" />
+    <Content Include="MeteorTreasure\index.html" />
+    <Content Include="MeteorTreasure\js\default.js" />
+    <Content Include="MeteorTreasure\js\main.js" />
+    <Content Include="MeteorTreasure\js\main.min.js" />
+    <Content Include="MeteorTreasure\js\phaser.js" />
+    <Content Include="MeteorTreasure\sound\BGM.mp3" />
+    <Content Include="MeteorTreasure\sound\Collecting gems.mp3" />
+    <Content Include="MeteorTreasure\sound\Explosion 2.mp3" />
+    <Content Include="MeteorTreasure\sound\Game ending.mp3" />
+    <Content Include="MeteorTreasure\sound\Game over 1.mp3" />
+    <Content Include="MeteorTreasure\sound\Gem Collecting 3.mp3" />
+    <Content Include="MeteorTreasure\sound\Music theme 2 sci fi.mp3" />
+    <Content Include="MeteorTreasure\sound\Rover moving 3.mp3" />
+    <Content Include="MeteorTreasure\sound\Rover Moving 5.mp3" />
+    <Content Include="MeteorTreasure\sound\Rover moving new 3.mp3" />
+    <Content Include="MeteorTreasure\sound\Rover moving.mp3" />
+    <Content Include="MeteorTreasure\sound\Sci Fi theme 3.mp3" />
+    <Content Include="MeteorTreasure\sound\Sci Fi theme 4.mp3" />
+    <Content Include="MeteorTreasure\sound\Start Button 3.mp3" />
+    <Content Include="MeteorTreasure\sound\Start button.mp3" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="theme\khichdi\css\bootstrap-theme.css.map" />
+    <Content Include="theme\khichdi\css\bootstrap-theme.min.css.map" />
+    <Content Include="theme\khichdi\css\bootstrap.css.map" />
+    <Content Include="theme\khichdi\css\bootstrap.min.css.map" />
+    <Content Include="theme\khichdi\FAVICON.jpg" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.eot" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.ttf" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.woff" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.woff2" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\FontAwesome.otf" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\animated.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\bordered-pulled.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\core.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\fixed-width.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\font-awesome.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\icons.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\larger.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\list.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\mixins.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\path.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\rotated-flipped.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\screen-reader.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\stacked.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\less\variables.less" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\font-awesome.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_animated.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_bordered-pulled.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_core.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_fixed-width.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_icons.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_larger.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_list.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_mixins.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_path.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_rotated-flipped.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_screen-reader.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_stacked.scss" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\scss\_variables.scss" />
+    <Content Include="theme\khichdi\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="theme\khichdi\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="theme\khichdi\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="theme\khichdi\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="theme\khichdi\fonts\Harabara Mais Demo.otf" />
+    <Content Include="theme\khichdi\fonts\Spongeboy Me Bob.ttf" />
+    <Content Include="theme\khichdi\img\daku-product-thumb.psd" />
+    <Content Include="theme\khichdi\img\meteor-new-poster-comp.psd" />
+    <Content Include="Views\Home\Privacy.vbhtml" />
+    <Content Include="Views\Home\Terms.vbhtml" />
+    <Content Include="Views\Home\Shipping.vbhtml" />
+    <Content Include="Views\Home\Payment.vbhtml" />
+    <Content Include="Views\Home\CustomBobblehead.vbhtml" />
+    <Content Include="Views\CategoryTags\Create.vbhtml" />
+    <Content Include="Views\CategoryTags\Delete.vbhtml" />
+    <Content Include="Views\CategoryTags\Details.vbhtml" />
+    <Content Include="Views\CategoryTags\Edit.vbhtml" />
+    <Content Include="Views\CategoryTags\Index.vbhtml" />
+    <Content Include="Views\Account\Login.vbhtml" />
+    <Content Include="Views\Articles\Index.vbhtml" />
+    <Content Include="Views\Articles\Detail.vbhtml" />
+    <Content Include="Views\Home\Games.vbhtml" />
+    <Content Include="Views\Orders\Index.vbhtml" />
+    <Content Include="Views\Orders\Detail.vbhtml" />
+    <Content Include="Views\Orders\Receipt.vbhtml" />
+    <Content Include="Views\Home\Collectibles.vbhtml" />
+    <Content Include="Views\Product\Detail.vbhtml" />
+    <Content Include="Views\Cart\Index.vbhtml" />
+    <Content Include="Views\Cart\Address.vbhtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="theme\khichdi\css\animate.css" />
+    <Content Include="theme\khichdi\css\bootstrap-theme.css" />
+    <Content Include="theme\khichdi\css\bootstrap-theme.min.css" />
+    <Content Include="theme\khichdi\css\bootstrap.css" />
+    <Content Include="theme\khichdi\css\bootstrap.min.css" />
+    <Content Include="theme\khichdi\css\hover-min.css" />
+    <Content Include="theme\khichdi\css\indiabobbles-article-sm.css" />
+    <Content Include="theme\khichdi\css\indiabobbles-article.css" />
+    <Content Include="theme\khichdi\css\indiabobbles-list-sm.css" />
+    <Content Include="theme\khichdi\css\indiabobbles-list.css" />
+    <Content Include="theme\khichdi\css\indiabobbles-sm.css" />
+    <Content Include="theme\khichdi\css\indiabobbles.css" />
+    <Content Include="theme\khichdi\css\productlist.css" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\css\font-awesome.css" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\css\font-awesome.min.css" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.svg" />
+    <Content Include="theme\khichdi\font-awesome-4.6.3\HELP-US-OUT.txt" />
+    <Content Include="theme\khichdi\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="theme\khichdi\img\10-sign-youre-hardcore-coll.jpg" />
+    <Content Include="theme\khichdi\img\10-sign-youre-hardcore-collector.jpg" />
+    <Content Include="theme\khichdi\img\AB-The-Great-Gatsby-comp.jpg" />
+    <Content Include="theme\khichdi\img\AB-The-Great-Gatsby.jpg" />
+    <Content Include="theme\khichdi\img\Agni Promo Art.jpg" />
+    <Content Include="theme\khichdi\img\agni-game-icon.JPG" />
+    <Content Include="theme\khichdi\img\agni-game.jpg" />
+    <Content Include="theme\khichdi\img\agni-game.png" />
+    <Content Include="theme\khichdi\img\agni-icon.jpg" />
+    <Content Include="theme\khichdi\img\Agni-poster.jpg" />
+    <Content Include="theme\khichdi\img\Agni-Screenshot-1.jpg" />
+    <Content Include="theme\khichdi\img\amazon.png" />
+    <Content Include="theme\khichdi\img\Android.jpg" />
+    <Content Include="theme\khichdi\img\androidsketch.jpg" />
+    <Content Include="theme\khichdi\img\apple-store-icon.png" />
+    <Content Include="theme\khichdi\img\apple-store-icon.svg" />
+    <Content Include="theme\khichdi\img\At-Anime-Con-comp.jpg" />
+    <Content Include="theme\khichdi\img\At-Anime-Con.jpg" />
+    <Content Include="theme\khichdi\img\bachchan-sketch.jpg" />
+    <Content Include="theme\khichdi\img\Bachchan.jpg" />
+    <Content Include="theme\khichdi\img\Bhagat.jpg" />
+    <Content Include="theme\khichdi\img\bhagatsketch.jpg" />
+    <Content Include="theme\khichdi\img\blog-school-carnival-comp.jpg" />
+    <Content Include="theme\khichdi\img\blog-school-carnival.jpg" />
+    <Content Include="theme\khichdi\img\blog.JPG" />
+    <Content Include="theme\khichdi\img\bobble-heads-1300-comp.jpg" />
+    <Content Include="theme\khichdi\img\buy-amazon-button.png" />
+    <Content Include="theme\khichdi\img\Collectibles-Sketchy.jpg" />
+    <Content Include="theme\khichdi\img\Crack-pot-Collector-comp.jpg" />
+    <Content Include="theme\khichdi\img\Crack-pot-Collector.jpg" />
+    <Content Include="theme\khichdi\img\Cult-India-Collectibles-Log.jpg" />
+    <Content Include="theme\khichdi\img\Cult-India-Collectibles-Log.png" />
+    <Content Include="theme\khichdi\img\cultindian.png" />
+    <Content Include="theme\khichdi\img\daku-product-thumbnail.jpg" />
+    <Content Include="theme\khichdi\img\daku.jpg" />
+    <Content Include="theme\khichdi\img\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
+    <Content Include="theme\khichdi\img\Dr-Kalaam-Dreams-comp.jpg" />
+    <Content Include="theme\khichdi\img\Dr-Kalaam-Dreams.jpg" />
+    <Content Include="theme\khichdi\img\fan-comp.jpg" />
+    <Content Include="theme\khichdi\img\gag.jpg" />
+    <Content Include="theme\khichdi\img\gandhi-bobblead.jpg" />
+    <Content Include="theme\khichdi\img\Gandhi-Bobblehead-backgroun.jpg" />
+    <Content Include="theme\khichdi\img\gandhi-gallery-2.jpg" />
+    <Content Include="theme\khichdi\img\gandhi-gallery-3.jpg" />
+    <Content Include="theme\khichdi\img\gandhi-gallery.jpg" />
+    <Content Include="theme\khichdi\img\Gandhi-product.jpg" />
+    <Content Include="theme\khichdi\img\Gandhi.jpg" />
+    <Content Include="theme\khichdi\img\gandhisketch.jpg" />
+    <Content Include="theme\khichdi\img\google-play-store.png" />
+    <Content Include="theme\khichdi\img\HTML5.png" />
+    <Content Include="theme\khichdi\img\ib-at-comic-con-comp.jpg" />
+    <Content Include="theme\khichdi\img\ib-at-comic-con.jpg" />
+    <Content Include="theme\khichdi\img\ib-comic-con-banner-comp.jpg" />
+    <Content Include="theme\khichdi\img\ib-comic-con-banner.jpg" />
+    <Content Include="theme\khichdi\img\ib-logo.png" />
+    <Content Include="theme\khichdi\img\India-Bobbles-package-1300.jpg" />
+    <Content Include="theme\khichdi\img\IndiaBobbles-buy-1-get-1-free-slidehsow-banner.jpeg" />
+    <Content Include="theme\khichdi\img\IndiaBobbles-buy-1get-1-free-slideshow-banner-2.jpeg" />
+    <Content Include="theme\khichdi\img\Jo-Dar-Gaya-Wo-Mar-Gaya-com.jpg" />
+    <Content Include="theme\khichdi\img\Jo-Dar-Gaya-Wo-Mar-Gaya.jpg" />
+    <Content Include="theme\khichdi\img\Kalam.jpg" />
+    <Content Include="theme\khichdi\img\kalamsketch.jpg" />
+    <Content Include="theme\khichdi\img\Kejriwaal-Bobblehead.jpg" />
+    <Content Include="theme\khichdi\img\Kejriwaal-Caricature.jpg" />
+    <Content Include="theme\khichdi\img\Lego-India-comp.jpg" />
+    <Content Include="theme\khichdi\img\Lego-India.jpg" />
+    <Content Include="theme\khichdi\img\lipika.png" />
+    <Content Include="theme\khichdi\img\mars.jpg" />
+    <Content Include="theme\khichdi\img\meteo-poster-1300.jpg" />
+    <Content Include="theme\khichdi\img\meteor-comp.jpg" />
+    <Content Include="theme\khichdi\img\meteor-icon.jpg" />
+    <Content Include="theme\khichdi\img\meteor-icon.png" />
+    <Content Include="theme\khichdi\img\meteor-new-poster-comp.jpg" />
+    <Content Include="theme\khichdi\img\meteor-treasure-logo.png" />
+    <Content Include="theme\khichdi\img\nazabattu.png" />
+    <Content Include="theme\khichdi\img\nazarbattu-poster.jpg" />
+    <Content Include="theme\khichdi\img\Nazarbattu.jpg" />
+    <Content Include="theme\khichdi\img\nazarbattusketch.jpg" />
+    <Content Include="theme\khichdi\img\New-Comics-comp.jpg" />
+    <Content Include="theme\khichdi\img\play-on-web.png" />
+    <Content Include="theme\khichdi\img\raj-comics-super-hero-unive.jpg" />
+    <Content Include="theme\khichdi\img\raj-comics-super-hero-universe.jpg" />
+    <Content Include="theme\khichdi\img\Sachin.jpg" />
+    <Content Include="theme\khichdi\img\sachinsketch.jpg" />
+    <Content Include="theme\khichdi\img\Sambhar-gag.jpg" />
+    <Content Include="theme\khichdi\img\sambhar-screenshot-comp.jpg" />
+    <Content Include="theme\khichdi\img\teacher_scolding_a_young_st.jpg" />
+    <Content Include="theme\khichdi\img\teacher_scolding_a_young_student_in_class.jpg" />
+    <Content Include="theme\khichdi\js\bootstrap.js" />
+    <Content Include="theme\khichdi\js\bootstrap.min.js" />
+    <Content Include="theme\khichdi\js\npm.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\_ViewStart.vbhtml" />
+    <Content Include="Views\Home\About.vbhtml" />
+    <Content Include="Views\Home\Contact.vbhtml" />
+    <Content Include="Views\Home\Index.vbhtml" />
+    <Content Include="Views\Shared\Error.vbhtml" />
+    <Content Include="Views\Shared\_Layout.vbhtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="theme\khichdi\img\img-version1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51506</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44366/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\indiabobbles\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\indiabobbles\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,637 @@
+﻿@font-face {
+    font-family: "Harabara Mais Demo";
+    src: url('../fonts/Harabara Mais Demo.otf') format('opentype');
+}
+
+@font-face {
+    font-family: "Spongeboy Me Bob";
+    src: url('../fonts/Spongeboy Me Bob.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../font-awesome-4.6.3/fonts/FontAwesome.otf') format('opentype');
+}
+/*default*/
+#main-header {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+/*Carousel CSS*/
+.carousel-control.left, .carousel-control.right {
+    background-image: none;
+}
+
+/*Carousel CSS Ends*/
+.center {
+    text-align: center;
+}
+
+.li-tab {
+    max-width: 200px;
+    list-style-type: none;
+    padding: 26px;
+    display: inline-table;
+}
+
+    .li-tab a {
+        display: inline-block;
+    }
+
+.navbar-default {
+    /*background-color: #fcd61f;*/
+    /*background-color: #FCD51E;*/
+    background-color: #FAC330;
+    border: none;
+    border-color: transparent;
+    border-radius: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.fa-caret-left {
+    text-align: center;
+    color: white;
+}
+
+.fa-caret-right {
+    text-align: center;
+    color: white;
+}
+
+.navbar-static-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+.navbar-nav {
+    float: right;
+}
+
+.navbar-brand img {
+    margin-left: 25px;
+}
+
+.navbar-nav > li > a {
+    font-family: 'Spongeboy Me Bob';
+    color: #330B41;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #330B41;
+    padding-right: 10px;
+    margin-right: 36px;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    color: #EF282B;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    color: #EF2528;
+    background-color: transparent;
+}
+
+#yellow {
+    /*background-color: #DC1019;*/
+    background-color: #330B41;
+}
+
+#white-footer {
+    background-color: #330B41;
+}
+
+.game-img {
+    position: relative;
+    margin: 10% auto;
+    width: 100%;
+    height: 100%;
+}
+
+.collectibles-img {
+    position: relative;
+    margin: 10% auto;
+    width: 100%;
+    height: 100%;
+}
+
+.game-img img {
+    border: 5px solid #EF282B;
+    border-radius: 3px 4px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.collectibles-img img {
+    border: 5px solid #EF282B;
+    border-radius: 3px 4px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.game-img .games {
+    position: absolute;
+    top: 21px;
+    left: 0;
+    padding: 10px;
+    font-size: 3em;
+    font-family: 'Spongeboy Me Bob';
+    color: #fff;
+    background-color: #EF282B;
+}
+
+.collectibles-img .collectables {
+    position: absolute;
+    bottom: 21px;
+    right: 0;
+    padding: 10px;
+    font-size: 3em;
+    font-family: 'Spongeboy Me Bob';
+    color: #fff;
+    background-color: #EF282B;
+}
+
+.blog a {
+    text-align: center;
+    color: white;
+    font-family: Spongeboy Me Bob;
+    margin-bottom: 9%;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+img-rounded:hover {
+    border-radius: 6px;
+}
+
+.blog-tab1 {
+    color: #FCD61F;
+    background-color: #330B41;
+    font-family: Spongeboy Me Bob;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 9px;
+    margin-right: 11%;
+    visibility: visible;
+    opacity: 1;
+}
+
+.blog-tab {
+    color: #FCD61F;
+    background-color: #330B41;
+    font-family: Spongeboy Me Bob;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 9px;
+    margin-right: 18%;
+    visibility: visible;
+    opacity: 1;
+}
+
+.intresting-page {
+    font-family: Spongeboy Me Bob;
+    color: #EF282B;
+    text-align: center;
+}
+
+.company {
+    color: white;
+    font-family: Harabara Mais Demo;
+    text-align: center;
+}
+
+.member {
+    font-family: Spongeboy Me Bob;
+    color: #EF282B;
+    text-align: center;
+}
+
+.member-area {
+    color: white;
+    text-align: center;
+    font-family: Harabara Mais Demo;
+}
+
+.fa {
+    margin-left: 10px;
+}
+
+.fa-info {
+    color: white;
+}
+
+.footer-margin {
+    padding: 30px 0px;
+}
+
+.lower-footer {
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+}
+
+.policy-li {
+    float: left;
+}
+
+    .policy-li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+    }
+
+li a:hover {
+    color: #DC1019;
+}
+
+.seperation:after {
+    content: "i";
+    color: white;
+    margin-left: 20px;
+}
+
+.Policies-heading {
+    color: #DC1019;
+    font-family: Spongeboy Me Bob;
+}
+
+.ul-tab {
+    padding-left: 0px;
+    margin-bottom: 40px;
+    min-height: 200px;
+    margin-top: 40px;
+}
+
+.li-image-tab {
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+    border: 5px solid #330B41;
+}
+
+.image-tab-heading {
+    position: absolute;
+    bottom: 20%;
+    padding: 10px;
+    font-family: Spongeboy Me Bob;
+    color: white;
+    text-align: center;
+    background-color: #330B41;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.image-tab-headings {
+    position: absolute;
+    top: 20%;
+    padding: 10px;
+    font-family: Spongeboy Me Bob;
+    color: white;
+    text-align: center;
+    background-color: #330B41;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.tab-list {
+    display: inline-table;
+    list-style-type: none;
+}
+
+/*End Default page Css*/
+
+/*Product List Page*/
+.cultindianimage {
+    margin-top: 80px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+
+.productlist {
+    padding-bottom: 30px;
+}
+
+    .productlist img {
+        margin: 0 auto;
+    }
+
+
+/*End Product List Page Css*/
+
+/*Blog list css*/
+
+.cultindian {
+    font-family: Spongeboy Me Bob;
+    color: #DC1019;
+    text-align: center;
+    margin-top: 7%;
+}
+
+.article-name {
+    font-family: Spongeboy Me Bob;
+    color: #330b41;
+    padding: 4px;
+}
+
+.listrow {
+    margin-top: 40px;
+    padding: 0px;
+}
+
+.blog-list {
+    height: 330px;
+    overflow: hidden;
+}
+
+.blog-list {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.list-ul {
+    padding-left: 0px;
+}
+
+#bobble-list li.blog-list .thumbnail img {
+    max-height: 190px;
+}
+
+/*End Blog List Css*/
+
+/*Article Css*/
+
+.blog-post {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+    .blog-post h1:first-child {
+        font-family: "Spongeboy Me Bob";
+    }
+
+    .blog-post, .blog-post p, .blog-post h5, .blog-post ul, .blog-post ol, .blog-post div {
+        line-height: 30px;
+        font-family: Verdana;
+       
+    }
+
+        .blog-post img {
+            max-width: 100%;
+            height: auto;
+        }
+
+#article-image img {
+    padding: 34px;
+}
+
+.blog-post ul, .blog-post ol {
+    margin-left: 0px;
+    padding-left: 30px;
+}
+
+.article-heading {
+    color: #330B41;
+    font-weight: 600;
+    margin-top: 3%;
+}
+
+.package-background {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.article-paragraph {
+    color: #333;
+    font-weight: 200;
+}
+
+#article-image img {
+    width: 100%;
+}
+
+ul.post-meta {
+    float: left;
+    width: 100%;
+    list-style: none;
+    padding: 0 0 5px 0;
+    border-bottom: 1px dotted #e6e6e6;
+    margin: 0 0 15px 0;
+}
+
+    ul.post-meta li {
+        float: left;
+        list-style: none;
+        margin: 0;
+        margin: 0 10px 0 10px;
+        font-size: 11px;
+    }
+
+#recomended-article {
+    position: fixed;
+    bottom: 0px;
+    background-color: transparent;
+    z-index: 1;
+    max-height: 200px;
+    width: 100%;
+}
+
+    #recomended-article #recommendedarticlelist {
+        display: none;
+    }
+
+.recomended-article-row {
+    margin: 0px;
+    background-color: #DC1019;
+    padding-left: 0px;
+}
+
+    .recomended-article-row li {
+        list-style-type: none;
+        position: center;
+    }
+
+.btn.btn-primary {
+    position: center;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: #DC1019;
+    border-color: transparent;
+}
+
+#recomended-article hr {
+    margin: 0px;
+    border: 0px;
+    padding: 10px;
+    background-color: #DC1019;
+}
+
+.center btn-primary {
+    text-align: center;
+}
+
+/*End Article Css*/
+
+/*Product Page Css*/
+
+.bobbleheadname {
+    font-family: Spongeboy Me Bob;
+    color: #330B41;
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 4%;
+}
+
+.productpagerow {
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-bottom: 10px;
+}
+
+.productcontent {
+    font-weight: 600;
+    margin: 0 0 15px;
+    font-size: 16px;
+    color: #666;
+    line-height: 25px;
+}
+
+.productcontentli {
+    color: #666;
+    line-height: 25px;
+}
+
+.productdescription {
+    text-align: justify;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+    .productdescription > .subcontainer {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+    }
+
+.cartbutton {
+    padding: 6px;
+}
+
+.gallery {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.gallerycolumn {
+    display: inline;
+}
+
+.thumb img {
+    padding: 0px;
+    margin: 8px 7px;
+    height: 100px;
+}
+
+.table {
+    border: 3px thin #330B41;
+}
+
+/*End Product Page Css*/
+
+/*Gags list Css*/
+
+.gagname {
+    font-family: 'Spongeboy Me Bob';
+    color: #DC1019;
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+
+.gagimage img {
+    max-width: 100%;
+}
+
+.newslettersection {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.carousel-indicators .active {
+    border: 2px solid #DC1019;
+}
+
+.carousel-indicators li {
+    background-color: #fff;
+}
+
+.carousel-indicators {
+    left: auto;
+    right: 10px;
+    width: auto;
+    margin-left: 0px;
+    text-align: right;
+    bottom: 0px;
+}
+
+/*About us*/
+
+.about-heading {
+    color: #330B41;
+    font-weight: 600;
+    margin-top: 9%;
+    margin-bottom: 3%;
+    font-family: 'Spongeboy Me Bob';
+}
+
+.aboutrow {
+    text-align: justify;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.about {
+    line-height: 30px;
+}
+
+    .about h5, about h2 {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+.game-name {
+    text-align: center;
+    font-family: 'Spongeboy Me Bob';
+    color: #EF282B;
+}
+
+/*Login Page css*/
+.login-page {
+    padding: 95px;
+}
+
+/*contact us page*/
+.widget .social-links li {
+    padding: 0;
+    border: none;
+    float: none;
+    display: inline;
+}
+
+.rowstyle {
+    padding-top: 95px;
+}

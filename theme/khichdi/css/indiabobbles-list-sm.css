@@ -1,0 +1,40 @@
+﻿@media screen and (max-width:1024px){  
+  #header{
+    background-color:#DC1019;
+}
+.cultindian {
+    font-family:Spongeboy Me Bob;
+    color:white;
+    text-align:center;
+    margin-top:7%;
+}
+.article-name{
+    font-family:Spongeboy Me Bob;
+    color:#330B41;
+    padding:3px;
+}
+.listrow{
+    margin-top:20px;
+}
+.blog-list{
+    list-style-type:none;
+    display:block;
+    list-style-type: none;
+    display:inline-block;
+    height:auto;
+    overflow-y:unset;
+}
+
+.blog-list{
+    margin-top:5%;
+}
+
+.list-ul{
+    padding-left:0px;
+}
+.listrow{
+    padding-left:0px;
+}
+
+
+}

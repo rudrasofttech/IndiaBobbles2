@@ -1,0 +1,31 @@
+﻿.cultindian {
+    font-family: Spongeboy Me Bob;
+    color: white;
+    text-align: center;
+    margin-top: 7%;
+}
+
+.article-name {
+    font-family: Spongeboy Me Bob;
+    color: #330b41;
+    padding: 4px;
+}
+
+.listrow {
+    margin-top: 40px;
+}
+
+.blog-list {
+    list-style-type: none;
+    display: inline-block;
+    height: 393px;
+    overflow-y: hidden;
+}
+
+.list-ul {
+    padding-left: 0px;
+}
+
+#header {
+    background-color: #DC1019;
+}
