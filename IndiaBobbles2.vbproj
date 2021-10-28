@@ -283,10 +283,10 @@
     <Compile Include="App_Start\WebApiConfig.vb" />
     <Compile Include="Article.vb" />
     <Compile Include="CacheManager.vb" />
-    <Compile Include="Category.vb">
+    <Compile Include="Models\Category.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CategoryTag.vb">
+    <Compile Include="Models\CategoryTag.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.vb" />
@@ -296,45 +296,45 @@
     <Compile Include="Controllers\OrdersController.vb" />
     <Compile Include="Controllers\ProductController.vb" />
     <Compile Include="CookieWorker.vb" />
-    <Compile Include="CouponCode.vb">
+    <Compile Include="Models\CouponCode.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CustomDataSource.vb">
+    <Compile Include="Models\CustomDataSource.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CustomPage.vb">
+    <Compile Include="Models\CustomPage.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DTO\DTO.vb" />
-    <Compile Include="EmailMessage.vb">
+    <Compile Include="Models\EmailMessage.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Enum.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IBModel.Context.vb">
+    <Compile Include="Models\IBModel.Context.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="IBModel.Designer.vb">
+    <Compile Include="Models\IBModel.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IBModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="IBModel.vb">
+    <Compile Include="Models\IBModel.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Link.vb">
+    <Compile Include="Models\Link.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Member.vb">
+    <Compile Include="Models\Member.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MemberStatu.vb">
+    <Compile Include="Models\MemberStatu.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -354,42 +354,42 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
-    <Compile Include="Order.vb">
+    <Compile Include="Models\Order.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrderItem.vb">
+    <Compile Include="Models\OrderItem.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderManager.vb" />
-    <Compile Include="PageComment.vb">
+    <Compile Include="Models\PageComment.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Post.vb">
+    <Compile Include="Models\Post.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="PostStatu.vb">
+    <Compile Include="Models\PostStatu.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Product.vb">
+    <Compile Include="Models\Product.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductPhoto.vb">
+    <Compile Include="Models\ProductPhoto.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductTag.vb">
+    <Compile Include="Models\ProductTag.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TopStory.vb">
+    <Compile Include="Models\TopStory.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserInRole.vb">
+    <Compile Include="Models\UserInRole.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserRole.vb">
+    <Compile Include="Models\UserRole.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Utility.vb" />
-    <Compile Include="WebsiteSetting.vb">
+    <Compile Include="Models\WebsiteSetting.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -402,7 +402,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="IBModel.edmx">
+    <EntityDeploy Include="Models\IBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>IBModel.Designer.vb</LastGenOutput>
     </EntityDeploy>
@@ -470,7 +470,7 @@
     <Content Include="Agni\sounds\Exp-hit.ogg" />
     <Content Include="Agni\sounds\Exp.mp3" />
     <Content Include="Agni\sounds\Exp.ogg" />
-    <Content Include="IBModel.edmx.diagram">
+    <Content Include="Models\IBModel.edmx.diagram">
       <DependentUpon>IBModel.edmx</DependentUpon>
     </Content>
     <Content Include="Agni\.vs\Agni\config\applicationhost.config" />
@@ -491,12 +491,12 @@
     </None>
     <None Include="packages.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="IBModel.Context.tt">
+    <Content Include="Models\IBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IBModel.edmx</DependentUpon>
       <LastGenOutput>IBModel.Context.vb</LastGenOutput>
     </Content>
-    <Content Include="IBModel.tt">
+    <Content Include="Models\IBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IBModel.edmx</DependentUpon>
       <LastGenOutput>IBModel.vb</LastGenOutput>
@@ -818,7 +818,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="theme\khichdi\img\img-version1\" />
   </ItemGroup>
   <ItemGroup>

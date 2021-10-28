@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\DTO",
+    "\\Views"
   ],
+  "SelectedNode": "\\Member.vb",
   "PreviewInSolutionExplorer": false
 }
