@@ -57,8 +57,7 @@ End Section
                 </tbody>
             </table>
             @If Model.Inventory > 3 Then
-                @<form method="post" action="@Url.Content("~/cart/add/" & Model.ID)">
-                    @Html.AntiForgeryToken()
+                @<form method="get" action="@Url.Content("~/cart/add/" & Model.ID)">
                     <button class="btn btn-primary mb-3">Add to Cart</button>
                 </form>
             End If
