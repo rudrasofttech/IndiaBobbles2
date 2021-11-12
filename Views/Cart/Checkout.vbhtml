@@ -1,12 +1,12 @@
 ﻿@ModelType IndiaBobbles.Order
 @Code
-    ViewData("Title") = "Cart"
+    ViewData("Title") = "Checkout"
 End Code
 
 <div class="container bg-white pt-2 fullbody">
     <div class="row">
         <div class="col-12 ">
-            <h1 class="text-center">Cart</h1>
+            <h1 class="text-center">Check Out</h1>
             <div class="pt-2 pb-2 mb-2">
                 <div class="table-responsive">
                     <table class="table">
@@ -15,10 +15,10 @@ End Code
                                 <th scope="col"></th>
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Product Code</th>
-                                <th scope="col" class="text-start">Quantity</th>
+                                <th scope="col">Quantity</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col"></th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -30,21 +30,11 @@ End Code
                                         <td>
                                             @o.ProductCode
                                         </td>
-                                        <td class="text-left">
-                                            <ul class="pagination">
-                                                <li class="page-item"><a class="page-link" href="~/cart/subtractquantity/@o.ID">-</a></li>
-                                                <li class="page-item disabled"><a class="page-link">@o.Quantity</a></li>
-                                                <li class="page-item"><a class="page-link" href="~/cart/addquantity/@o.ID">+</a></li>
-                                            </ul>
+                                        <td>
+                                            @o.Quantity
                                         </td>
                                         <td>@o.Price.ToString("##00.00")</td>
                                         <td>@o.Amount.ToString("##00.00")</td>
-                                        <td>
-                                            <form method="post" action="@Url.Content("~/cart/remove/" & o.ID)">
-                                                @Html.AntiForgeryToken()
-                                                <input type="submit" value="Remove" Class="btn btn-dark btn-sm" />
-                                            </form>
-                                        </td>
                                     </tr>
                                 Next
 
@@ -58,7 +48,7 @@ End Code
                                             <form method="post" action="@Url.Content("~/cart/applycoupon")">
                                                 @Html.AntiForgeryToken()
                                                 <input type="text" name="coupon" maxlength="100" placeholder="Coupon Code" />
-                                                <input type="hidden" name="returnto" value="Index"/>
+                                                <input type="hidden" name="returnto" value="Checkout" />
                                                 <input type="submit" value="Apply" Class="btn btn-light btn-sm" />
                                             </form>
                                         </td>
@@ -74,7 +64,7 @@ End Code
                                             Coupon Code
                                             <form method="post" action="@Url.Content("~/cart/RemoveCoupon")">
                                                 @Html.AntiForgeryToken()
-                                                <input type="hidden" name="returnto" value="Index" />
+                                                <input type="hidden" name="returnto" value="Checkout" />
                                                 <input type="submit" value="Remove" Class="btn btn-link btn-sm" />
                                             </form>
                                         </td>
@@ -89,19 +79,41 @@ End Code
                                         <td></td>
                                     </tr>
                                 End If
-
-
                             End If
                         </tbody>
                     </table>
                 </div>
+                @If Model IsNot Nothing Then
+                    @<div class="row">
+                         <div class="col-md-4">
+                             Billing Address:<br />
+                             <a href="address" class="btn btn-sm btn-link">Change</a><br/>
+                             @Model.Name<br />
+                             @Model.Email<br />
+                             @Model.Phone<br />
+                             <address>
+                                 @Model.BillingAddress<br />
+                                 @Model.BillingCity<br />
+                                 @Model.BillingState<br />
+                                 @Model.BillingZip
+                             </address>
+                         </div>
+                         <div Class="col-md-4">
+                             Shipping Address:<br />
+                             <a href="address" class="btn btn-sm btn-link">Change</a><br />
+                             @Model.ShippingFirstName @Model.ShippingLastName<br />
+                             @Model.ShippingPhone<br />
+                             <address>
+                                 @Model.ShippingAddress<br />
+                                 @Model.ShippingCity<br />
+                                 @Model.ShippingState<br />
+                                 @Model.ShippingZip
+                             </address>
+                         </div>
+                        <div Class="col-md-4"></div>
+                    </div>
+                End If
             </div>
-            @If Model.OrderItems.Count > 0 Then
-                @<div class="text-end">
-                    <a href="@Url.Content("~/cart/address")" class="btn btn-primary">Proceed To Checkout</a>
-                </div>
-            End If
         </div>
     </div>
 </div>
-

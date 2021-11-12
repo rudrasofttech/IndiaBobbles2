@@ -43,6 +43,7 @@ Public Class OrderAddressDTO
     Private _phone As String
     <Required>
     <MaxLength(15)>
+    <Display(Name:="Billing Contact Phone")>
     Public Property Phone() As String
         Get
             Return _phone
@@ -55,6 +56,7 @@ Public Class OrderAddressDTO
     Private _name As String
     <Required>
     <MaxLength(150)>
+    <Display(Name:="Billing Contact Name")>
     Public Property Name() As String
         Get
             Return _name
@@ -67,6 +69,7 @@ Public Class OrderAddressDTO
     Private _billingAddress As String
     <Required>
     <MaxLength(250)>
+    <Display(Name:="Billing Address")>
     Public Property BillingAddress() As String
         Get
             Return _billingAddress
@@ -79,6 +82,7 @@ Public Class OrderAddressDTO
     Private _billingCity As String
     <Required>
     <MaxLength(150)>
+    <Display(Name:="Billing City")>
     Public Property BillingCity() As String
         Get
             Return _billingCity
@@ -91,6 +95,7 @@ Public Class OrderAddressDTO
     Private _billingState As String
     <Required>
     <MaxLength(50)>
+    <Display(Name:="Billing State")>
     Public Property BillingState() As String
         Get
             Return _billingState
@@ -103,6 +108,7 @@ Public Class OrderAddressDTO
     Private _billingCountry As String
     <Required>
     <MaxLength(50)>
+    <Display(Name:="Billing Country")>
     Public Property BillingCountry() As String
         Get
             Return _billingCountry
@@ -115,6 +121,7 @@ Public Class OrderAddressDTO
     Private _billingPincode As String
     <Required>
     <MaxLength(15)>
+    <Display(Name:="Billing PinCode")>
     Public Property BillingPinCode() As String
         Get
             Return _billingPincode
@@ -127,6 +134,7 @@ Public Class OrderAddressDTO
     Private _shippingName As String
     <Required>
     <MaxLength(250)>
+    <Display(Name:="Shipping Contact Name")>
     Public Property ShippingName() As String
         Get
             Return _shippingName
@@ -139,6 +147,7 @@ Public Class OrderAddressDTO
     Private _shippingPhone As String
     <Required>
     <MaxLength(15)>
+    <Display(Name:="Shipping Contact Phone")>
     Public Property ShippingPhone() As String
         Get
             Return _shippingPhone
@@ -151,6 +160,7 @@ Public Class OrderAddressDTO
     Private _shippingAddress As String
     <Required>
     <MaxLength(300)>
+    <Display(Name:="Shipping Address")>
     Public Property ShippingAddress() As String
         Get
             Return _shippingAddress
@@ -163,6 +173,7 @@ Public Class OrderAddressDTO
     Private _shippingCity As String
     <Required>
     <MaxLength(50)>
+    <Display(Name:="Shipping City")>
     Public Property ShippingCity() As String
         Get
             Return _shippingCity
@@ -175,6 +186,7 @@ Public Class OrderAddressDTO
     Private _shippingState As String
     <Required>
     <MaxLength(50)>
+    <Display(Name:="Shipping State")>
     Public Property ShippingState() As String
         Get
             Return _shippingState
@@ -187,6 +199,7 @@ Public Class OrderAddressDTO
     Private _shippingCountry As String
     <Required>
     <MaxLength(50)>
+    <Display(Name:="Shipping Country")>
     Public Property ShippingCountry() As String
         Get
             Return _shippingCountry
@@ -199,6 +212,7 @@ Public Class OrderAddressDTO
     Private _shippingPincode As String
     <Required>
     <MaxLength(10)>
+    <Display(Name:="Shipping Pincode")>
     Public Property ShippingPincode() As String
         Get
             Return _shippingPincode
@@ -207,4 +221,28 @@ Public Class OrderAddressDTO
             _shippingPincode = value
         End Set
     End Property
+
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(o As Order)
+        If o IsNot Nothing Then
+            Name = o.Name
+            Email = o.Email
+            Phone = o.Phone
+            BillingAddress = o.BillingAddress
+            BillingCity = o.BillingCity
+            BillingCountry = o.BillingCountry
+            BillingState = o.BillingState
+            BillingPinCode = o.BillingZip
+            ShippingAddress = o.ShippingAddress
+            ShippingCity = o.ShippingCity
+            ShippingCountry = o.ShippingCountry
+            ShippingName = o.ShippingFirstName
+            ShippingPhone = o.ShippingPhone
+            ShippingState = o.ShippingState
+            ShippingPincode = o.ShippingZip
+        End If
+    End Sub
 End Class

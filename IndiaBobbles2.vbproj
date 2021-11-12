@@ -680,6 +680,7 @@
     <Content Include="Views\Product\Detail.vbhtml" />
     <Content Include="Views\Cart\Index.vbhtml" />
     <Content Include="Views\Cart\Address.vbhtml" />
+    <Content Include="Views\Cart\Checkout.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

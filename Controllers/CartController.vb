@@ -40,21 +40,21 @@ Namespace Controllers
 
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function ApplyCoupon(ByVal coupon As String) As ActionResult
+        Function ApplyCoupon(ByVal coupon As String, ByVal returnto As String) As ActionResult
 
             Dim o As Order = om.GetCart()
             om.UpdateCouponCode(o.ID, coupon)
-            Return RedirectToAction("Index")
+            Return RedirectToAction(returnto)
         End Function
 
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function RemoveCoupon() As ActionResult
+        Function RemoveCoupon(ByVal returnto As String) As ActionResult
 
             Dim o As Order = om.GetCart()
             om.UpdateCouponCode(o.ID, "")
 
-            Return RedirectToAction("Index")
+            Return RedirectToAction(returnto)
         End Function
 
         Function AddQuantity(ByVal id As Integer) As ActionResult
@@ -71,7 +71,10 @@ Namespace Controllers
 
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function SetAddress(ByVal model As OrderAddressDTO) As ActionResult
+        Function Address(ByVal model As OrderAddressDTO) As ActionResult
+            If Not ModelState.IsValid Then
+                Return View(model)
+            End If
             Dim o As Order = om.GetCart()
             om.UpdateOrderContact(o.ID, model.Name, model.Email, Nothing, model.Phone)
             om.UpdateOrderBillingAddress(o.ID, model.BillingAddress, model.BillingCity, model.BillingState, model.BillingCountry, model.BillingPinCode)
@@ -79,8 +82,20 @@ Namespace Controllers
             Return RedirectToAction("Checkout")
         End Function
 
-        Function Checkout() As ActionResult
+        Function Address() As ActionResult
+            Dim o As Order = om.GetCart()
+            If o.ID = 0 Then
+                Return RedirectToAction("Index")
+            End If
+            Return View(New OrderAddressDTO(o))
+        End Function
 
+        Function Checkout() As ActionResult
+            Dim o As Order = om.GetCart()
+            If o.ID = 0 Then
+                Return RedirectToAction("Index")
+            End If
+            Return View(o)
         End Function
     End Class
 End Namespace
