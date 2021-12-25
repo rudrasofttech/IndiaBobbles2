@@ -277,12 +277,51 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPage.vb">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Admin.Master.designer.vb">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Admin.Master.vb">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Articles.aspx.designer.vb">
+      <DependentUpon>Articles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Articles.aspx.vb">
+      <DependentUpon>Articles.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin\controls\Message.ascx.designer.vb">
+      <DependentUpon>Message.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\controls\Message.ascx.vb">
+      <DependentUpon>Message.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ManageOrder.aspx.designer.vb">
+      <DependentUpon>ManageOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ManageOrder.aspx.vb">
+      <DependentUpon>ManageOrder.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin\Orders.aspx.designer.vb">
+      <DependentUpon>Orders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Orders.aspx.vb">
+      <DependentUpon>Orders.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.vb" />
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\WebApiConfig.vb" />
     <Compile Include="Article.vb" />
     <Compile Include="CacheManager.vb" />
+    <Compile Include="EmailManager.vb" />
     <Compile Include="Models\Category.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
@@ -388,6 +427,7 @@
     <Compile Include="Models\UserRole.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PagingDetail.vb" />
     <Compile Include="Utility.vb" />
     <Compile Include="Models\WebsiteSetting.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
@@ -406,6 +446,11 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>IBModel.Designer.vb</LastGenOutput>
     </EntityDeploy>
+    <Content Include="admin\Articles.aspx" />
+    <Content Include="admin\controls\Message.ascx" />
+    <Content Include="admin\ManageOrder.aspx" />
+    <Content Include="admin\Orders.aspx" />
+    <Content Include="admin\style.css" />
     <Content Include="Agni\images\back.png" />
     <Content Include="Agni\images\bd1.png" />
     <Content Include="Agni\images\bd10.png" />
@@ -470,6 +515,7 @@
     <Content Include="Agni\sounds\Exp-hit.ogg" />
     <Content Include="Agni\sounds\Exp.mp3" />
     <Content Include="Agni\sounds\Exp.ogg" />
+    <Content Include="EmailWrapper.html" />
     <Content Include="Models\IBModel.edmx.diagram">
       <DependentUpon>IBModel.edmx</DependentUpon>
     </Content>
@@ -480,6 +526,7 @@
     <Content Include="Agni\fonts\armalite.ttf" />
     <Content Include="MeteorTreasure2\images\Popup.psd" />
     <Content Include="MeteorTreasure\images\Popup.psd" />
+    <Content Include="admin\Admin.Master" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -681,6 +728,7 @@
     <Content Include="Views\Cart\Index.vbhtml" />
     <Content Include="Views\Cart\Address.vbhtml" />
     <Content Include="Views\Cart\Checkout.vbhtml" />
+    <Content Include="Views\Account\Register.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -820,6 +868,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="theme\khichdi\img\img-version1\" />
+    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

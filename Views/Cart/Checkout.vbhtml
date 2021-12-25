@@ -110,7 +110,36 @@ End Code
                                  @Model.ShippingZip
                              </address>
                          </div>
-                        <div Class="col-md-4"></div>
+                        <div Class="col-md-4">
+                            <form action="@ViewBag.action1" method="post">
+                                <input type="hidden" name="hash" value="@ViewBag.hash1" />
+                                <input type="hidden" name="key" value="@ViewBag.key" />
+                                <input type="hidden" name="txnid" value="@Model.ID" />
+                                <input type="hidden" name="amount" value="@Model.Total.ToString("g29")" />
+                                <input type="hidden" name="firstname" value="@Model.Name" />
+                                <input type="hidden" name="lastname" value="" />
+                                <input type="hidden" name="email" value="@Model.Email" />
+                                <input type="hidden" name="phone" value="@Model.Phone" />
+                                <input type="hidden" name="productinfo" value="IndiaBobblesProducts" />
+                                <input type="hidden" name="surl" value="https://www.indiabobbles.com/cart/payumoneyresponse?id=@Model.ID" />
+                                <input type="hidden" name="furl" value="https://www.indiabobbles.com/cart/checkout?id=@Model.ID" />
+                                <input type="hidden" name="curl" value="https://www.indiabobbles.com/cart/checkout?id=@Model.ID" />
+                                <input type="hidden" name="address1" value="@Model.BillingAddress" />
+                                <input type="hidden" name="address2" value="" />
+                                <input type="hidden" name="city" value="@Model.BillingCity" />
+                                <input type="hidden" name="state" value="@Model.BillingState" />
+                                <input type="hidden" name="country" value="@Model.BillingCountry" />
+                                <input type="hidden" name="zipcode" value="@Model.BillingZip" />
+                                <input type="hidden" name="udf1" value="" />
+                                <input type="hidden" name="udf2" value="" />
+                                <input type="hidden" name="udf3" value="" />
+                                <input type="hidden" name="udf4" value="" />
+                                <input type="hidden" name="udf5" value="" />
+                                <input type="hidden" name="pg" value="" />
+                                <input type="hidden" name="service_provider" value="payu_paisa" />
+                                <input type="image" src="~/theme/khichdi/img/Paynow.png" />
+                            </form>
+                        </div>
                     </div>
                 End If
             </div>

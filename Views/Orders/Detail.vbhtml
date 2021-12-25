@@ -104,8 +104,12 @@ End Code
             </p>
             <form method="post" action="@Url.Content("~/orders/receipt/" & Model.ID)" target="_blank">
                 @Html.AntiForgeryToken()
-                <input type="submit" value="Print Receipt" Class="btn btn-primary mt-2" />
+                <input type="submit" value="Print Receipt" Class="btn btn-primary m-2" />
             </form>
+            @If Not String.IsNullOrEmpty(Model.Email) Then
+                @<a href="@Url.Content("~/orders/email/" & Model.ID)" Class="btn btn-secondary m-2">Email Receipt</a>
+            End If
+
         </div>
     </div>
 </div>

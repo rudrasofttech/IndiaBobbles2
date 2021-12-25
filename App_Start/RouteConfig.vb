@@ -8,6 +8,7 @@ Imports System.Web.Routing
 Public Module RouteConfig
     Public Sub RegisterRoutes(ByVal routes As RouteCollection)
         routes.IgnoreRoute("{resource}.axd/{*pathInfo}")
+        routes.IgnoreRoute("admin/{pagename}.aspx")
         routes.MapRoute(
             name:="Games",
             url:="games",

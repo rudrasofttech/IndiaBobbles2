@@ -42,12 +42,12 @@
                 <li><a href="~/cart" class="nav-link px-2 link-dark">Cart</a></li>
             </ul>
             <div class="col-md-3 text-end">
-                @If User.Identity.IsAuthenticated Then
-                    @<a href="~/account/login" class="btn btn-outline-secondary me-2">Login</a>
-                    @<a href="~/account/register" class="btn btn-success">Sign-up</a>
+                @If Session("member") IsNot Nothing Then
+                    @<a href="~/account/logout" class="btn btn-secondary me-2">Logout</a>
+                    @<a href="~/account/profile" class="btn btn-success me-2">@CType(Session("member"), IndiaBobbles.Member).MemberName Profile</a>
                 Else
-                    @<a href="~/account/login" class="btn btn-outline-secondary me-2">Login</a>
-                    @<a href="~/account/register" class="btn btn-success">Sign-up</a>
+                    @<a href="~/account/login" class="btn btn-secondary me-2">Login</a>
+                    @<a href="~/account/register" class="btn btn-secondary me-2">Signup</a>
                 End If
 
             </div>

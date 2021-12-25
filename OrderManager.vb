@@ -4,6 +4,7 @@
     Public CODFee As Decimal = 50
     Private ReadOnly dc As New indiabobblesEntities
 
+
     Public Sub New()
     End Sub
 
@@ -288,12 +289,12 @@
     Public Sub UpdateOrderContact(ByVal orderId As Integer, ByVal name As String, ByVal email As String, ByVal memberid As Long?, ByVal phone As String)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            o.Name = name
-            o.Email = email
-            o.MemberID = memberid
-            o.Phone = phone
-            o.DateModified = DateTime.Now
-            dc.SaveChanges()
+        o.Name = name
+        o.Email = email
+        o.MemberID = memberid
+        o.Phone = phone
+        o.DateModified = DateTime.Now
+        dc.SaveChanges()
 
     End Sub
 
@@ -442,7 +443,7 @@
 
     Public Function GetOrderDetail(ByVal orderId As Integer) As Order
 
-        Return dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)
+        Return dc.Orders.Include("OrderItems").SingleOrDefault(Function(item) item.ID = orderId)
 
     End Function
 

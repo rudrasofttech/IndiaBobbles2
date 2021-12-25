@@ -13,8 +13,37 @@ Namespace Controllers
             Return View()
         End Function
 
+
         Function Detail(ByVal id As Integer) As ActionResult
             Return View(db.Orders.Include("OrderItems").FirstOrDefault(Function(t) t.ID = id))
+        End Function
+
+        Function Delete(ByVal id As Integer) As ActionResult
+            Dim order = db.Orders.Include("OrderItems").FirstOrDefault(Function(t) t.ID = id)
+            If (order IsNot Nothing) Then
+                db.OrderItems.RemoveRange(order.OrderItems)
+                db.Orders.Remove(order)
+                db.SaveChanges()
+            End If
+            Return Redirect("~/orders/list")
+        End Function
+
+        Function Email(ByVal id As Integer) As ActionResult
+            Dim om As OrderManager = New OrderManager()
+            Dim o As Order = om.GetOrderDetail(id)
+
+            If o IsNot Nothing Then
+                Try
+                    Dim body As String = om.GenerateReceipt(o.ID)
+                    Dim eman As New EmailManager()
+                    eman.SendMail(Utility.NewsletterEmail, o.Email, Utility.AdminName, o.Name, body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                    eman.SendMail(Utility.NewsletterEmail, "rajkiran.singh@rudrasofttech.com", Utility.AdminName, "Raj Kiran Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                Catch ex As Exception
+                    Trace.Write(ex.Message)
+                End Try
+            End If
+
+            Return RedirectToAction("Detail", id)
         End Function
 
         <HttpPost()>

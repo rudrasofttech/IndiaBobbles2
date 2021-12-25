@@ -25,6 +25,39 @@ Public Class LoginDTO
     End Property
 End Class
 
+Public Class RegisterDTO
+    <Required>
+    <EmailAddress>
+    Public Property Email As String = String.Empty
+    Public Property Newsletter As Boolean
+    <Required>
+    <MaxLength(200)>
+    Public Property Name As String = String.Empty
+    <MaxLength(20)>
+    Public Property Mobile As String = String.Empty
+    <Required>
+    <MinLength(8, ErrorMessage:="Password should be minimum 8 characters. Avoid using common passwords.")>
+    Public Property Password As String = String.Empty
+    <Required>
+    <Compare("Password", ErrorMessage:="This should match Password")>
+    Public Property ConfirmPassword As String = String.Empty
+End Class
+
+Public Class ForgotpasswordDTO
+    <Required>
+    <EmailAddress>
+    Public Property Email As String = String.Empty
+End Class
+
+Public Class ProfileDTO
+    <Required>
+    <MaxLength(200)>
+    Public Property Name As String = String.Empty
+    Public Property Newsletter As Boolean
+    <MaxLength(20)>
+    Public Property Mobile As String = String.Empty
+End Class
+
 Public Class OrderAddressDTO
     Private _email As String
     <Required>
