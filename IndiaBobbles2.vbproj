@@ -97,6 +97,7 @@
     <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\indiabobbles\packages\Microsoft.AspNetCore.WebUtilities.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\indiabobbles\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
@@ -129,6 +130,12 @@
     </Reference>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\indiabobbles\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGrid, Version=9.25.1.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>packages\SendGrid.9.25.1\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="StarkbankEcdsa, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b2e6337a5d77bfbc, processorArchitecture=MSIL">
+      <HintPath>packages\starkbank-ecdsa.1.3.3\lib\net452\StarkbankEcdsa.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -301,11 +308,39 @@
       <DependentUpon>Message.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="admin\Emails.aspx.designer.vb">
+      <DependentUpon>Emails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Emails.aspx.vb">
+      <DependentUpon>Emails.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin\ManageArticle.aspx.designer.vb">
+      <DependentUpon>ManageArticle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ManageArticle.aspx.vb">
+      <DependentUpon>ManageArticle.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin\ManageMember.aspx.designer.vb">
+      <DependentUpon>ManageMember.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ManageMember.aspx.vb">
+      <DependentUpon>ManageMember.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="admin\ManageOrder.aspx.designer.vb">
       <DependentUpon>ManageOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\ManageOrder.aspx.vb">
       <DependentUpon>ManageOrder.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin\Members.aspx.designer.vb">
+      <DependentUpon>Members.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Members.aspx.vb">
+      <DependentUpon>Members.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="admin\Orders.aspx.designer.vb">
@@ -448,7 +483,11 @@
     </EntityDeploy>
     <Content Include="admin\Articles.aspx" />
     <Content Include="admin\controls\Message.ascx" />
+    <Content Include="admin\Emails.aspx" />
+    <Content Include="admin\ManageArticle.aspx" />
+    <Content Include="admin\ManageMember.aspx" />
     <Content Include="admin\ManageOrder.aspx" />
+    <Content Include="admin\Members.aspx" />
     <Content Include="admin\Orders.aspx" />
     <Content Include="admin\style.css" />
     <Content Include="Agni\images\back.png" />
@@ -660,6 +699,98 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="sitedata\Article\articlexml-1.txt" />
+    <Content Include="sitedata\Article\articlexml-10.txt" />
+    <Content Include="sitedata\Article\articlexml-11.txt" />
+    <Content Include="sitedata\Article\articlexml-12.txt" />
+    <Content Include="sitedata\Article\articlexml-13.txt" />
+    <Content Include="sitedata\Article\articlexml-14.txt" />
+    <Content Include="sitedata\Article\articlexml-15.txt" />
+    <Content Include="sitedata\Article\articlexml-16.txt" />
+    <Content Include="sitedata\Article\articlexml-17.txt" />
+    <Content Include="sitedata\Article\articlexml-18.txt" />
+    <Content Include="sitedata\Article\articlexml-19.txt" />
+    <Content Include="sitedata\Article\articlexml-2.txt" />
+    <Content Include="sitedata\Article\articlexml-20.txt" />
+    <Content Include="sitedata\Article\articlexml-21.txt" />
+    <Content Include="sitedata\Article\articlexml-22.txt" />
+    <Content Include="sitedata\Article\articlexml-23.txt" />
+    <Content Include="sitedata\Article\articlexml-24.txt" />
+    <Content Include="sitedata\Article\articlexml-25.txt" />
+    <Content Include="sitedata\Article\articlexml-26.txt" />
+    <Content Include="sitedata\Article\articlexml-27.txt" />
+    <Content Include="sitedata\Article\articlexml-28.txt" />
+    <Content Include="sitedata\Article\articlexml-29.txt" />
+    <Content Include="sitedata\Article\articlexml-3.txt" />
+    <Content Include="sitedata\Article\articlexml-30.txt" />
+    <Content Include="sitedata\Article\articlexml-31.txt" />
+    <Content Include="sitedata\Article\articlexml-32.txt" />
+    <Content Include="sitedata\Article\articlexml-33.txt" />
+    <Content Include="sitedata\Article\articlexml-34.txt" />
+    <Content Include="sitedata\Article\articlexml-35.txt" />
+    <Content Include="sitedata\Article\articlexml-36.txt" />
+    <Content Include="sitedata\Article\articlexml-37.txt" />
+    <Content Include="sitedata\Article\articlexml-38.txt" />
+    <Content Include="sitedata\Article\articlexml-39.txt" />
+    <Content Include="sitedata\Article\articlexml-4.txt" />
+    <Content Include="sitedata\Article\articlexml-40.txt" />
+    <Content Include="sitedata\Article\articlexml-41.txt" />
+    <Content Include="sitedata\Article\articlexml-42.txt" />
+    <Content Include="sitedata\Article\articlexml-43.txt" />
+    <Content Include="sitedata\Article\articlexml-44.txt" />
+    <Content Include="sitedata\Article\articlexml-45.txt" />
+    <Content Include="sitedata\Article\articlexml-46.txt" />
+    <Content Include="sitedata\Article\articlexml-47.txt" />
+    <Content Include="sitedata\Article\articlexml-48.txt" />
+    <Content Include="sitedata\Article\articlexml-49.txt" />
+    <Content Include="sitedata\Article\articlexml-5.txt" />
+    <Content Include="sitedata\Article\articlexml-50.txt" />
+    <Content Include="sitedata\Article\articlexml-51.txt" />
+    <Content Include="sitedata\Article\articlexml-52.txt" />
+    <Content Include="sitedata\Article\articlexml-53.txt" />
+    <Content Include="sitedata\Article\articlexml-54.txt" />
+    <Content Include="sitedata\Article\articlexml-55.txt" />
+    <Content Include="sitedata\Article\articlexml-56.txt" />
+    <Content Include="sitedata\Article\articlexml-57.txt" />
+    <Content Include="sitedata\Article\articlexml-58.txt" />
+    <Content Include="sitedata\Article\articlexml-59.txt" />
+    <Content Include="sitedata\Article\articlexml-6.txt" />
+    <Content Include="sitedata\Article\articlexml-60.txt" />
+    <Content Include="sitedata\Article\articlexml-61.txt" />
+    <Content Include="sitedata\Article\articlexml-62.txt" />
+    <Content Include="sitedata\Article\articlexml-63.txt" />
+    <Content Include="sitedata\Article\articlexml-7.txt" />
+    <Content Include="sitedata\Article\articlexml-8.txt" />
+    <Content Include="sitedata\Article\articlexml-9.txt" />
+    <Content Include="sitedata\chatsetting.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-1.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-10.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-11.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-13.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-19.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-2.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-20.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-21.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-22.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-23.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-25.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-26.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-27.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-28.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-29.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-3.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-30.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-31.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-32.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-33.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-34.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-36.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-4.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-5.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-6.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-7.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-8.txt" />
+    <Content Include="sitedata\CustomPage\cpagexml-9.txt" />
     <Content Include="theme\khichdi\css\bootstrap-theme.css.map" />
     <Content Include="theme\khichdi\css\bootstrap-theme.min.css.map" />
     <Content Include="theme\khichdi\css\bootstrap.css.map" />
@@ -729,6 +860,7 @@
     <Content Include="Views\Cart\Address.vbhtml" />
     <Content Include="Views\Cart\Checkout.vbhtml" />
     <Content Include="Views\Account\Register.vbhtml" />
+    <Content Include="Views\Account\GenerateOTP.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

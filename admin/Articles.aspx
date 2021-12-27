@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
 
     <asp:SqlDataSource ID="ArticleSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>"
-        SelectCommand="SELECT P.ID, P.Title, P.DateCreated, P.WriterName, P.Viewed, C.Name AS Category, PS.Name AS Status, P.URL, P.Sitemap FROM Category AS C INNER JOIN Post AS P ON C.ID = P.Category INNER JOIN PostStatus AS PS ON P.Status = PS.ID WHERE (P.Status = @Status) or @Status = '0'">
+        SelectCommand="SELECT P.ID, P.Title, P.DateCreated, P.WriterName, P.Viewed, C.Name AS Category, PS.Name AS Status, P.URL, P.Sitemap FROM Category AS C INNER JOIN Post AS P ON C.ID = P.Category INNER JOIN PostStatus AS PS ON P.Status = PS.ID WHERE (P.Status = @Status) or @Status = '0' ORDER BY P.ID DESC">
         <SelectParameters>
             <asp:ControlParameter ControlID="StatusDropDown" Name="Status" PropertyName="SelectedValue" />
         </SelectParameters>
@@ -32,6 +32,7 @@
         <div class="col-md-8">
             <div class="p-3">
                 <asp:Button ID="SubmitButton" class="btn btn-primary" runat="server" Text="Filter" />
+                <a href="ManageArticle.aspx?mode=add" class="btn btn-primary ms-3">Create New</a>
             </div>
         </div>
     </div>
@@ -50,7 +51,7 @@
                     SortExpression="DateCreated" />
                 <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
                 <asp:BoundField DataField="WriterName" HeaderText="WriterName" SortExpression="WriterName" />
-                <asp:TemplateField ShowHeader="False" HeaderText="Viewed">
+                <asp:TemplateField ShowHeader="False" HeaderText="Viewed" Visible="false">
                     <ItemTemplate>
                         <a class="viewed" target="_blank" href='<%#String.Format("http://vtracker.rudrasofttech.com/report/WebpagePublicStats?id=2&path={0}{1}", HttpContext.Current.Server.UrlEncode("http://www.indiabobbles.com/blog/"), DataBinder.Eval(Container.DataItem, "URL")) %>'
                             vhref='<%# string.Format("http://www.indiabobbles.com/blog/{0}", DataBinder.Eval(Container.DataItem, "URL")) %>'></a>
@@ -58,7 +59,7 @@
                 </asp:TemplateField>
                 <asp:BoundField DataField="Category" HeaderText="Category" SortExpression="Category" />
                 <asp:CheckBoxField DataField="Sitemap" HeaderText="Sitemap" SortExpression="Sitemap" ReadOnly="true" />
-                <asp:TemplateField ShowHeader="False">
+                <asp:TemplateField ShowHeader="False" Visible="false">
                     <ItemTemplate>
                         <asp:LinkButton ID="SetTopStoryButton" runat="server" CausesValidation="False" CommandName="TopStory"
                             CommandArgument='<%# DataBinder.Eval(Container.DataItem, "ID") %>' Text="Top Story"></asp:LinkButton>
@@ -76,7 +77,7 @@
                     Target="_blank" Text="Preview" />
             </Columns>
             <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NumericFirstLast" NextPageText="Next" Position="TopAndBottom" PreviousPageText="Previous" />
-            <PagerStyle CssClass="paging" />
+            <PagerStyle CssClass="paging" HorizontalAlign="Center" />
         </asp:GridView>
 
     </div>

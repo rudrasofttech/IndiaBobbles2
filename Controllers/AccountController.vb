@@ -1,4 +1,5 @@
-﻿Imports System.Web.Mvc
+﻿Imports System.Threading.Tasks
+Imports System.Web.Mvc
 
 
 Namespace Controllers
@@ -23,6 +24,8 @@ Namespace Controllers
             Try
                 Dim user = db.Members.FirstOrDefault(Function(m) m.Email = dto.Email And m.Password = dto.Password)
                 If user IsNot Nothing Then
+                    user.Status = GeneralStatusType.Active
+                    db.SaveChanges()
                     FormsAuthentication.SetAuthCookie(user.Email, True)
                     If user.UserType = CByte(MemberTypeType.Admin) Then
                         Return Redirect("~/admin/orders.aspx")
@@ -45,7 +48,7 @@ Namespace Controllers
 
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function Register(ByVal dto As RegisterDTO) As ActionResult
+        Async Function RegisterAsync(ByVal dto As RegisterDTO) As Task(Of ActionResult)
             If Not ModelState.IsValid Then
                 ViewBag.Error = "Please check your input."
                 Return View(dto)
@@ -57,10 +60,12 @@ Namespace Controllers
                     ViewBag.Error = "This email address is already in our records."
                     Return View(dto)
                 Else
+                    Dim r As New Random(0)
+                    Dim password As String = String.Format("{0}{1}{2}{3}{4}{5}{7}", r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9))
                     Dim m As New Member()
                     m.MemberName = dto.Name
                     m.Email = dto.Email
-                    m.Password = dto.Password
+                    m.Password = password
                     m.Createdate = DateTime.UtcNow
                     m.Mobile = dto.Mobile
                     m.Newsletter = dto.Newsletter
@@ -68,20 +73,60 @@ Namespace Controllers
                     db.Members.Add(m)
                     db.SaveChanges()
 
-                    Dim body As String = String.Format("Dear {0},<br/><br/>You are now a registered member of IndiaBobbles.<br/><br/>Please click this link to <a href=""https://www.indiabobbles.com/account/activate/{1}"">activate your account</a>.<br/><br/>", m.MemberName, m.Email)
+                    Dim body As String = String.Format("Dear {0},<br/><br/>You are now a registered member of IndiaBobbles.<br/><br/>Your one time password is <strong>{1}</strong>.<br/><br/>", m.MemberName, password)
                     Dim eman As New EmailManager()
-                    eman.SendMail(Utility.NewsletterEmail, m.Email, Utility.AdminName,
+                    Await eman.SendMailAsync(Utility.NewsletterEmail, m.Email, Utility.AdminName,
                                   m.MemberName, body, "Registration Successfull",
                                   EmailMessageType.Communication, "Registration")
 
-
+                    Return Redirect("~/account/login")
                 End If
             Catch ex As Exception
                 ViewBag.Error = ex.Message
                 Return View(dto)
             End Try
+        End Function
 
+        Function Logout() As ActionResult
+            FormsAuthentication.SignOut()
+            Return Redirect("~")
+        End Function
 
+        Function GenerateOTP() As ActionResult
+            Return View(New OTPDTO())
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Async Function GenerateOTP(ByVal dto As OTPDTO) As Task(Of ActionResult)
+            If Not ModelState.IsValid Then
+                ViewBag.Error = "Please check your input."
+                Return View(dto)
+            End If
+
+            Try
+                Dim user = db.Members.FirstOrDefault(Function(m) m.Email = dto.Email)
+                If user Is Nothing Then
+                    ViewBag.Error = "This email address is not in our records. Please register before "
+                    Return View(dto)
+                Else
+                    Dim r As New Random(0)
+                    Dim password As String = String.Format("{0}{1}{2}{3}{4}{5}{7}", r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9))
+                    user.Password = password
+                    db.SaveChanges()
+
+                    Dim body As String = String.Format("Dear {0},<br/><br/>Your one time password is <strong>{1}</strong>.<br/><br/>", user.MemberName, password)
+                    Dim eman As New EmailManager()
+                    Await eman.SendMailAsync(Utility.NewsletterEmail, user.Email, Utility.AdminName,
+                                  user.MemberName, body, "India Bobbles OTP",
+                                  EmailMessageType.Communication, "OTP")
+                    ViewBag.Success = String.Format("We have sent OTP to you registered email address. Please check you mail box for an email from {0}", user.Email)
+                    Return View(dto)
+                End If
+            Catch ex As Exception
+                ViewBag.Error = ex.Message
+                Return View(dto)
+            End Try
         End Function
 
     End Class

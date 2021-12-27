@@ -23,16 +23,6 @@ End Code
         @Html.ValidationMessageFor(Function(model) model.Email, "", New With {.class = "text-danger"})
     </div>
     <div class="mb-3">
-        @Html.LabelFor(Function(model) model.Password, htmlAttributes:=New With {.class = "form-label"})
-        @Html.EditorFor(Function(model) model.Password, New With {.htmlAttributes = New With {.class = "form-control", .required = "required", .type = "password", .minlength = "8"}})
-        @Html.ValidationMessageFor(Function(model) model.Password, "", New With {.class = "text-danger"})
-    </div>
-    <div class="mb-3">
-        @Html.LabelFor(Function(model) model.ConfirmPassword, htmlAttributes:=New With {.class = "form-label"})
-        @Html.EditorFor(Function(model) model.ConfirmPassword, New With {.htmlAttributes = New With {.class = "form-control", .required = "required", .type = "password", .minlength = "8"}})
-        @Html.ValidationMessageFor(Function(model) model.ConfirmPassword, "", New With {.class = "text-danger"})
-    </div>
-    <div class="mb-3">
         @Html.LabelFor(Function(model) model.Name, htmlAttributes:=New With {.class = "form-label"})
         @Html.EditorFor(Function(model) model.Name, New With {.htmlAttributes = New With {.class = "form-control", .required = "required", .maxlength = "50"}})
         @Html.ValidationMessageFor(Function(model) model.Name, "", New With {.class = "text-danger"})

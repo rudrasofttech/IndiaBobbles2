@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="Orders.aspx.vb" Inherits="IndiaBobbles.Orders" %>
+﻿<%@ Page Title="Orders" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="Orders.aspx.vb" Inherits="IndiaBobbles.Orders" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -68,7 +68,7 @@
 
                     </Columns>
                     <PagerSettings Position="TopAndBottom" Mode="NumericFirstLast" />
-                    <PagerStyle HorizontalAlign="Left" VerticalAlign="Middle" CssClass="paging" />
+                    <PagerStyle HorizontalAlign="Center" VerticalAlign="Middle" CssClass="paging" />
                 </asp:GridView>
 
             </div>

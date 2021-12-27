@@ -9,7 +9,7 @@
     End Sub
 
     Public Property Mode As String
-    Public Property ID As Integer
+    Public Property TargetID As Integer
 
     Public Function ForbidUserAccess(ParamArray ValidUserTypes As MemberTypeType()) As Boolean
         Dim utype As MemberTypeType = CType(CurrentUser.UserType, MemberTypeType)
@@ -38,7 +38,7 @@
         End If
 
         If Not String.IsNullOrEmpty(Request.QueryString("id")) Then
-            ID = Integer.Parse(Request.QueryString("id").ToString())
+            TargetID = Integer.Parse(Request.QueryString("id").ToString())
         End If
     End Sub
 End Class

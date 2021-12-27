@@ -35,15 +35,9 @@ Public Class RegisterDTO
     Public Property Name As String = String.Empty
     <MaxLength(20)>
     Public Property Mobile As String = String.Empty
-    <Required>
-    <MinLength(8, ErrorMessage:="Password should be minimum 8 characters. Avoid using common passwords.")>
-    Public Property Password As String = String.Empty
-    <Required>
-    <Compare("Password", ErrorMessage:="This should match Password")>
-    Public Property ConfirmPassword As String = String.Empty
 End Class
 
-Public Class ForgotpasswordDTO
+Public Class OTPDTO
     <Required>
     <EmailAddress>
     Public Property Email As String = String.Empty
@@ -279,3 +273,4 @@ Public Class OrderAddressDTO
         End If
     End Sub
 End Class
+
