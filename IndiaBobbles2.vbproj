@@ -336,6 +336,13 @@
       <DependentUpon>ManageOrder.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="admin\ManageProduct.aspx.designer.vb">
+      <DependentUpon>ManageProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ManageProduct.aspx.vb">
+      <DependentUpon>ManageProduct.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="admin\Members.aspx.designer.vb">
       <DependentUpon>Members.aspx</DependentUpon>
     </Compile>
@@ -348,6 +355,20 @@
     </Compile>
     <Compile Include="admin\Orders.aspx.vb">
       <DependentUpon>Orders.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductDetail.aspx.designer.vb">
+      <DependentUpon>ProductDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductDetail.aspx.vb">
+      <DependentUpon>ProductDetail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin\Products.aspx.designer.vb">
+      <DependentUpon>Products.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Products.aspx.vb">
+      <DependentUpon>Products.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="App_Start\BundleConfig.vb" />
@@ -487,8 +508,11 @@
     <Content Include="admin\ManageArticle.aspx" />
     <Content Include="admin\ManageMember.aspx" />
     <Content Include="admin\ManageOrder.aspx" />
+    <Content Include="admin\ManageProduct.aspx" />
     <Content Include="admin\Members.aspx" />
     <Content Include="admin\Orders.aspx" />
+    <Content Include="admin\ProductDetail.aspx" />
+    <Content Include="admin\Products.aspx" />
     <Content Include="admin\style.css" />
     <Content Include="Agni\images\back.png" />
     <Content Include="Agni\images\bd1.png" />
@@ -861,6 +885,7 @@
     <Content Include="Views\Cart\Checkout.vbhtml" />
     <Content Include="Views\Account\Register.vbhtml" />
     <Content Include="Views\Account\GenerateOTP.vbhtml" />
+    <Content Include="Views\Account\ManageProfile.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

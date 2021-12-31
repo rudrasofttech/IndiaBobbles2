@@ -7,8 +7,6 @@
     <h1>Edit Member</h1>
     <div class="row">
         <div class="col-md-6">
-
-
             <div class="mb-3">
                 <label class="form-label" for="<%: EmailTextBox.ClientID %>">
                     Email</label>
@@ -17,13 +15,11 @@
             <div class="mb-3">
                 <label class="form-label" for="<%: NameTextBox.ClientID %>">
                     Name</label>
-
                 <asp:TextBox cssclass="form-control" ID="NameTextBox" MaxLength="200" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
                     ControlToValidate="NameTextBox" CssClass="validator" Display="Dynamic"
                     ErrorMessage="Required" SetFocusOnError="True" ValidationGroup="MemberGrp">
                 </asp:RequiredFieldValidator>
-
             </div>
             <div class="mb-3">
                 <label class="form-label" for="<%: LastNameTextBox.ClientID %>">

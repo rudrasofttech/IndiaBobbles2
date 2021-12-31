@@ -43,7 +43,8 @@
             </ul>
             <div class="col-md-3 text-end">
                 @If Request.IsAuthenticated Then
-                    @<a href="~/account/profile" class="btn btn-success me-2">Profile</a>
+
+                    @<a href="~/account/manageprofile" class="btn btn-success me-2">Profile</a>
                     @<a href="~/account/logout" class="btn btn-secondary me-2">Logout</a>
                 Else
                     @<a href="~/account/generateotp" class="btn btn-secondary me-2">Login</a>
@@ -60,13 +61,6 @@
         <div class="container">
             <div>
                 <a href="~/about" class="px-2 link-dark">Our Story</a>
-                @If User.Identity.IsAuthenticated Then
-                    @<a href="~/account/myaccount" class="px-2 link-dark">My Account</a>
-                    @<a href="~/account/logout" class="px-2 link-dark">Logout</a>
-                Else
-                    @<a href="~/account/register" class="px-2 link-dark">Register</a>
-                    @<a href="~/account/login" class="px-2 link-dark">Login</a>
-                End If
                 <a href="~/contact" class="px-2 link-dark">Contact</a>
                 <a href="~/privacy-policy" class="px-2 link-dark">Privacy</a>
                 <a href="~/terms-and-conditions" class="px-2 link-dark">Terms &amp; Conditions</a>

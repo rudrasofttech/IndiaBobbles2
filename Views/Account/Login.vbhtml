@@ -28,6 +28,7 @@ End Code
                 </div>
                 @<div class="mb-3">
                     <input type="submit" value="Login" class="btn btn-success mt-2" />
+                    <a href="~/account/generateotp" class="btn btn-dark float-end">Get OTP</a>
                 </div>
             End Using
         </div>

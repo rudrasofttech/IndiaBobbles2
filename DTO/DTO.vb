@@ -46,10 +46,18 @@ End Class
 Public Class ProfileDTO
     <Required>
     <MaxLength(200)>
-    Public Property Name As String = String.Empty
+    Public Property MemberName As String = String.Empty
+
+    <MaxLength(200)>
+    Public Property LastName As String = String.Empty
+    Public Property DOB As DateTime
     Public Property Newsletter As Boolean
     <MaxLength(20)>
     Public Property Mobile As String = String.Empty
+    <MaxLength(10)>
+    Public Property Country As String = String.Empty
+    <MaxLength(1)>
+    Public Property Gender As String = String.Empty
 End Class
 
 Public Class OrderAddressDTO

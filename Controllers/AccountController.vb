@@ -129,5 +129,37 @@ Namespace Controllers
             End Try
         End Function
 
+        Function ManageProfile() As ActionResult
+            If Request.IsAuthenticated Then
+                Dim member = db.Members.FirstOrDefault(Function(mem) mem.Email = User.Identity.Name)
+                Return View(member)
+            Else
+                Return Redirect("~/account/login")
+            End If
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function ManageProfile(ByVal dto As ProfileDTO) As ActionResult
+            If Request.IsAuthenticated Then
+                Dim member = db.Members.FirstOrDefault(Function(mem) mem.Email = User.Identity.Name)
+                If Not ModelState.IsValid Then
+                    ViewBag.Error = "Please check your input."
+                    Return View(member)
+                End If
+
+                Member.Newsletter = dto.Newsletter
+                Member.MemberName = dto.MemberName
+                Member.LastName = dto.LastName
+                Member.DOB = dto.DOB
+                Member.Country = dto.Country
+                Member.Mobile = dto.Mobile
+                Member.Gender = dto.Gender
+                db.SaveChanges()
+                Return Redirect("~/account/managerprofile")
+            Else
+                Return Redirect("~/account/login")
+            End If
+        End Function
     End Class
 End Namespace
