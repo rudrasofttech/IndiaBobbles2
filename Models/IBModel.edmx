@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="IBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="ID" />
@@ -272,10 +272,10 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <Property Name="Fragile" Type="bit" Nullable="false" />
           <Property Name="ShippingTime" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Handmade" Type="bit" Nullable="false" />
-          <Property Name="Inventory" Type="int" Nullable="false" />
           <Property Name="ThumbPath" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="URL" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="ProductCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OutofStock" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductPhoto">
           <Key>
@@ -642,7 +642,7 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="IBModelStoreContainer">
+        <EntityContainer Name="StoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryTag" EntityType="Self.CategoryTag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CouponCode" EntityType="Self.CouponCode" Schema="dbo" store:Type="Tables" />
@@ -775,561 +775,83 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UrlName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Parent" Type="Int32" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Category1" Relationship="Self.FK_Category_Category1" FromRole="Category" ToRole="Category1" />
-          <NavigationProperty Name="Category2" Relationship="Self.FK_Category_Category1" FromRole="Category1" ToRole="Category" />
-          <NavigationProperty Name="Posts" Relationship="Self.FK_Post_Category" FromRole="Category" ToRole="Post" />
-        </EntityType>
-        <EntityType Name="CouponCode">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsPercent" Type="Boolean" Nullable="false" />
-          <Property Name="Value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CustomDataSource">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Query" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="Int64" Nullable="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int64" />
-          <Property Name="HtmlTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK_CustomDataSource_Member" FromRole="CustomDataSource" ToRole="Member" />
-          <NavigationProperty Name="Member1" Relationship="Self.FK_CustomDataSource_Member1" FromRole="CustomDataSource" ToRole="Member" />
-        </EntityType>
-        <EntityType Name="CustomPage">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="Int64" Nullable="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int64" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <Property Name="PageType" Type="Byte" />
-          <Property Name="Sitemap" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK_CustomPage_Member" FromRole="CustomPage" ToRole="Member" />
-          <NavigationProperty Name="Member1" Relationship="Self.FK_CustomPage_Member1" FromRole="CustomPage" ToRole="Member" />
-        </EntityType>
-        <EntityType Name="EmailMessage">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="FromAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ToAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Subject" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsRead" Type="Boolean" Nullable="false" />
-          <Property Name="SentDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsSent" Type="Boolean" Nullable="false" />
-          <Property Name="EmailType" Type="Byte" Nullable="false" />
-          <Property Name="EmailGroup" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="ReadDate" Type="DateTime" Precision="3" />
-          <Property Name="CCAdress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ToName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FromName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastAttempt" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Member">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Createdate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Newsletter" Type="Boolean" Nullable="false" />
-          <Property Name="UserType" Type="Byte" Nullable="false" />
-          <Property Name="MemberName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <Property Name="LastLogon" Type="DateTime" Precision="3" />
-          <Property Name="DOB" Type="DateTime" Precision="0" />
-          <Property Name="Country" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="AlternateEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AlternateEmail2" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int64" />
-          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="MemberImage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CustomDataSources" Relationship="Self.FK_CustomDataSource_Member" FromRole="Member" ToRole="CustomDataSource" />
-          <NavigationProperty Name="CustomDataSources1" Relationship="Self.FK_CustomDataSource_Member1" FromRole="Member" ToRole="CustomDataSource" />
-          <NavigationProperty Name="CustomPages" Relationship="Self.FK_CustomPage_Member" FromRole="Member" ToRole="CustomPage" />
-          <NavigationProperty Name="CustomPages1" Relationship="Self.FK_CustomPage_Member1" FromRole="Member" ToRole="CustomPage" />
-          <NavigationProperty Name="Member1" Relationship="Self.FK_Member_Member" FromRole="Member" ToRole="Member1" />
-          <NavigationProperty Name="Member2" Relationship="Self.FK_Member_Member" FromRole="Member1" ToRole="Member" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Member" FromRole="Member" ToRole="Order" />
-          <NavigationProperty Name="PageComments" Relationship="Self.FK_PageComment_Member" FromRole="Member" ToRole="PageComment" />
-          <NavigationProperty Name="PageComments1" Relationship="Self.FK_PageComment_Member1" FromRole="Member" ToRole="PageComment" />
-          <NavigationProperty Name="Posts" Relationship="Self.FK_Post_Member" FromRole="Member" ToRole="Post" />
-          <NavigationProperty Name="Posts1" Relationship="Self.FK_Post_Member1" FromRole="Member" ToRole="Post" />
-          <NavigationProperty Name="TopStories" Relationship="Self.FK_TopStory_Member" FromRole="Member" ToRole="TopStory" />
-          <NavigationProperty Name="UserInRoles" Relationship="IBModel.FK_UserInRole_Member" FromRole="Member" ToRole="UserInRole" />
-          <NavigationProperty Name="Products" Relationship="IBModel.FK_Product_Member" FromRole="Member" ToRole="Product" />
-          <NavigationProperty Name="Products1" Relationship="IBModel.FK_Product_Member1" FromRole="Member" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MemberID" Type="Int64" />
-          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BillingAddress" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BillingCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BillingState" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BillingCountry" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BillingZip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingAddress" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingState" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingCountry" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingZip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Coupon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <Property Name="ShippingTrackCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingNotes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Tax" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="TaxPercentage" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="TransactionCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
-          <Property Name="TransactionDetail" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="ShippingPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="COD" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingService" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShippingPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK_Order_Member" FromRole="Order" ToRole="Member" />
-          <NavigationProperty Name="OrderItems" Relationship="Self.FK_OrderItem_Order" FromRole="Order" ToRole="OrderItem" />
-        </EntityType>
-        <EntityType Name="OrderItem">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderID" Type="Int32" Nullable="false" />
-          <Property Name="ProductImg" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProductCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_OrderItem_Order" FromRole="OrderItem" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="PageComment">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberID" Type="Int64" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Website" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MessageText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <Property Name="ModifiedBy" Type="Int64" />
-          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
-          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ParentId" Type="Int64" />
-          <Property Name="URL" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CommentType" Type="Byte" Nullable="false" />
-          <Property Name="IPAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK_PageComment_Member" FromRole="PageComment" ToRole="Member" />
-          <NavigationProperty Name="Member1" Relationship="Self.FK_PageComment_Member1" FromRole="PageComment" ToRole="Member" />
-          <NavigationProperty Name="PageComment1" Relationship="Self.FK_PageComment_PageComment" FromRole="PageComment" ToRole="PageComment1" />
-          <NavigationProperty Name="PageComment2" Relationship="Self.FK_PageComment_PageComment" FromRole="PageComment1" ToRole="PageComment" />
-        </EntityType>
-        <EntityType Name="Post">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int64" Nullable="false" />
-          <Property Name="ModifiedBy" Type="Int64" />
-          <Property Name="Category" Type="Int32" Nullable="false" />
-          <Property Name="Tag" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Article" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="WriterName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="WriterEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OGImage" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="OGDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Viewed" Type="Int32" Nullable="false" />
-          <Property Name="URL" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Sitemap" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Category1" Relationship="Self.FK_Post_Category" FromRole="Post" ToRole="Category" />
-          <NavigationProperty Name="Member" Relationship="Self.FK_Post_Member" FromRole="Post" ToRole="Member" />
-          <NavigationProperty Name="Member1" Relationship="Self.FK_Post_Member1" FromRole="Post" ToRole="Member" />
-          <NavigationProperty Name="TopStories" Relationship="Self.FK_TopStory_Post" FromRole="Post" ToRole="TopStory" />
-          <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="TopStory">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PostId" Type="Int64" Nullable="false" />
-          <Property Name="CreatedBy" Type="Int64" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Member" Relationship="Self.FK_TopStory_Member" FromRole="TopStory" ToRole="Member" />
-          <NavigationProperty Name="Post" Relationship="Self.FK_TopStory_Post" FromRole="TopStory" ToRole="Post" />
-        </EntityType>
-        <EntityType Name="WebsiteSetting">
-          <Key>
-            <PropertyRef Name="KeyName" />
-          </Key>
-          <Property Name="KeyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="KeyValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="MemberStatu">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PostStatu">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_Category_Category1">
-          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
-          <End Role="Category1" Type="Self.Category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Category1">
-              <PropertyRef Name="Parent" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_Category">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="Post" Type="Self.Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="Category" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomDataSource_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="CustomDataSource" Type="Self.CustomDataSource" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomDataSource">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomDataSource_Member1">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="CustomDataSource" Type="Self.CustomDataSource" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomDataSource">
-              <PropertyRef Name="ModifiedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomPage_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="CustomPage" Type="Self.CustomPage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomPage">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomPage_Member1">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="CustomPage" Type="Self.CustomPage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomPage">
-              <PropertyRef Name="ModifiedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Member_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="Member1" Type="Self.Member" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Member1">
-              <PropertyRef Name="ModifiedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PageComment_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="PageComment" Type="Self.PageComment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PageComment">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PageComment_Member1">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="PageComment" Type="Self.PageComment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PageComment">
-              <PropertyRef Name="ModifiedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="Post" Type="Self.Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_Member1">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="Post" Type="Self.Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="ModifiedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TopStory_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="TopStory" Type="Self.TopStory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TopStory">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderItem_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="1" />
-          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OrderItem">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PageComment_PageComment">
-          <End Role="PageComment" Type="Self.PageComment" Multiplicity="0..1" />
-          <End Role="PageComment1" Type="Self.PageComment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PageComment">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PageComment1">
-              <PropertyRef Name="ParentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TopStory_Post">
-          <End Role="Post" Type="Self.Post" Multiplicity="1" />
-          <End Role="TopStory" Type="Self.TopStory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Post">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TopStory">
-              <PropertyRef Name="PostId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="indiabobblesEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="CouponCodes" EntityType="Self.CouponCode" />
-          <EntitySet Name="CustomDataSources" EntityType="Self.CustomDataSource" />
-          <EntitySet Name="CustomPages" EntityType="Self.CustomPage" />
-          <EntitySet Name="EmailMessages" EntityType="Self.EmailMessage" />
-          <EntitySet Name="Members" EntityType="Self.Member" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="OrderItems" EntityType="Self.OrderItem" />
-          <EntitySet Name="PageComments" EntityType="Self.PageComment" />
-          <EntitySet Name="Posts" EntityType="Self.Post" />
-          <EntitySet Name="TopStories" EntityType="Self.TopStory" />
-          <EntitySet Name="WebsiteSettings" EntityType="Self.WebsiteSetting" />
-          <EntitySet Name="MemberStatus" EntityType="Self.MemberStatu" />
-          <EntitySet Name="PostStatus" EntityType="Self.PostStatu" />
-          <AssociationSet Name="FK_Category_Category1" Association="Self.FK_Category_Category1">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Category1" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Post_Category" Association="Self.FK_Post_Category">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomDataSource_Member" Association="Self.FK_CustomDataSource_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="CustomDataSource" EntitySet="CustomDataSources" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomDataSource_Member1" Association="Self.FK_CustomDataSource_Member1">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="CustomDataSource" EntitySet="CustomDataSources" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomPage_Member" Association="Self.FK_CustomPage_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="CustomPage" EntitySet="CustomPages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomPage_Member1" Association="Self.FK_CustomPage_Member1">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="CustomPage" EntitySet="CustomPages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Member_Member" Association="Self.FK_Member_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Member1" EntitySet="Members" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Member" Association="Self.FK_Order_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageComment_Member" Association="Self.FK_PageComment_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="PageComment" EntitySet="PageComments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageComment_Member1" Association="Self.FK_PageComment_Member1">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="PageComment" EntitySet="PageComments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Post_Member" Association="Self.FK_Post_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Post_Member1" Association="Self.FK_Post_Member1">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TopStory_Member" Association="Self.FK_TopStory_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="TopStory" EntitySet="TopStories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderItem_Order" Association="Self.FK_OrderItem_Order">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="OrderItem" EntitySet="OrderItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageComment_PageComment" Association="Self.FK_PageComment_PageComment">
-            <End Role="PageComment" EntitySet="PageComments" />
-            <End Role="PageComment1" EntitySet="PageComments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TopStory_Post" Association="Self.FK_TopStory_Post">
-            <End Role="Post" EntitySet="Posts" />
-            <End Role="TopStory" EntitySet="TopStories" />
-          </AssociationSet>
-          <EntitySet Name="UserInRoles" EntityType="IBModel.UserInRole" />
-          <EntitySet Name="UserRoles" EntityType="IBModel.UserRole" />
-          <AssociationSet Name="FK_UserInRole_Member" Association="IBModel.FK_UserInRole_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="UserInRole" EntitySet="UserInRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserInRole_UserRole" Association="IBModel.FK_UserInRole_UserRole">
-            <End Role="UserRole" EntitySet="UserRoles" />
-            <End Role="UserInRole" EntitySet="UserInRoles" />
-          </AssociationSet>
+          <EntitySet Name="Categories" EntityType="IBModel.Category" />
           <EntitySet Name="CategoryTags" EntityType="IBModel.CategoryTag" />
+          <EntitySet Name="CouponCodes" EntityType="IBModel.CouponCode" />
+          <EntitySet Name="CustomDataSources" EntityType="IBModel.CustomDataSource" />
+          <EntitySet Name="CustomPages" EntityType="IBModel.CustomPage" />
+          <EntitySet Name="EmailMessages" EntityType="IBModel.EmailMessage" />
           <EntitySet Name="Links" EntityType="IBModel.Link" />
+          <EntitySet Name="Members" EntityType="IBModel.Member" />
+          <EntitySet Name="Orders" EntityType="IBModel.Order" />
+          <EntitySet Name="OrderItems" EntityType="IBModel.OrderItem" />
+          <EntitySet Name="PageComments" EntityType="IBModel.PageComment" />
+          <EntitySet Name="Posts" EntityType="IBModel.Post" />
           <EntitySet Name="Products" EntityType="IBModel.Product" />
           <EntitySet Name="ProductPhotoes" EntityType="IBModel.ProductPhoto" />
           <EntitySet Name="ProductTags" EntityType="IBModel.ProductTag" />
+          <EntitySet Name="TopStories" EntityType="IBModel.TopStory" />
+          <EntitySet Name="UserInRoles" EntityType="IBModel.UserInRole" />
+          <EntitySet Name="UserRoles" EntityType="IBModel.UserRole" />
+          <EntitySet Name="WebsiteSettings" EntityType="IBModel.WebsiteSetting" />
+          <EntitySet Name="MemberStatus" EntityType="IBModel.MemberStatu" />
+          <EntitySet Name="PostStatus" EntityType="IBModel.PostStatu" />
+          <AssociationSet Name="FK_Category_Category1" Association="IBModel.FK_Category_Category1">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Category1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Category" Association="IBModel.FK_Post_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductTag_CategoryTag" Association="IBModel.FK_ProductTag_CategoryTag">
             <End Role="CategoryTag" EntitySet="CategoryTags" />
             <End Role="ProductTag" EntitySet="ProductTags" />
           </AssociationSet>
+          <AssociationSet Name="FK_CustomDataSource_Member" Association="IBModel.FK_CustomDataSource_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="CustomDataSource" EntitySet="CustomDataSources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomDataSource_Member1" Association="IBModel.FK_CustomDataSource_Member1">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="CustomDataSource" EntitySet="CustomDataSources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomPage_Member" Association="IBModel.FK_CustomPage_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="CustomPage" EntitySet="CustomPages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomPage_Member1" Association="IBModel.FK_CustomPage_Member1">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="CustomPage" EntitySet="CustomPages" />
+          </AssociationSet>
           <AssociationSet Name="FK_Link_Link" Association="IBModel.FK_Link_Link">
             <End Role="Link" EntitySet="Links" />
             <End Role="Link1" EntitySet="Links" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Member" Association="IBModel.FK_Member_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Member1" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Member" Association="IBModel.FK_Order_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageComment_Member" Association="IBModel.FK_PageComment_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="PageComment" EntitySet="PageComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageComment_Member1" Association="IBModel.FK_PageComment_Member1">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="PageComment" EntitySet="PageComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Member" Association="IBModel.FK_Post_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Member1" Association="IBModel.FK_Post_Member1">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Post" EntitySet="Posts" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Member" Association="IBModel.FK_Product_Member">
             <End Role="Member" EntitySet="Members" />
@@ -1339,6 +861,26 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             <End Role="Member" EntitySet="Members" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_TopStory_Member" Association="IBModel.FK_TopStory_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="TopStory" EntitySet="TopStories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserInRole_Member" Association="IBModel.FK_UserInRole_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="UserInRole" EntitySet="UserInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItem_Order" Association="IBModel.FK_OrderItem_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageComment_PageComment" Association="IBModel.FK_PageComment_PageComment">
+            <End Role="PageComment" EntitySet="PageComments" />
+            <End Role="PageComment1" EntitySet="PageComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopStory_Post" Association="IBModel.FK_TopStory_Post">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="TopStory" EntitySet="TopStories" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductPhoto_Product" Association="IBModel.FK_ProductPhoto_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="ProductPhoto" EntitySet="ProductPhotoes" />
@@ -1347,49 +889,24 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             <End Role="Product" EntitySet="Products" />
             <End Role="ProductTag" EntitySet="ProductTags" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserInRole_UserRole" Association="IBModel.FK_UserInRole_UserRole">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="UserInRole" EntitySet="UserInRoles" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="UserInRole">
+        <EntityType Name="Category">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberID" Type="Int64" Nullable="false" />
-          <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="IBModel.FK_UserInRole_Member" FromRole="UserInRole" ToRole="Member" />
-          <NavigationProperty Name="UserRole" Relationship="IBModel.FK_UserInRole_UserRole" FromRole="UserInRole" ToRole="UserRole" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UrlName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Parent" Type="Int32" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Category1" Relationship="IBModel.FK_Category_Category1" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="Category2" Relationship="IBModel.FK_Category_Category1" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="Posts" Relationship="IBModel.FK_Post_Category" FromRole="Category" ToRole="Post" />
         </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserInRoles" Relationship="IBModel.FK_UserInRole_UserRole" FromRole="UserRole" ToRole="UserInRole" />
-        </EntityType>
-        <Association Name="FK_UserInRole_Member">
-          <End Type="IBModel.Member" Role="Member" Multiplicity="1" />
-          <End Type="IBModel.UserInRole" Role="UserInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserInRole">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserInRole_UserRole">
-          <End Type="IBModel.UserRole" Role="UserRole" Multiplicity="1" />
-          <End Type="IBModel.UserInRole" Role="UserInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserInRole">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="CategoryTag">
           <Key>
             <PropertyRef Name="ID" />
@@ -1406,6 +923,69 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProductTags" Relationship="IBModel.FK_ProductTag_CategoryTag" FromRole="CategoryTag" ToRole="ProductTag" />
         </EntityType>
+        <EntityType Name="CouponCode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsPercent" Type="Boolean" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomDataSource">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Query" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int64" />
+          <Property Name="HtmlTemplate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member" Relationship="IBModel.FK_CustomDataSource_Member" FromRole="CustomDataSource" ToRole="Member" />
+          <NavigationProperty Name="Member1" Relationship="IBModel.FK_CustomDataSource_Member1" FromRole="CustomDataSource" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="CustomPage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int64" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="PageType" Type="Byte" />
+          <Property Name="Sitemap" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="IBModel.FK_CustomPage_Member" FromRole="CustomPage" ToRole="Member" />
+          <NavigationProperty Name="Member1" Relationship="IBModel.FK_CustomPage_Member1" FromRole="CustomPage" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="EmailMessage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="FromAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ToAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <Property Name="SentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsSent" Type="Boolean" Nullable="false" />
+          <Property Name="EmailType" Type="Byte" Nullable="false" />
+          <Property Name="EmailGroup" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="ReadDate" Type="DateTime" Precision="3" />
+          <Property Name="CCAdress" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ToName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FromName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastAttempt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="Link">
           <Key>
             <PropertyRef Name="ID" />
@@ -1420,6 +1000,157 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <Property Name="Sequence" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Link1" Relationship="IBModel.FK_Link_Link" FromRole="Link" ToRole="Link1" />
           <NavigationProperty Name="Link2" Relationship="IBModel.FK_Link_Link" FromRole="Link1" ToRole="Link" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Createdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Newsletter" Type="Boolean" Nullable="false" />
+          <Property Name="UserType" Type="Byte" Nullable="false" />
+          <Property Name="MemberName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="LastLogon" Type="DateTime" Precision="3" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Country" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AlternateEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AlternateEmail2" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int64" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="MemberImage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomDataSources" Relationship="IBModel.FK_CustomDataSource_Member" FromRole="Member" ToRole="CustomDataSource" />
+          <NavigationProperty Name="CustomDataSources1" Relationship="IBModel.FK_CustomDataSource_Member1" FromRole="Member" ToRole="CustomDataSource" />
+          <NavigationProperty Name="CustomPages" Relationship="IBModel.FK_CustomPage_Member" FromRole="Member" ToRole="CustomPage" />
+          <NavigationProperty Name="CustomPages1" Relationship="IBModel.FK_CustomPage_Member1" FromRole="Member" ToRole="CustomPage" />
+          <NavigationProperty Name="Member1" Relationship="IBModel.FK_Member_Member" FromRole="Member" ToRole="Member1" />
+          <NavigationProperty Name="Member2" Relationship="IBModel.FK_Member_Member" FromRole="Member1" ToRole="Member" />
+          <NavigationProperty Name="Orders" Relationship="IBModel.FK_Order_Member" FromRole="Member" ToRole="Order" />
+          <NavigationProperty Name="PageComments" Relationship="IBModel.FK_PageComment_Member" FromRole="Member" ToRole="PageComment" />
+          <NavigationProperty Name="PageComments1" Relationship="IBModel.FK_PageComment_Member1" FromRole="Member" ToRole="PageComment" />
+          <NavigationProperty Name="Posts" Relationship="IBModel.FK_Post_Member" FromRole="Member" ToRole="Post" />
+          <NavigationProperty Name="Posts1" Relationship="IBModel.FK_Post_Member1" FromRole="Member" ToRole="Post" />
+          <NavigationProperty Name="Products" Relationship="IBModel.FK_Product_Member" FromRole="Member" ToRole="Product" />
+          <NavigationProperty Name="Products1" Relationship="IBModel.FK_Product_Member1" FromRole="Member" ToRole="Product" />
+          <NavigationProperty Name="TopStories" Relationship="IBModel.FK_TopStory_Member" FromRole="Member" ToRole="TopStory" />
+          <NavigationProperty Name="UserInRoles" Relationship="IBModel.FK_UserInRole_Member" FromRole="Member" ToRole="UserInRole" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MemberID" Type="Int64" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="BillingAddress" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="BillingCity" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BillingState" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BillingCountry" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BillingZip" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingAddress" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingCity" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingState" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingCountry" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingZip" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Coupon" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="ShippingTrackCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingNotes" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Tax" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TaxPercentage" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Discount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TransactionCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+          <Property Name="TransactionDetail" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="COD" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PaymentMode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingService" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingFirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingLastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingPhone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member" Relationship="IBModel.FK_Order_Member" FromRole="Order" ToRole="Member" />
+          <NavigationProperty Name="OrderItems" Relationship="IBModel.FK_OrderItem_Order" FromRole="Order" ToRole="OrderItem" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductImg" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Order" Relationship="IBModel.FK_OrderItem_Order" FromRole="OrderItem" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="PageComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int64" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MessageText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int64" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int64" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CommentType" Type="Byte" Nullable="false" />
+          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member" Relationship="IBModel.FK_PageComment_Member" FromRole="PageComment" ToRole="Member" />
+          <NavigationProperty Name="Member1" Relationship="IBModel.FK_PageComment_Member1" FromRole="PageComment" ToRole="Member" />
+          <NavigationProperty Name="PageComment1" Relationship="IBModel.FK_PageComment_PageComment" FromRole="PageComment" ToRole="PageComment1" />
+          <NavigationProperty Name="PageComment2" Relationship="IBModel.FK_PageComment_PageComment" FromRole="PageComment1" ToRole="PageComment" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int64" />
+          <Property Name="Category" Type="Int32" Nullable="false" />
+          <Property Name="Tag" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Article" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WriterName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WriterEmail" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="OGImage" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="OGDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Viewed" Type="Int32" Nullable="false" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Sitemap" Type="Boolean" Nullable="false" />
+          <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Category1" Relationship="IBModel.FK_Post_Category" FromRole="Post" ToRole="Category" />
+          <NavigationProperty Name="Member" Relationship="IBModel.FK_Post_Member" FromRole="Post" ToRole="Member" />
+          <NavigationProperty Name="Member1" Relationship="IBModel.FK_Post_Member1" FromRole="Post" ToRole="Member" />
+          <NavigationProperty Name="TopStories" Relationship="IBModel.FK_TopStory_Post" FromRole="Post" ToRole="TopStory" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1446,14 +1177,14 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <Property Name="Fragile" Type="Boolean" Nullable="false" />
           <Property Name="ShippingTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Handmade" Type="Boolean" Nullable="false" />
-          <Property Name="Inventory" Type="Int32" Nullable="false" />
+          <Property Name="ThumbPath" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OutofStock" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Member" Relationship="IBModel.FK_Product_Member" FromRole="Product" ToRole="Member" />
           <NavigationProperty Name="Member1" Relationship="IBModel.FK_Product_Member1" FromRole="Product" ToRole="Member" />
           <NavigationProperty Name="ProductPhotoes" Relationship="IBModel.FK_ProductPhoto_Product" FromRole="Product" ToRole="ProductPhoto" />
           <NavigationProperty Name="ProductTags" Relationship="IBModel.FK_ProductTag_Product" FromRole="Product" ToRole="ProductTag" />
-          <Property Name="ThumbPath" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="URL" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductPhoto">
           <Key>
@@ -1475,6 +1206,83 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <NavigationProperty Name="CategoryTag" Relationship="IBModel.FK_ProductTag_CategoryTag" FromRole="ProductTag" ToRole="CategoryTag" />
           <NavigationProperty Name="Product" Relationship="IBModel.FK_ProductTag_Product" FromRole="ProductTag" ToRole="Product" />
         </EntityType>
+        <EntityType Name="TopStory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="Int64" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int64" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Member" Relationship="IBModel.FK_TopStory_Member" FromRole="TopStory" ToRole="Member" />
+          <NavigationProperty Name="Post" Relationship="IBModel.FK_TopStory_Post" FromRole="TopStory" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="UserInRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int64" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="IBModel.FK_UserInRole_Member" FromRole="UserInRole" ToRole="Member" />
+          <NavigationProperty Name="UserRole" Relationship="IBModel.FK_UserInRole_UserRole" FromRole="UserInRole" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserInRoles" Relationship="IBModel.FK_UserInRole_UserRole" FromRole="UserRole" ToRole="UserInRole" />
+        </EntityType>
+        <EntityType Name="WebsiteSetting">
+          <Key>
+            <PropertyRef Name="KeyName" />
+          </Key>
+          <Property Name="KeyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MemberStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PostStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Category_Category1">
+          <End Type="IBModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="IBModel.Category" Role="Category1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Category">
+          <End Type="IBModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="IBModel.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductTag_CategoryTag">
           <End Type="IBModel.CategoryTag" Role="CategoryTag" Multiplicity="1" />
           <End Type="IBModel.ProductTag" Role="ProductTag" Multiplicity="*" />
@@ -1487,6 +1295,54 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CustomDataSource_Member">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="IBModel.CustomDataSource" Role="CustomDataSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomDataSource">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomDataSource_Member1">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="IBModel.CustomDataSource" Role="CustomDataSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomDataSource">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomPage_Member">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="IBModel.CustomPage" Role="CustomPage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomPage">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomPage_Member1">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="IBModel.CustomPage" Role="CustomPage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomPage">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Link_Link">
           <End Type="IBModel.Link" Role="Link" Multiplicity="0..1" />
           <End Type="IBModel.Link" Role="Link1" Multiplicity="*" />
@@ -1496,6 +1352,78 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             </Principal>
             <Dependent Role="Link1">
               <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Member">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="IBModel.Member" Role="Member1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Member1">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Member">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="IBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PageComment_Member">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="IBModel.PageComment" Role="PageComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PageComment">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PageComment_Member1">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="IBModel.PageComment" Role="PageComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PageComment">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Member">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="IBModel.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Member1">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="IBModel.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="ModifiedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1523,6 +1451,66 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TopStory_Member">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="IBModel.TopStory" Role="TopStory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TopStory">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserInRole_Member">
+          <End Type="IBModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="IBModel.UserInRole" Role="UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserInRole">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItem_Order">
+          <End Type="IBModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="IBModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PageComment_PageComment">
+          <End Type="IBModel.PageComment" Role="PageComment" Multiplicity="0..1" />
+          <End Type="IBModel.PageComment" Role="PageComment1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PageComment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PageComment1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopStory_Post">
+          <End Type="IBModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="IBModel.TopStory" Role="TopStory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TopStory">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductPhoto_Product">
           <End Type="IBModel.Product" Role="Product" Multiplicity="1" />
           <End Type="IBModel.ProductPhoto" Role="ProductPhoto" Multiplicity="*" />
@@ -1547,263 +1535,30 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_UserInRole_UserRole">
+          <End Type="IBModel.UserRole" Role="UserRole" Multiplicity="1" />
+          <End Type="IBModel.UserInRole" Role="UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserInRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="IBModelStoreContainer" CdmEntityContainer="indiabobblesEntities">
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StoreContainer" CdmEntityContainer="indiabobblesEntities" >
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="IBModel.Category">
               <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UrlName" ColumnName="UrlName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Parent" ColumnName="Parent" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CouponCodes">
-            <EntityTypeMapping TypeName="IBModel.CouponCode">
-              <MappingFragment StoreEntitySet="CouponCode">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="IsPercent" ColumnName="IsPercent" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CustomDataSources">
-            <EntityTypeMapping TypeName="IBModel.CustomDataSource">
-              <MappingFragment StoreEntitySet="CustomDataSource">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Query" ColumnName="Query" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="HtmlTemplate" ColumnName="HtmlTemplate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CustomPages">
-            <EntityTypeMapping TypeName="IBModel.CustomPage">
-              <MappingFragment StoreEntitySet="CustomPage">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="PageType" ColumnName="PageType" />
-                <ScalarProperty Name="Sitemap" ColumnName="Sitemap" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EmailMessages">
-            <EntityTypeMapping TypeName="IBModel.EmailMessage">
-              <MappingFragment StoreEntitySet="EmailMessage">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FromAddress" ColumnName="FromAddress" />
-                <ScalarProperty Name="ToAddress" ColumnName="ToAddress" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
-                <ScalarProperty Name="SentDate" ColumnName="SentDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
-                <ScalarProperty Name="EmailType" ColumnName="EmailType" />
-                <ScalarProperty Name="EmailGroup" ColumnName="EmailGroup" />
-                <ScalarProperty Name="ReadDate" ColumnName="ReadDate" />
-                <ScalarProperty Name="CCAdress" ColumnName="CCAdress" />
-                <ScalarProperty Name="ToName" ColumnName="ToName" />
-                <ScalarProperty Name="FromName" ColumnName="FromName" />
-                <ScalarProperty Name="LastAttempt" ColumnName="LastAttempt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Members">
-            <EntityTypeMapping TypeName="IBModel.Member">
-              <MappingFragment StoreEntitySet="Member">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Createdate" ColumnName="Createdate" />
-                <ScalarProperty Name="Newsletter" ColumnName="Newsletter" />
-                <ScalarProperty Name="UserType" ColumnName="UserType" />
-                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="LastLogon" ColumnName="LastLogon" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="AlternateEmail" ColumnName="AlternateEmail" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="AlternateEmail2" ColumnName="AlternateEmail2" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="MemberImage" ColumnName="MemberImage" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="IBModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
-                <ScalarProperty Name="BillingCity" ColumnName="BillingCity" />
-                <ScalarProperty Name="BillingState" ColumnName="BillingState" />
-                <ScalarProperty Name="BillingCountry" ColumnName="BillingCountry" />
-                <ScalarProperty Name="BillingZip" ColumnName="BillingZip" />
-                <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
-                <ScalarProperty Name="ShippingCity" ColumnName="ShippingCity" />
-                <ScalarProperty Name="ShippingState" ColumnName="ShippingState" />
-                <ScalarProperty Name="ShippingCountry" ColumnName="ShippingCountry" />
-                <ScalarProperty Name="ShippingZip" ColumnName="ShippingZip" />
-                <ScalarProperty Name="Coupon" ColumnName="Coupon" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ShippingTrackCode" ColumnName="ShippingTrackCode" />
-                <ScalarProperty Name="ShippingNotes" ColumnName="ShippingNotes" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Tax" ColumnName="Tax" />
-                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="TransactionCode" ColumnName="TransactionCode" />
-                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
-                <ScalarProperty Name="TransactionDetail" ColumnName="TransactionDetail" />
-                <ScalarProperty Name="ShippingPrice" ColumnName="ShippingPrice" />
-                <ScalarProperty Name="COD" ColumnName="COD" />
-                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
-                <ScalarProperty Name="ShippingService" ColumnName="ShippingService" />
-                <ScalarProperty Name="ShippingFirstName" ColumnName="ShippingFirstName" />
-                <ScalarProperty Name="ShippingLastName" ColumnName="ShippingLastName" />
-                <ScalarProperty Name="ShippingPhone" ColumnName="ShippingPhone" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderItems">
-            <EntityTypeMapping TypeName="IBModel.OrderItem">
-              <MappingFragment StoreEntitySet="OrderItem">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="ProductImg" ColumnName="ProductImg" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PageComments">
-            <EntityTypeMapping TypeName="IBModel.PageComment">
-              <MappingFragment StoreEntitySet="PageComment">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Website" ColumnName="Website" />
-                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="CommentType" ColumnName="CommentType" />
-                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Posts">
-            <EntityTypeMapping TypeName="IBModel.Post">
-              <MappingFragment StoreEntitySet="Post">
-                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Tag" ColumnName="Tag" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Article" ColumnName="Article" />
-                <ScalarProperty Name="WriterName" ColumnName="WriterName" />
-                <ScalarProperty Name="WriterEmail" ColumnName="WriterEmail" />
-                <ScalarProperty Name="OGImage" ColumnName="OGImage" />
-                <ScalarProperty Name="OGDescription" ColumnName="OGDescription" />
-                <ScalarProperty Name="Viewed" ColumnName="Viewed" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="Sitemap" ColumnName="Sitemap" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TopStories">
-            <EntityTypeMapping TypeName="IBModel.TopStory">
-              <MappingFragment StoreEntitySet="TopStory">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="PostId" ColumnName="PostId" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WebsiteSettings">
-            <EntityTypeMapping TypeName="IBModel.WebsiteSetting">
-              <MappingFragment StoreEntitySet="WebsiteSetting">
-                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
-                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MemberStatus">
-            <EntityTypeMapping TypeName="IBModel.MemberStatu">
-              <MappingFragment StoreEntitySet="MemberStatus">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PostStatus">
-            <EntityTypeMapping TypeName="IBModel.PostStatu">
-              <MappingFragment StoreEntitySet="PostStatus">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserInRoles">
-            <EntityTypeMapping TypeName="IBModel.UserInRole">
-              <MappingFragment StoreEntitySet="UserInRole">
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="IBModel.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="UrlName" ColumnName="UrlName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1825,6 +1580,69 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CouponCodes">
+            <EntityTypeMapping TypeName="IBModel.CouponCode">
+              <MappingFragment StoreEntitySet="CouponCode">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="IsPercent" ColumnName="IsPercent" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomDataSources">
+            <EntityTypeMapping TypeName="IBModel.CustomDataSource">
+              <MappingFragment StoreEntitySet="CustomDataSource">
+                <ScalarProperty Name="HtmlTemplate" ColumnName="HtmlTemplate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Query" ColumnName="Query" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomPages">
+            <EntityTypeMapping TypeName="IBModel.CustomPage">
+              <MappingFragment StoreEntitySet="CustomPage">
+                <ScalarProperty Name="Sitemap" ColumnName="Sitemap" />
+                <ScalarProperty Name="PageType" ColumnName="PageType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailMessages">
+            <EntityTypeMapping TypeName="IBModel.EmailMessage">
+              <MappingFragment StoreEntitySet="EmailMessage">
+                <ScalarProperty Name="LastAttempt" ColumnName="LastAttempt" />
+                <ScalarProperty Name="FromName" ColumnName="FromName" />
+                <ScalarProperty Name="ToName" ColumnName="ToName" />
+                <ScalarProperty Name="CCAdress" ColumnName="CCAdress" />
+                <ScalarProperty Name="ReadDate" ColumnName="ReadDate" />
+                <ScalarProperty Name="EmailGroup" ColumnName="EmailGroup" />
+                <ScalarProperty Name="EmailType" ColumnName="EmailType" />
+                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SentDate" ColumnName="SentDate" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="ToAddress" ColumnName="ToAddress" />
+                <ScalarProperty Name="FromAddress" ColumnName="FromAddress" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Links">
             <EntityTypeMapping TypeName="IBModel.Link">
               <MappingFragment StoreEntitySet="Link">
@@ -1839,13 +1657,143 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="IBModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MemberImage" ColumnName="MemberImage" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="AlternateEmail2" ColumnName="AlternateEmail2" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="AlternateEmail" ColumnName="AlternateEmail" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="LastLogon" ColumnName="LastLogon" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="Newsletter" ColumnName="Newsletter" />
+                <ScalarProperty Name="Createdate" ColumnName="Createdate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="IBModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="ShippingPhone" ColumnName="ShippingPhone" />
+                <ScalarProperty Name="ShippingLastName" ColumnName="ShippingLastName" />
+                <ScalarProperty Name="ShippingFirstName" ColumnName="ShippingFirstName" />
+                <ScalarProperty Name="ShippingService" ColumnName="ShippingService" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="COD" ColumnName="COD" />
+                <ScalarProperty Name="ShippingPrice" ColumnName="ShippingPrice" />
+                <ScalarProperty Name="TransactionDetail" ColumnName="TransactionDetail" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionCode" ColumnName="TransactionCode" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ShippingNotes" ColumnName="ShippingNotes" />
+                <ScalarProperty Name="ShippingTrackCode" ColumnName="ShippingTrackCode" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Coupon" ColumnName="Coupon" />
+                <ScalarProperty Name="ShippingZip" ColumnName="ShippingZip" />
+                <ScalarProperty Name="ShippingCountry" ColumnName="ShippingCountry" />
+                <ScalarProperty Name="ShippingState" ColumnName="ShippingState" />
+                <ScalarProperty Name="ShippingCity" ColumnName="ShippingCity" />
+                <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
+                <ScalarProperty Name="BillingZip" ColumnName="BillingZip" />
+                <ScalarProperty Name="BillingCountry" ColumnName="BillingCountry" />
+                <ScalarProperty Name="BillingState" ColumnName="BillingState" />
+                <ScalarProperty Name="BillingCity" ColumnName="BillingCity" />
+                <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItems">
+            <EntityTypeMapping TypeName="IBModel.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItem">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductImg" ColumnName="ProductImg" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PageComments">
+            <EntityTypeMapping TypeName="IBModel.PageComment">
+              <MappingFragment StoreEntitySet="PageComment">
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="CommentType" ColumnName="CommentType" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="IBModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="Sitemap" ColumnName="Sitemap" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Viewed" ColumnName="Viewed" />
+                <ScalarProperty Name="OGDescription" ColumnName="OGDescription" />
+                <ScalarProperty Name="OGImage" ColumnName="OGImage" />
+                <ScalarProperty Name="WriterEmail" ColumnName="WriterEmail" />
+                <ScalarProperty Name="WriterName" ColumnName="WriterName" />
+                <ScalarProperty Name="Article" ColumnName="Article" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="IBModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="OutofStock" ColumnName="OutofStock" />
                 <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
                 <ScalarProperty Name="ThumbPath" ColumnName="ThumbPath" />
-                <ScalarProperty Name="Inventory" ColumnName="Inventory" />
                 <ScalarProperty Name="Handmade" ColumnName="Handmade" />
                 <ScalarProperty Name="ShippingTime" ColumnName="ShippingTime" />
                 <ScalarProperty Name="Fragile" ColumnName="Fragile" />
@@ -1889,9 +1837,60 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TopStories">
+            <EntityTypeMapping TypeName="IBModel.TopStory">
+              <MappingFragment StoreEntitySet="TopStory">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInRoles">
+            <EntityTypeMapping TypeName="IBModel.UserInRole">
+              <MappingFragment StoreEntitySet="UserInRole">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="IBModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebsiteSettings">
+            <EntityTypeMapping TypeName="IBModel.WebsiteSetting">
+              <MappingFragment StoreEntitySet="WebsiteSetting">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberStatus">
+            <EntityTypeMapping TypeName="IBModel.MemberStatu">
+              <MappingFragment StoreEntitySet="MemberStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostStatus">
+            <EntityTypeMapping TypeName="IBModel.PostStatu">
+              <MappingFragment StoreEntitySet="PostStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -1905,7 +1904,7 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

@@ -111,7 +111,7 @@ Namespace Controllers
 
                     For Each merc_hash_var As String In merc_hash_vars_seq
                         merc_hash_string += "|"
-                        merc_hash_string = merc_hash_string & (If(Request.Form(merc_hash_var) IsNot Nothing, Request.Form(merc_hash_var), ""))
+                        merc_hash_string &= (If(Request.Form(merc_hash_var), ""))
                     Next
 
                     Response.Write(merc_hash_string)
@@ -130,7 +130,7 @@ Namespace Controllers
                             Dim payuMoneyId As String = Request.Form("payuMoneyId")
                             Dim array = (From key In Request.Form.AllKeys From value In Request.Form.GetValues(key) Select String.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(value))).ToArray()
                             Dim payumoneydata As String = String.Join("&", array)
-                            Dim om As OrderManager = New OrderManager()
+                            Dim om As New OrderManager()
                             Dim o As Order = om.GetOrderDetail(Integer.Parse(order_id))
 
                             If o IsNot Nothing Then
@@ -141,9 +141,9 @@ Namespace Controllers
                                 Try
                                     Dim body As String = om.GenerateReceipt(o.ID)
                                     Dim eman As New EmailManager()
-                                    eman.SendMailAsync(Utility.NewsletterEmail, o.Email, Utility.AdminName, o.Name, body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
-                                    eman.SendMailAsync(Utility.NewsletterEmail, "preeti.singh@rudrasofttech.com", Utility.AdminName, "Preeti Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
-                                    eman.SendMailAsync(Utility.NewsletterEmail, "rajkiran.singh@rudrasofttech.com", Utility.AdminName, "Raj Kiran Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                                    Dim unused = eman.SendMailAsync(Utility.NewsletterEmail, o.Email, Utility.AdminName, o.Name, body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                                    Dim unused1 = eman.SendMailAsync(Utility.NewsletterEmail, "preeti.singh@rudrasofttech.com", Utility.AdminName, "Preeti Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                                    Dim unused2 = eman.SendMailAsync(Utility.NewsletterEmail, "rajkiran.singh@rudrasofttech.com", Utility.AdminName, "Raj Kiran Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
                                 Catch ex As Exception
                                     Trace.Write(ex.Message)
                                 End Try
@@ -205,9 +205,9 @@ Namespace Controllers
 
         Public Function Generatehash512(ByVal text As String) As String
             Dim message As Byte() = Encoding.UTF8.GetBytes(text)
-            Dim UE As UnicodeEncoding = New UnicodeEncoding()
+            Dim UE As New UnicodeEncoding()
             Dim hashValue As Byte()
-            Dim hashString As SHA512Managed = New SHA512Managed()
+            Dim hashString As New SHA512Managed()
             Dim hex As String = ""
             hashValue = hashString.ComputeHash(message)
 

@@ -7,7 +7,7 @@ Imports System.Web.UI.WebControls
 Imports IndiaBobbles
 Public Class ManageMember
     Inherits AdminPage
-    Private dc As New indiabobblesEntities()
+    Private ReadOnly dc As New indiabobblesEntities()
     Private Sub ManageMember_Load(sender As Object, e As EventArgs) Handles Me.Load
         If ForbidUserAccess(MemberTypeType.Admin) Then
             Response.Redirect("default.aspx")

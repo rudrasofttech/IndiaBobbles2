@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
-    <asp:SqlDataSource ID="ProductDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>" SelectCommand="SELECT [ID], [Name], [MRP], [SalePrice], [Status], [Dimension], [Color], [Weight], [Material], [Manufacturer], [CareInstructions], [RecommendedAge], [CountryofOrigin], [Fragile], [ShippingTime], [Handmade], [Inventory], [ThumbPath], [URL], [ProductCode] FROM [Product] WHERE ([ID] = @ID)">
+    <asp:SqlDataSource ID="ProductDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>" SelectCommand="SELECT [ID], [Name], [MRP], [SalePrice], [Status], [Dimension], [Color], [Weight], [Material], [Manufacturer], [CareInstructions], [RecommendedAge], [CountryofOrigin], [Fragile], [ShippingTime], [Handmade], [OutofStock], [ThumbPath], [URL], [ProductCode] FROM [Product] WHERE ([ID] = @ID)">
         <SelectParameters>
             <asp:QueryStringParameter DefaultValue="0" Name="ID" QueryStringField="id" Type="Int32" />
         </SelectParameters>
@@ -32,7 +32,7 @@
             <asp:CheckBoxField DataField="Fragile" HeaderText="Fragile" SortExpression="Fragile" />
             <asp:BoundField DataField="ShippingTime" HeaderText="ShippingTime" SortExpression="ShippingTime" />
             <asp:CheckBoxField DataField="Handmade" HeaderText="Handmade" SortExpression="Handmade" />
-            <asp:BoundField DataField="Inventory" HeaderText="Inventory" SortExpression="Inventory" />
+            <asp:CheckBoxField DataField="OutofStock" HeaderText="OutofStock" SortExpression="OutofStock" />
             <asp:BoundField DataField="URL" HeaderText="URL" SortExpression="URL" />
             <asp:BoundField DataField="ProductCode" HeaderText="ProductCode" SortExpression="ProductCode" />
             <asp:ImageField DataImageUrlField="ThumbPath" HeaderText="Thumbpath" ReadOnly="True" ControlStyle-Height="70px">

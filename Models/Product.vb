@@ -32,10 +32,10 @@ Partial Public Class Product
     Public Property Fragile As Boolean
     Public Property ShippingTime As String
     Public Property Handmade As Boolean
-    Public Property Inventory As Integer
     Public Property ThumbPath As String
     Public Property URL As String
     Public Property ProductCode As String
+    Public Property OutofStock As Boolean
 
     Public Overridable Property Member As Member
     Public Overridable Property Member1 As Member

@@ -62,14 +62,15 @@ Namespace Controllers
                 Else
                     Dim r As New Random(0)
                     Dim password As String = String.Format("{0}{1}{2}{3}{4}{5}{7}", r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9))
-                    Dim m As New Member()
-                    m.MemberName = dto.Name
-                    m.Email = dto.Email
-                    m.Password = password
-                    m.Createdate = DateTime.UtcNow
-                    m.Mobile = dto.Mobile
-                    m.Newsletter = dto.Newsletter
-                    m.UserType = MemberTypeType.Member
+                    Dim m As New Member With {
+                        .MemberName = dto.Name,
+                        .Email = dto.Email,
+                        .Password = password,
+                        .Createdate = DateTime.UtcNow,
+                        .Mobile = dto.Mobile,
+                        .Newsletter = dto.Newsletter,
+                        .UserType = MemberTypeType.Member
+                    }
                     db.Members.Add(m)
                     db.SaveChanges()
 

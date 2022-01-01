@@ -432,6 +432,9 @@
     <Compile Include="Models\MemberStatu.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PostStatu.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -460,9 +463,6 @@
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.vb">
-      <DependentUpon>IBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PostStatu.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.vb">
@@ -606,6 +606,7 @@
       <DependentUpon>IBModel.edmx</DependentUpon>
       <LastGenOutput>IBModel.Context.vb</LastGenOutput>
     </Content>
+    <Content Include="Models\IBModel.edmx.sql" />
     <Content Include="Models\IBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IBModel.edmx</DependentUpon>

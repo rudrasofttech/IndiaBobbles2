@@ -45,9 +45,9 @@ Partial Public Class Member
     Public Overridable Property PageComments1 As ICollection(Of PageComment) = New HashSet(Of PageComment)
     Public Overridable Property Posts As ICollection(Of Post) = New HashSet(Of Post)
     Public Overridable Property Posts1 As ICollection(Of Post) = New HashSet(Of Post)
-    Public Overridable Property TopStories As ICollection(Of TopStory) = New HashSet(Of TopStory)
-    Public Overridable Property UserInRoles As ICollection(Of UserInRole) = New HashSet(Of UserInRole)
     Public Overridable Property Products As ICollection(Of Product) = New HashSet(Of Product)
     Public Overridable Property Products1 As ICollection(Of Product) = New HashSet(Of Product)
+    Public Overridable Property TopStories As ICollection(Of TopStory) = New HashSet(Of TopStory)
+    Public Overridable Property UserInRoles As ICollection(Of UserInRole) = New HashSet(Of UserInRole)
 
 End Class
