@@ -13,7 +13,6 @@
             Dim product = db.Products.FirstOrDefault(Function(m) m.ID = TargetID)
             If product IsNot Nothing Then
                 NameTextBox.Text = product.Name
-                URLTextBox.Text = product.URL
                 DescTextBox.Text = product.Description
                 MRPTextBox.Text = product.MRP
                 SaleTextBox.Text = product.SalePrice
@@ -29,7 +28,8 @@
                 HandmadeCheckBox.Checked = product.Handmade
                 OutofStockCheckBox.Checked = product.OutofStock
                 ShippingTimeTextBox.Text = product.ShippingTime
-
+                StatusDropDown.SelectedValue = product.Status
+                ThumbPathTextBox.Text = product.ThumbPath
             End If
         End If
     End Sub
@@ -44,7 +44,6 @@
             product = db.Products.FirstOrDefault(Function(m) m.ID = TargetID)
         End If
         product.Name = NameTextBox.Text.Trim()
-        product.URL = URLTextBox.Text.Trim()
         product.Description = DescTextBox.Text.Trim()
         product.MRP = Decimal.Parse(MRPTextBox.Text.Trim())
         product.SalePrice = Decimal.Parse(SaleTextBox.Text.Trim())
@@ -60,7 +59,8 @@
         product.Handmade = HandmadeCheckBox.Checked
         product.OutofStock = OutofStockCheckBox.Checked
         product.ShippingTime = ShippingTimeTextBox.Text.Trim()
-
+        product.Status = Byte.Parse(StatusDropDown.SelectedValue)
+        product.ThumbPath = ThumbPathTextBox.Text.Trim()
         If TargetID = 0 Then
             db.Products.Add(product)
         End If

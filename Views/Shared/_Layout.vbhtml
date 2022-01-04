@@ -7,7 +7,7 @@
     <meta name="google-site-verification" content="rtXgIUyaLbBtd_tsln3F6ZB9ZboSPHZe7K_zB6uRgv8" />
     <link rel="shortcut icon" href="~/theme/khichdi/favicon.jpg" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     @Scripts.Render("~/bundles/modernizr")
     <style>
         body {
@@ -30,24 +30,24 @@
             js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=490407121012387";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-    <div class="container-fluid bg-warning">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+    <div class="container-fluid bg-light">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1">
             <a href="~/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                 <img alt="India Bobbles Logo" src="~/theme/khichdi/img/ib-logo.png" />
             </a>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="~/collectibles" class="nav-link px-2 link-dark">Bobbles</a></li>
-                <li><a href="~/blog" class="nav-link px-2 link-dark">Blog</a></li>
+                <li><a href="~/blog" class="nav-link px-2 link-dark"><i class="bi bi-book"></i> Blog</a></li>
                 <li><a href="~/orders" class="nav-link px-2 link-dark">My Orders</a></li>
-                <li><a href="~/cart" class="nav-link px-2 link-dark">Cart</a></li>
+                <li><a href="~/cart" class="nav-link px-2 link-dark"><i class="bi bi-cart"></i> Cart</a></li>
             </ul>
             <div class="col-md-3 text-end">
                 @If Request.IsAuthenticated Then
 
-                    @<a href="~/account/manageprofile" class="btn btn-success me-2">Profile</a>
-                    @<a href="~/account/logout" class="btn btn-secondary me-2">Logout</a>
+                    @<a href="~/account/manageprofile" class="btn btn-success me-2"><i class="bi bi-person-badge"></i> Profile</a>
+                    @<a href="~/account/logout" class="btn btn-secondary me-2"><i class="bi bi-box-arrow-right"></i> Logout</a>
                 Else
-                    @<a href="~/account/generateotp" class="btn btn-secondary me-2">Login</a>
+                    @<a href="~/account/generateotp" class="btn btn-secondary me-2"><i class="bi bi-box-arrow-in-right"></i> Login</a>
                     @<a href="~/account/register" class="btn btn-secondary me-2">Signup</a>
                 End If
 

@@ -23,13 +23,22 @@ Partial Public Class ProductDetail
     Protected WithEvents ProductDataSource As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
-    '''PhotoDataSource control.
+    '''ProductTagDataSource control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents PhotoDataSource As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents ProductTagDataSource As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''TagDataSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TagDataSource As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
     '''ProductDetailsView control.
@@ -41,11 +50,101 @@ Partial Public Class ProductDetail
     Protected WithEvents ProductDetailsView As Global.System.Web.UI.WebControls.DetailsView
 
     '''<summary>
-    '''PhotoListView control.
+    '''PhotoUP control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents PhotoListView As Global.System.Web.UI.WebControls.ListView
+    Protected WithEvents PhotoUP As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
+    '''PhotoGridView control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PhotoGridView As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''PhotoPathTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PhotoPathTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''RequiredFieldValidator1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''SequenceTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SequenceTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''RequiredFieldValidator2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''SaveButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SaveButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ProductTagUP control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ProductTagUP As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
+    '''ProductTagGridView control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ProductTagGridView As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''TagDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TagDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''SaveTagButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SaveTagButton As Global.System.Web.UI.WebControls.Button
 End Class

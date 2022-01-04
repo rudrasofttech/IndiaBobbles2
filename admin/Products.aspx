@@ -3,10 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
-    <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>" SelectCommand="SELECT [ID], [Name], [MRP], [SalePrice], [CreateDate], [ModifyDate], [Status], [ThumbPath], [OutofStock] FROM [Product] ORDER BY [Name]"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>" SelectCommand="SELECT ID, Name, MRP, SalePrice, CreateDate, ModifyDate, CASE WHEN Status = 0 THEN 'Active' WHEN Status = 1 THEN 'Inactive' WHEN Status = 2 THEN 'Deleted' ELSE '' END AS Status, ThumbPath, OutofStock FROM Product AS P ORDER BY Name"></asp:SqlDataSource>
     <a runat="server" href="~/admin/manageproduct.aspx" class="btn btn-primary mt-3 float-end">Create Product</a>
     <h1>Products</h1>
-    <asp:GridView ID="ProductsGridView" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CssClass="table " DataKeyNames="ID" DataSourceID="ProductsDataSource" PageSize="20">
+    <asp:GridView ID="ProductsGridView" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CssClass="table " DataKeyNames="ID" DataSourceID="ProductsDataSource" PageSize="20" EnableSortingAndPagingCallbacks="True">
         <Columns>
             <asp:ImageField DataImageUrlField="ThumbPath" HeaderText="Product Image" ReadOnly="True">
                 <ControlStyle Height="80px" />

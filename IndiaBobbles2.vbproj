@@ -371,6 +371,13 @@
       <DependentUpon>Products.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="admin\ViewDrive.aspx.designer.vb">
+      <DependentUpon>ViewDrive.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ViewDrive.aspx.vb">
+      <DependentUpon>ViewDrive.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.vb" />
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
@@ -514,6 +521,7 @@
     <Content Include="admin\ProductDetail.aspx" />
     <Content Include="admin\Products.aspx" />
     <Content Include="admin\style.css" />
+    <Content Include="admin\ViewDrive.aspx" />
     <Content Include="Agni\images\back.png" />
     <Content Include="Agni\images\bd1.png" />
     <Content Include="Agni\images\bd10.png" />
@@ -1025,6 +1033,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ProductPhotos\Thumb\" />
     <Folder Include="theme\khichdi\img\img-version1\" />
     <Folder Include="Views\Email\" />
   </ItemGroup>
