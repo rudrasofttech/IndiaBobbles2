@@ -903,6 +903,7 @@
     <Content Include="Views\Account\Register.vbhtml" />
     <Content Include="Views\Account\GenerateOTP.vbhtml" />
     <Content Include="Views\Account\ManageProfile.vbhtml" />
+    <Content Include="Views\Home\Tag.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

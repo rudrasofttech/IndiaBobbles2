@@ -27,7 +27,19 @@
     End Function
 
     Function Collectibles() As ActionResult
-        Return View(db.Products.ToList())
+        Return RedirectPermanent("~/tag/collectibles")
+        'Return View(db.Products.ToList())
+    End Function
+
+    Function Tag(ByVal t As String) As ActionResult
+        ViewBag.Tag = t
+        Dim ct = db.CategoryTags.FirstOrDefault(Function(m) m.UrlName = t)
+        If ct IsNot Nothing Then
+            Dim productlist = db.ProductTags.Where(Function(m) m.TagID = ct.ID).Select(Function(m) m.Product).ToList()
+            Return View(productlist)
+        Else
+            Return View(New List(Of Product))
+        End If
     End Function
 
     Function Games() As ActionResult

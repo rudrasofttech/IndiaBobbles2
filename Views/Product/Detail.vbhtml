@@ -42,85 +42,87 @@ End Section
                 </ul>
             </div>
         End If
-        <div Class="col-md-8">
-            <p>@Html.Raw(Model.Description)</p>
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="text-left">MRP</td>
-                        <td>@Model.MRP.ToString("##00.00") ₹</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left fw-bold text-success">Sale Price</td>
-                        <td class="fw-bold text-success" style="font-size:1.25em;">@Model.SalePrice.ToString("##00.00") ₹</td>
-                    </tr>
-                </tbody>
-            </table>
-            @If Not Model.OutofStock Then
-                @<form method="get" action="@Url.Content("~/cart/add/" & Model.ID)">
-                    <button class="btn btn-primary mb-3">Add to Cart</button>
-                </form>
-            End If
-            <h4> More Details</h4>
-            <Table Class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="text-left">Fragile</td>
-                        @If Model.Fragile Then
-                            @<td class="text-danger">Yes</td>
-                        Else
-                            @<td>No</td>
-                        End If
+    <div Class="col-md-8">
+        <p>@Html.Raw(Model.Description)</p>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td class="text-left">MRP</td>
+                    <td>@Model.MRP.ToString("##00.00") ₹</td>
+                </tr>
+                <tr>
+                    <td class="text-left fw-bold text-success">Sale Price</td>
+                    <td class="fw-bold text-success" style="font-size:1.25em;">@Model.SalePrice.ToString("##00.00") ₹</td>
+                </tr>
+            </tbody>
+        </table>
+        @If Not Model.OutofStock Then
+            @<form method="get" action="@Url.Content("~/cart/add/" & Model.ID)">
+                <button class="btn btn-primary mb-3">Add to Cart</button>
+            </form>
+        Else
+            @<button disabled class="btn btn-warning mb-3">Out of Stock</button>
+        End If
+        <h4> More Details</h4>
+        <Table Class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td class="text-left">Fragile</td>
+                    @If Model.Fragile Then
+                        @<td class="text-danger">Yes</td>
+                    Else
+                        @<td>No</td>
+                    End If
 
-                    </tr>
-                    <tr>
-                        <td class="text-left">Handmade</td>
-                        @If Model.Handmade Then
-                            @<td>Yes</td>
-                        Else
-                            @<td>No</td>
-                        End If
-                    </tr>
-                    <tr>
-                        <td Class="text-left">Dimension</td>
-                        <td>@Model.Dimension</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Color</td>
-                        <td>@Model.Color</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Weight</td>
-                        <td>@Model.Weight</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Material</td>
-                        <td>@Model.Material</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Manufacturer</td>
-                        <td>@Model.Manufacturer</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Care Instructions</td>
-                        <td>@Model.CareInstructions</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Recommended Age</td>
-                        <td>@Model.RecommendedAge</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Country of Origin</td>
-                        <td>@Model.CountryofOrigin</td>
-                    </tr>
+                </tr>
+                <tr>
+                    <td class="text-left">Handmade</td>
+                    @If Model.Handmade Then
+                        @<td>Yes</td>
+                    Else
+                        @<td>No</td>
+                    End If
+                </tr>
+                <tr>
+                    <td Class="text-left">Dimension</td>
+                    <td>@Model.Dimension</td>
+                </tr>
+                <tr>
+                    <td class="text-left">Color</td>
+                    <td>@Model.Color</td>
+                </tr>
+                <tr>
+                    <td class="text-left">Weight</td>
+                    <td>@Model.Weight</td>
+                </tr>
+                <tr>
+                    <td class="text-left">Material</td>
+                    <td>@Model.Material</td>
+                </tr>
+                <tr>
+                    <td class="text-left">Manufacturer</td>
+                    <td>@Model.Manufacturer</td>
+                </tr>
+                <tr>
+                    <td class="text-left">Care Instructions</td>
+                    <td>@Model.CareInstructions</td>
+                </tr>
+                <tr>
+                    <td class="text-left">Recommended Age</td>
+                    <td>@Model.RecommendedAge</td>
+                </tr>
+                <tr>
+                    <td class="text-left">Country of Origin</td>
+                    <td>@Model.CountryofOrigin</td>
+                </tr>
 
-                    <tr>
-                        <td class="text-left">Shipping Time</td>
-                        <td>@Model.ShippingTime</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </div>
+                <tr>
+                    <td class="text-left">Shipping Time</td>
+                    <td>@Model.ShippingTime</td>
+                </tr>
+            </tbody>
+        </Table>
+    </div>
     </div>
 </div>
 

@@ -17,16 +17,19 @@ End Code
     <div class="row">
         <div class="col-12 ">
             <h1 class="text-center">Address</h1>
-
             @Using (Html.BeginForm())
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
                 @<div class="form-horizontal">
-                    <div class="form-group">
-                        @Html.LabelFor(Function(model) model.Email, htmlAttributes:=New With {.class = "control-label col-md-3"})
-                        <div class="col-md-5">
-                            @Html.EditorFor(Function(model) model.Email, New With {.htmlAttributes = New With {.class = "form-control"}})
-                            @Html.ValidationMessageFor(Function(model) model.Email, "", New With {.class = "text-danger"})
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(Function(model) model.Email, htmlAttributes:=New With {.class = "control-label col-md-3"})
+                                <div class="col-md-9">
+                                    @Html.EditorFor(Function(model) model.Email, New With {.htmlAttributes = New With {.class = "form-control"}})
+                                    @Html.ValidationMessageFor(Function(model) model.Email, "", New With {.class = "text-danger"})
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -38,7 +41,6 @@ End Code
                                     @Html.ValidationMessageFor(Function(model) model.Name, "", New With {.class = "text-danger"})
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 @Html.LabelFor(Function(model) model.Phone, htmlAttributes:=New With {.class = "control-label col-md-3"})
                                 <div class="col-md-9">
@@ -46,7 +48,6 @@ End Code
                                     @Html.ValidationMessageFor(Function(model) model.Phone, "", New With {.class = "text-danger"})
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 @Html.LabelFor(Function(model) model.BillingAddress, htmlAttributes:=New With {.class = "control-label col-md-3"})
                                 <div class="col-md-9">
@@ -54,7 +55,6 @@ End Code
                                     @Html.ValidationMessageFor(Function(model) model.BillingAddress, "", New With {.class = "text-danger"})
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 @Html.LabelFor(Function(model) model.BillingCity, htmlAttributes:=New With {.class = "control-label col-md-3"})
                                 <div class="col-md-9">
@@ -62,7 +62,6 @@ End Code
                                     @Html.ValidationMessageFor(Function(model) model.BillingCity, "", New With {.class = "text-danger"})
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 @Html.LabelFor(Function(model) model.BillingState, htmlAttributes:=New With {.class = "control-label col-md-3"})
                                 <div class="col-md-9">
@@ -70,15 +69,13 @@ End Code
                                     @Html.ValidationMessageFor(Function(model) model.BillingState, "", New With {.class = "text-danger"})
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 @Html.LabelFor(Function(model) model.BillingCountry, htmlAttributes:=New With {.class = "control-label col-md-3"})
                                 <div class="col-md-9">
-                                    @Html.EditorFor(Function(model) model.BillingCountry, New With {.htmlAttributes = New With {.class = "form-control", .onchange = "copyData(this, 'ShippingCountry')", .readonly = ""}})
+                                    @Html.EditorFor(Function(model) model.BillingCountry, New With {.value = "India", .htmlAttributes = New With {.class = "form-control", .onchange = "copyData(this, 'ShippingCountry')", .readonly = ""}})
                                     @Html.ValidationMessageFor(Function(model) model.BillingCountry, "", New With {.class = "text-danger"})
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 @Html.LabelFor(Function(model) model.BillingPinCode, htmlAttributes:=New With {.class = "control-label col-md-3"})
                                 <div class="col-md-9">

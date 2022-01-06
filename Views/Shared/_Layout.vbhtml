@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     @Scripts.Render("~/bundles/modernizr")
     <style>
-        body {
-            background-image: url( @Url.Content("~/theme/khichdi/img/India-Bobbles-package-1300.jpg") );
-        }
+        /*body {
+            background-image: url(@Url.Content("~/theme/khichdi/img/India-Bobbles-package-1300.jpg") );
+        }*/
 
         .fullbody{
             min-height:calc(100vh - 150px);
@@ -30,7 +30,7 @@
             js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=490407121012387";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-    <div class="container-fluid bg-light">
+    <div class="container-fluid bg-warning p-1">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1">
             <a href="~/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                 <img alt="India Bobbles Logo" src="~/theme/khichdi/img/ib-logo.png" />

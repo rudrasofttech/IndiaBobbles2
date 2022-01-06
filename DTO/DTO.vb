@@ -268,17 +268,23 @@ Public Class OrderAddressDTO
             Phone = o.Phone
             BillingAddress = o.BillingAddress
             BillingCity = o.BillingCity
+            If String.IsNullOrEmpty(o.BillingCountry) Then
+                o.BillingCountry = "India"
+            End If
             BillingCountry = o.BillingCountry
             BillingState = o.BillingState
             BillingPinCode = o.BillingZip
             ShippingAddress = o.ShippingAddress
             ShippingCity = o.ShippingCity
+            If String.IsNullOrEmpty(o.ShippingCountry) Then
+                o.ShippingCountry = "India"
+            End If
             ShippingCountry = o.ShippingCountry
             ShippingName = o.ShippingFirstName
-            ShippingPhone = o.ShippingPhone
-            ShippingState = o.ShippingState
-            ShippingPincode = o.ShippingZip
-        End If
+                ShippingPhone = o.ShippingPhone
+                ShippingState = o.ShippingState
+                ShippingPincode = o.ShippingZip
+            End If
     End Sub
 End Class
 
