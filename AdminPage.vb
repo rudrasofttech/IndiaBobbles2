@@ -28,7 +28,7 @@
         MyBase.OnInit(e)
 
         If Not Request.IsAuthenticated Then
-            Response.Redirect("~/account/login")
+            'Response.Redirect("~/account/login")
         Else
             CurrentUser = db.Members.FirstOrDefault(Function(m) m.Email = Page.User.Identity.Name)
         End If

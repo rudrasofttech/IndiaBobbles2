@@ -371,6 +371,13 @@
       <DependentUpon>Products.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="admin\RunQuery.aspx.designer.vb">
+      <DependentUpon>RunQuery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\RunQuery.aspx.vb">
+      <DependentUpon>RunQuery.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="admin\Tags.aspx.designer.vb">
       <DependentUpon>Tags.aspx</DependentUpon>
     </Compile>
@@ -522,6 +529,7 @@
     <Content Include="admin\Orders.aspx" />
     <Content Include="admin\ProductDetail.aspx" />
     <Content Include="admin\Products.aspx" />
+    <Content Include="admin\RunQuery.aspx" />
     <Content Include="admin\style.css" />
     <Content Include="admin\Tags.aspx" />
     <Content Include="admin\ViewDrive.aspx" />
