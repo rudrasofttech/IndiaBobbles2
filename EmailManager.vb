@@ -36,7 +36,7 @@ Public Class EmailManager
             'mail.IsBodyHtml = True
             'Dim client As System.Net.Mail.SmtpClient = New SmtpClient()
             'client.Send(mail)
-            Dim apiKey = "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"
+            Dim apiKey = ConfigurationManager.AppSettings("sgkey")
             Dim client = New SendGridClient(apiKey)
             Dim from = New EmailAddress(em.FromAddress, em.FromName)
             Dim subject = em.Subject
@@ -202,8 +202,6 @@ Public Class EmailManager
 
     Public Function AddMessage(ByVal id As Guid, ByVal toaddress As String, ByVal fromaddress As String, ByVal subject As String, ByVal body As String, ByVal messagetype As EmailMessageType, ByVal emailGroup As String, ByVal ccaddress As String, ByVal toname As String, ByVal fromname As String) As EmailMessage
         Try
-
-
             Dim em As EmailMessage = New EmailMessage() With {
                     .ID = id,
                     .Message = body,
