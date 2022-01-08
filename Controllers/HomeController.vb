@@ -3,7 +3,23 @@
     Private ReadOnly db As New indiabobblesEntities
 
     Function Index() As ActionResult
+        Dim hl = db.CategoryTags.FirstOrDefault(Function(m) m.UrlName = "highlight")
+        If hl IsNot Nothing Then
+            ViewBag.Highlights = db.ProductTags.Where(Function(m) m.TagID = hl.ID).Select(Function(m) m.Product).ToList()
+        Else
+            ViewBag.Highlights = New List(Of Product)
+        End If
         Return View()
+    End Function
+
+    Function Tag(ByVal id As String) As ActionResult
+        Dim t = db.CategoryTags.FirstOrDefault(Function(m) m.UrlName = id)
+        ViewBag.Tag = id
+        If t IsNot Nothing Then
+            Return View(db.ProductTags.Where(Function(m) m.TagID = t.ID).Select(Function(m) m.Product).ToList())
+        Else
+            Return View(New List(Of Product))
+        End If
     End Function
 
     Function About() As ActionResult
@@ -27,7 +43,7 @@
     End Function
 
     Function Collectibles() As ActionResult
-        Return View(db.Products.ToList())
+        Return RedirectPermanent("~/tag/collectibles")
     End Function
 
     Function Games() As ActionResult

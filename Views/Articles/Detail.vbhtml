@@ -9,7 +9,7 @@
 End Code
 <div class="container bg-white pt-2 pb-2">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9" id="article">
             @If Model IsNot Nothing Then
                 @<h1>@Model.Title</h1>
                 @<div>@Model.WriterName | @Model.DateCreated</div>
@@ -44,6 +44,9 @@ End Code
         </div>
     </div>
 </div>
-
-
-
+ <style>
+     #article img{
+         max-width:100%;
+         height:auto;
+     }
+ </style>

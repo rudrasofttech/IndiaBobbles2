@@ -336,6 +336,13 @@
       <DependentUpon>ManageOrder.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="admin\ManageProduct.aspx.designer.vb">
+      <DependentUpon>ManageProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ManageProduct.aspx.vb">
+      <DependentUpon>ManageProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="admin\Members.aspx.designer.vb">
       <DependentUpon>Members.aspx</DependentUpon>
     </Compile>
@@ -350,12 +357,48 @@
       <DependentUpon>Orders.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="admin\ProductDetail.aspx.designer.vb">
+      <DependentUpon>ProductDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ProductDetail.aspx.vb">
+      <DependentUpon>ProductDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Products.aspx.designer.vb">
+      <DependentUpon>Products.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Products.aspx.vb">
+      <DependentUpon>Products.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\RunQuery.aspx.designer.vb">
+      <DependentUpon>RunQuery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\RunQuery.aspx.vb">
+      <DependentUpon>RunQuery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Tags.aspx.designer.vb">
+      <DependentUpon>Tags.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Tags.aspx.vb">
+      <DependentUpon>Tags.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ViewDrive.aspx.designer.vb">
+      <DependentUpon>ViewDrive.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ViewDrive.aspx.vb">
+      <DependentUpon>ViewDrive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.vb" />
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\WebApiConfig.vb" />
     <Compile Include="Article.vb" />
     <Compile Include="CacheManager.vb" />
+    <Compile Include="DriveManager.vb" />
     <Compile Include="EmailManager.vb" />
     <Compile Include="Models\Category.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
@@ -411,6 +454,9 @@
     <Compile Include="Models\MemberStatu.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PostStatus.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -439,9 +485,6 @@
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.vb">
-      <DependentUpon>IBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PostStatu.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.vb">
@@ -487,9 +530,15 @@
     <Content Include="admin\ManageArticle.aspx" />
     <Content Include="admin\ManageMember.aspx" />
     <Content Include="admin\ManageOrder.aspx" />
+    <Content Include="admin\ManageProduct.aspx" />
     <Content Include="admin\Members.aspx" />
     <Content Include="admin\Orders.aspx" />
+    <Content Include="admin\ProductDetail.aspx" />
+    <Content Include="admin\Products.aspx" />
+    <Content Include="admin\RunQuery.aspx" />
     <Content Include="admin\style.css" />
+    <Content Include="admin\Tags.aspx" />
+    <Content Include="admin\ViewDrive.aspx" />
     <Content Include="Agni\images\back.png" />
     <Content Include="Agni\images\bd1.png" />
     <Content Include="Agni\images\bd10.png" />
@@ -582,6 +631,7 @@
       <DependentUpon>IBModel.edmx</DependentUpon>
       <LastGenOutput>IBModel.Context.vb</LastGenOutput>
     </Content>
+    <Content Include="Models\IBModel.edmx.sql" />
     <Content Include="Models\IBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IBModel.edmx</DependentUpon>
@@ -861,6 +911,8 @@
     <Content Include="Views\Cart\Checkout.vbhtml" />
     <Content Include="Views\Account\Register.vbhtml" />
     <Content Include="Views\Account\GenerateOTP.vbhtml" />
+    <Content Include="Views\Account\ManageProfile.vbhtml" />
+    <Content Include="Views\Home\Tag.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

@@ -272,10 +272,10 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <Property Name="Fragile" Type="bit" Nullable="false" />
           <Property Name="ShippingTime" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Handmade" Type="bit" Nullable="false" />
-          <Property Name="Inventory" Type="int" Nullable="false" />
           <Property Name="ThumbPath" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="URL" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="ProductCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OutofStock" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductPhoto">
           <Key>
@@ -1029,7 +1029,7 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="PostStatu">
+        <EntityType Name="PostStatus">
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="Name" />
@@ -1243,7 +1243,7 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <EntitySet Name="TopStories" EntityType="Self.TopStory" />
           <EntitySet Name="WebsiteSettings" EntityType="Self.WebsiteSetting" />
           <EntitySet Name="MemberStatus" EntityType="Self.MemberStatu" />
-          <EntitySet Name="PostStatus" EntityType="Self.PostStatu" />
+          <EntitySet Name="PostStatus1" EntityType="IBModel.PostStatus" />
           <AssociationSet Name="FK_Category_Category1" Association="Self.FK_Category_Category1">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Category1" EntitySet="Categories" />
@@ -1446,14 +1446,14 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <Property Name="Fragile" Type="Boolean" Nullable="false" />
           <Property Name="ShippingTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Handmade" Type="Boolean" Nullable="false" />
-          <Property Name="Inventory" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Member" Relationship="IBModel.FK_Product_Member" FromRole="Product" ToRole="Member" />
           <NavigationProperty Name="Member1" Relationship="IBModel.FK_Product_Member1" FromRole="Product" ToRole="Member" />
           <NavigationProperty Name="ProductPhotoes" Relationship="IBModel.FK_ProductPhoto_Product" FromRole="Product" ToRole="ProductPhoto" />
           <NavigationProperty Name="ProductTags" Relationship="IBModel.FK_ProductTag_Product" FromRole="Product" ToRole="ProductTag" />
           <Property Name="ThumbPath" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="URL" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OutofStock" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductPhoto">
           <Key>
@@ -1784,8 +1784,8 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PostStatus">
-            <EntityTypeMapping TypeName="IBModel.PostStatu">
+          <EntitySetMapping Name="PostStatus1">
+            <EntityTypeMapping TypeName="IBModel.PostStatus">
               <MappingFragment StoreEntitySet="PostStatus">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1842,10 +1842,10 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="IBModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="OutofStock" ColumnName="OutofStock" />
                 <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
                 <ScalarProperty Name="ThumbPath" ColumnName="ThumbPath" />
-                <ScalarProperty Name="Inventory" ColumnName="Inventory" />
                 <ScalarProperty Name="Handmade" ColumnName="Handmade" />
                 <ScalarProperty Name="ShippingTime" ColumnName="ShippingTime" />
                 <ScalarProperty Name="Fragile" ColumnName="Fragile" />

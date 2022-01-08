@@ -85,6 +85,7 @@ Namespace Controllers
             om.UpdateOrderContact(o.ID, model.Name, model.Email, IIf(m Is Nothing, Nothing, m.ID), model.Phone)
             om.UpdateOrderBillingAddress(o.ID, model.BillingAddress, model.BillingCity, model.BillingState, model.BillingCountry, model.BillingPinCode)
             om.UpdateOrderShippingAddress(o.ID, model.ShippingAddress, model.ShippingCity, model.ShippingState, model.ShippingCountry, model.ShippingPincode, model.ShippingName, "", model.ShippingPhone)
+            om.UpdateTotal(o.ID)
             Return RedirectToAction("Checkout")
         End Function
 

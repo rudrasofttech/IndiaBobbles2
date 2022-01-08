@@ -10,9 +10,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
     <style>
-        body {
-            background-image: url( @Url.Content("~/theme/khichdi/img/India-Bobbles-package-1300.jpg") );
-        }
+        /*body {
+            background-image: url( @@Url.Content("~/theme/khichdi/img/India-Bobbles-package-1300.jpg") );
+        }*/
 
         .fullbody{
             min-height:calc(100vh - 150px);
@@ -36,7 +36,7 @@
                 <img alt="India Bobbles Logo" src="~/theme/khichdi/img/ib-logo.png" />
             </a>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="~/collectibles" class="nav-link px-2 link-dark">Bobbles</a></li>
+                <li><a href="~/tag/collectibles" class="nav-link px-2 link-dark">Bobbles</a></li>
                 <li><a href="~/blog" class="nav-link px-2 link-dark">Blog</a></li>
                 <li><a href="~/orders" class="nav-link px-2 link-dark">My Orders</a></li>
                 <li><a href="~/cart" class="nav-link px-2 link-dark">Cart</a></li>
@@ -73,6 +73,8 @@
                 <a href="~/shipping-policy" class="px-2 link-dark">Shipping &amp; Refund</a>
                 <a href="~/payment-options" class="px-2 link-dark">Payment Options</a>
                 <a href="~/order-custom-bobbleheads" class="px-2 link-dark">Custom Bobbleheads</a>
+                <a href="~/collectibles" class="px-2 link-dark">Collectibles</a>
+                <a href="~/games" class="px-2 link-dark">Games</a>
                 <a href="https://www.facebook.com/IndiaBobbles" class="px-2 link-dark" title="IndiaBobbles Facebook" target="_blank">
                     <i class="fa fa-facebook" aria-hidden="true"></i>
                 </a>

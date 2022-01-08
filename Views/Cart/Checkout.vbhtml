@@ -79,37 +79,51 @@ End Code
                                         <td></td>
                                     </tr>
                                 End If
+                                @<tr>
+                                    <td colspan="5" class="text-end">
+                                        Shipping Fee
+                                    </td>
+                                    <td>0</td>
+                                    <td></td>
+                                </tr>
+                                @<tr>
+                                    <td colspan="5" class="text-end">
+                                        Total
+                                    </td>
+                                    <td>@Model.Total.ToString("##00.00")</td>
+                                    <td></td>
+                                </tr>
                             End If
                         </tbody>
                     </table>
                 </div>
                 @If Model IsNot Nothing Then
                     @<div class="row">
-                         <div class="col-md-4">
-                             Billing Address:<br />
-                             <a href="address" class="btn btn-sm btn-link">Change</a><br/>
-                             @Model.Name<br />
-                             @Model.Email<br />
-                             @Model.Phone<br />
-                             <address>
-                                 @Model.BillingAddress<br />
-                                 @Model.BillingCity<br />
-                                 @Model.BillingState<br />
-                                 @Model.BillingZip
-                             </address>
-                         </div>
-                         <div Class="col-md-4">
-                             Shipping Address:<br />
-                             <a href="address" class="btn btn-sm btn-link">Change</a><br />
-                             @Model.ShippingFirstName @Model.ShippingLastName<br />
-                             @Model.ShippingPhone<br />
-                             <address>
-                                 @Model.ShippingAddress<br />
-                                 @Model.ShippingCity<br />
-                                 @Model.ShippingState<br />
-                                 @Model.ShippingZip
-                             </address>
-                         </div>
+                        <div class="col-md-4">
+                            Billing Address:<br />
+                            <a href="address" class="btn btn-sm btn-link">Change</a><br />
+                            @Model.Name<br />
+                            @Model.Email<br />
+                            @Model.Phone<br />
+                            <address>
+                                @Model.BillingAddress<br />
+                                @Model.BillingCity<br />
+                                @Model.BillingState<br />
+                                @Model.BillingZip
+                            </address>
+                        </div>
+                        <div Class="col-md-4">
+                            Shipping Address:<br />
+                            <a href="address" class="btn btn-sm btn-link">Change</a><br />
+                            @Model.ShippingFirstName @Model.ShippingLastName<br />
+                            @Model.ShippingPhone<br />
+                            <address>
+                                @Model.ShippingAddress<br />
+                                @Model.ShippingCity<br />
+                                @Model.ShippingState<br />
+                                @Model.ShippingZip
+                            </address>
+                        </div>
                         <div Class="col-md-4">
                             <form action="@ViewBag.action1" method="post">
                                 <input type="hidden" name="hash" value="@ViewBag.hash1" />

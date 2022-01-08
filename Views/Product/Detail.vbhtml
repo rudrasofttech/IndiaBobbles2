@@ -56,10 +56,12 @@ End Section
                     </tr>
                 </tbody>
             </table>
-            @If Model.Inventory > 3 Then
+            @If Not Model.OutofStock Then
                 @<form method="get" action="@Url.Content("~/cart/add/" & Model.ID)">
                     <button class="btn btn-primary mb-3">Add to Cart</button>
                 </form>
+                Else
+                @<Button type="button" Class="btn btn-warning mb-3">Out of Stock</button>
             End If
             <h4> More Details</h4>
             <Table Class="table table-bordered">

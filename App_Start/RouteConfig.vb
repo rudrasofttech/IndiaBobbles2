@@ -10,6 +10,16 @@ Public Module RouteConfig
         routes.IgnoreRoute("{resource}.axd/{*pathInfo}")
         routes.IgnoreRoute("admin/{pagename}.aspx")
         routes.MapRoute(
+            name:="ProductRoute",
+            url:="product/{id}/{name}",
+            defaults:=New With {.controller = "Product", .action = "Detail", .id = UrlParameter.Optional}
+        )
+        routes.MapRoute(
+            name:="TagRoute",
+            url:="tag/{id}",
+            defaults:=New With {.controller = "Home", .action = "Tag", .id = UrlParameter.Optional}
+        )
+        routes.MapRoute(
             name:="Games",
             url:="games",
             defaults:=New With {.controller = "Home", .action = "Games", .id = UrlParameter.Optional}
@@ -47,42 +57,42 @@ Public Module RouteConfig
         routes.MapRoute(
             name:="dakusambharsinghbobblehead",
             url:="daku-sambhar-singh-bobble-head",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = "daku-sambhar-singh-bobble-head"}
+            defaults:=New With {.controller = "Product", .action = "OldPageDetail", .id = "daku-sambhar-singh-bobble-head"}
         )
         routes.MapRoute(
             name:="chhote-bachchan-bobblehead",
             url:="chhote-bachchan-bobblehead",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = "chhote-bachchan-bobblehead"}
+            defaults:=New With {.controller = "Product", .action = "OldPageDetail", .id = "chhote-bachchan-bobblehead"}
         )
         routes.MapRoute(
             name:="nazarbattu-bobblehead",
             url:="nazarbattu-bobblehead",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = "nazarbattu-bobblehead"}
+            defaults:=New With {.controller = "Product", .action = "OldPageDetail", .id = "nazarbattu-bobblehead"}
         )
         routes.MapRoute(
             name:="bhagat-singh-figurine",
             url:="bhagat-singh-figurine",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = "bhagat-singh-figurine"}
+            defaults:=New With {.controller = "Product", .action = "OldPageDetail", .id = "bhagat-singh-figurine"}
         )
         routes.MapRoute(
             name:="mahatma-gandhi-bobblehead",
             url:="mahatma-gandhi-bobblehead",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = "mahatma-gandhi-bobblehead"}
+            defaults:=New With {.controller = "Product", .action = "OldPageDetail", .id = "mahatma-gandhi-bobblehead"}
         )
         routes.MapRoute(
             name:="dr-abdul-kalam-bobblehead",
             url:="dr-abdul-kalam-bobblehead",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = "dr-abdul-kalam-bobblehead"}
+            defaults:=New With {.controller = "Product", .action = "OldPageDetail", .id = "dr-abdul-kalam-bobblehead"}
         )
         routes.MapRoute(
             name:="android-figurine",
             url:="android-figurine",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = "android-figurine"}
+            defaults:=New With {.controller = "Product", .action = "OldPageDetail", .id = "android-figurine"}
         )
         routes.MapRoute(
             name:="master-blaster-bobblehead",
             url:="master-blaster-bobblehead",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = "master-blaster-bobblehead"}
+            defaults:=New With {.controller = "Product", .action = "OldPageDetail", .id = "master-blaster-bobblehead"}
         )
         routes.MapRoute(
             name:="CustomBobblehead",

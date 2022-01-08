@@ -5,8 +5,19 @@ Namespace Controllers
         Inherits Controller
         Private ReadOnly db As New indiabobblesEntities
         ' GET: Product
-        Function Detail(ByVal id As String) As ActionResult
-            Return View(db.Products.FirstOrDefault(Function(t) t.URL = id))
+        Function Detail(ByVal id As Integer) As ActionResult
+            'Return View(db.Products.FirstOrDefault(Function(t) t.URL = id))
+            Return View(db.Products.FirstOrDefault(Function(t) t.ID = id))
+        End Function
+
+        Function OldPageDetail(ByVal id As String) As ActionResult
+            Dim product = db.Products.FirstOrDefault(Function(t) t.URL = id)
+            If product IsNot Nothing Then
+                Return RedirectPermanent("~/product/" & product.ID & "/" & Utility.Slugify(product.Name))
+            Else
+                Return RedirectPermanent("~/tag/trending")
+            End If
+
         End Function
     End Class
 End Namespace

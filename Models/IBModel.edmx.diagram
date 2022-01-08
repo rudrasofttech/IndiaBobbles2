@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c3c88818561248fcb6f3066791774a48" Name="Diagram1">
+      <Diagram DiagramId="c3c88818561248fcb6f3066791774a48" Name="Diagram1" ZoomLevel="99">
         <EntityTypeShape EntityType="IBModel.Category" Width="1.5" PointX="3.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="IBModel.CouponCode" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IBModel.CustomDataSource" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
@@ -18,7 +18,7 @@
         <EntityTypeShape EntityType="IBModel.TopStory" Width="1.5" PointX="8.25" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="IBModel.WebsiteSetting" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IBModel.MemberStatu" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="IBModel.PostStatu" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IBModel.PostStatus" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
         <AssociationConnector Association="IBModel.FK_Category_Category1" ManuallyRouted="false" />
         <AssociationConnector Association="IBModel.FK_Post_Category" ManuallyRouted="false" />
         <AssociationConnector Association="IBModel.FK_CustomDataSource_Member" ManuallyRouted="false" />

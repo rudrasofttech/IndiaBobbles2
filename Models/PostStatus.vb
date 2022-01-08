@@ -10,7 +10,7 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class PostStatu
+Partial Public Class PostStatus
     Public Property ID As Integer
     Public Property Name As String
 
