@@ -391,6 +391,7 @@
     <Compile Include="App_Start\WebApiConfig.vb" />
     <Compile Include="Article.vb" />
     <Compile Include="CacheManager.vb" />
+    <Compile Include="DriveManager.vb" />
     <Compile Include="EmailManager.vb" />
     <Compile Include="Models\Category.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
@@ -489,12 +490,6 @@
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TopStory.vb">
-      <DependentUpon>IBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserInRole.vb">
-      <DependentUpon>IBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserRole.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PagingDetail.vb" />
@@ -1042,7 +1037,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ProductPhotos\Thumb\" />
+    <Folder Include="drive\" />
     <Folder Include="theme\khichdi\img\img-version1\" />
     <Folder Include="Views\Email\" />
   </ItemGroup>

@@ -94,7 +94,7 @@
 
             <h4>Add Photo</h4>
             <div class="p-1">
-                <label for="PhotoPathTextBox" class="form-label">Photo Path</label>
+                <label for="PhotoPathTextBox" class="form-label">Photo Path (<a role="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#driveModal">View Drive</a>)</label>
                 <asp:TextBox ID="PhotoPathTextBox" ValidationGroup="photogrp" ClientIDMode="Static" MaxLength="300" CssClass="form-control" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ForeColor="Red" ControlToValidate="PhotoPathTextBox" Display="Dynamic" ValidationGroup="photogrp" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
 

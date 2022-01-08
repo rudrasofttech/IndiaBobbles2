@@ -105,7 +105,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="<%: FacebookImageTextBox.ClientID %>">
-                    Facebook Image (<a href="#driveModal" data-toggle="modal" role="button">Open Drive</a>)</label>
+                    Facebook Image (<a role="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#driveModal">View Drive</a>)</label>
                 <asp:TextBox CssClass="form-control" ID="FacebookImageTextBox" MaxLength="250" runat="server"></asp:TextBox>
             </div>
             <div class="mb-3">
@@ -155,16 +155,6 @@
                     runat="server" Text="Save" OnClick="SubmitButton_Click" />
                 <a href="Default.aspx" class="btn">Cancel</a>
             </div>
-        </div>
-    </div>
-    <div id="driveModal" class="modal hide fade" tabindex="-1" role="dialog">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                &times;</button>
-            <h3>Drive</h3>
-        </div>
-        <div class="modal-body">
-            <iframe style="border: none; width: 100%; height: 400px;" src="viewdrive.aspx"></iframe>
         </div>
     </div>
 </asp:Content>

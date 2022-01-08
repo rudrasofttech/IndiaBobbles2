@@ -89,10 +89,12 @@
         </div>
     </div>
     <div class="p-2">
-        <label for="ThumbPathTextBox" class="form-label">Thumbnail Path</label>
+        <label for="ThumbPathTextBox" class="form-label">
+            Thumbnail Path (<a role="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#driveModal">View Drive</a>)</label>
         <asp:TextBox ID="ThumbPathTextBox" ClientIDMode="Static" MaxLength="300" CssClass="form-control" runat="server"></asp:TextBox>
     </div>
     <div class="well p-3">
         <asp:Button ID="SaveButton" runat="server" Text="Save" CssClass="btn btn-primary" CausesValidation="true" />
     </div>
+    
 </asp:Content>

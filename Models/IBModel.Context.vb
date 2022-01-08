@@ -38,8 +38,6 @@ Partial Public Class indiabobblesEntities
     Public Overridable Property ProductPhotoes() As DbSet(Of ProductPhoto)
     Public Overridable Property ProductTags() As DbSet(Of ProductTag)
     Public Overridable Property TopStories() As DbSet(Of TopStory)
-    Public Overridable Property UserInRoles() As DbSet(Of UserInRole)
-    Public Overridable Property UserRoles() As DbSet(Of UserRole)
     Public Overridable Property WebsiteSettings() As DbSet(Of WebsiteSetting)
     Public Overridable Property MemberStatus() As DbSet(Of MemberStatu)
     Public Overridable Property PostStatus() As DbSet(Of PostStatu)

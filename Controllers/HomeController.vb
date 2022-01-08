@@ -3,6 +3,12 @@
     Private ReadOnly db As New indiabobblesEntities
 
     Function Index() As ActionResult
+        Dim highlight = db.CategoryTags.FirstOrDefault(Function(m) m.UrlName = "highlight")
+        If highlight IsNot Nothing Then
+            ViewBag.Highlights = db.ProductTags.Where(Function(m) m.TagID = highlight.ID).Select(Function(m) m.Product).ToList()
+        Else
+            ViewBag.Highlights = New List(Of Product)
+        End If
         Return View()
     End Function
 

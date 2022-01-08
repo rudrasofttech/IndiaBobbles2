@@ -67,6 +67,10 @@
                 <a href="~/shipping-policy" class="px-2 link-dark">Shipping &amp; Refund</a>
                 <a href="~/payment-options" class="px-2 link-dark">Payment Options</a>
                 <a href="~/order-custom-bobbleheads" class="px-2 link-dark">Custom Bobbleheads</a>
+                <a href="~/collectibles" Class="px-2 link-dark">
+                    Collectibles
+                </a>
+                <a href="~/games" Class="px-2 link-dark">Games</a>
                 <a href="https://www.facebook.com/IndiaBobbles" class="px-2 link-dark" title="IndiaBobbles Facebook" target="_blank">
                     <i class="fa fa-facebook" aria-hidden="true"></i>
                 </a>

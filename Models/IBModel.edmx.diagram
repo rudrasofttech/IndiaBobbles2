@@ -21,8 +21,6 @@
         <EntityTypeShape EntityType="IBModel.ProductPhoto" Width="1.5" PointX="5.25" PointY="37.75" />
         <EntityTypeShape EntityType="IBModel.ProductTag" Width="1.5" PointX="5.25" PointY="35" />
         <EntityTypeShape EntityType="IBModel.TopStory" Width="1.5" PointX="8.25" PointY="20.375" />
-        <EntityTypeShape EntityType="IBModel.UserInRole" Width="1.5" PointX="3" PointY="20.5" />
-        <EntityTypeShape EntityType="IBModel.UserRole" Width="1.5" PointX="0.75" PointY="14.75" />
         <EntityTypeShape EntityType="IBModel.WebsiteSetting" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="IBModel.MemberStatu" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="IBModel.PostStatu" Width="1.5" PointX="7.75" PointY="0.75" />
@@ -43,13 +41,11 @@
         <AssociationConnector Association="IBModel.FK_Product_Member" />
         <AssociationConnector Association="IBModel.FK_Product_Member1" />
         <AssociationConnector Association="IBModel.FK_TopStory_Member" />
-        <AssociationConnector Association="IBModel.FK_UserInRole_Member" />
         <AssociationConnector Association="IBModel.FK_OrderItem_Order" />
         <AssociationConnector Association="IBModel.FK_PageComment_PageComment" />
         <AssociationConnector Association="IBModel.FK_TopStory_Post" />
         <AssociationConnector Association="IBModel.FK_ProductPhoto_Product" />
         <AssociationConnector Association="IBModel.FK_ProductTag_Product" />
-        <AssociationConnector Association="IBModel.FK_UserInRole_UserRole" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

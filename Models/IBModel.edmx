@@ -331,21 +331,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <Property Name="CreatedBy" Type="bigint" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserInRole">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MemberID" Type="bigint" Nullable="false" />
-          <Property Name="RoleID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="WebsiteSetting">
           <Key>
             <PropertyRef Name="KeyName" />
@@ -618,30 +603,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserInRole_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="UserInRole" Type="Self.UserInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserInRole">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserInRole_UserRole">
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
-          <End Role="UserInRole" Type="Self.UserInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserInRole">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="StoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryTag" EntityType="Self.CategoryTag" Schema="dbo" store:Type="Tables" />
@@ -659,8 +620,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <EntitySet Name="ProductPhoto" EntityType="Self.ProductPhoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTag" EntityType="Self.ProductTag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TopStory" EntityType="Self.TopStory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserInRole" EntityType="Self.UserInRole" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteSetting" EntityType="Self.WebsiteSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberStatus" EntityType="Self.MemberStatus" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -762,14 +721,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             <End Role="Post" EntitySet="Post" />
             <End Role="TopStory" EntitySet="TopStory" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserInRole_Member" Association="Self.FK_UserInRole_Member">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="UserInRole" EntitySet="UserInRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserInRole_UserRole" Association="Self.FK_UserInRole_UserRole">
-            <End Role="UserRole" EntitySet="UserRole" />
-            <End Role="UserInRole" EntitySet="UserInRole" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -792,8 +743,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <EntitySet Name="ProductPhotoes" EntityType="IBModel.ProductPhoto" />
           <EntitySet Name="ProductTags" EntityType="IBModel.ProductTag" />
           <EntitySet Name="TopStories" EntityType="IBModel.TopStory" />
-          <EntitySet Name="UserInRoles" EntityType="IBModel.UserInRole" />
-          <EntitySet Name="UserRoles" EntityType="IBModel.UserRole" />
           <EntitySet Name="WebsiteSettings" EntityType="IBModel.WebsiteSetting" />
           <EntitySet Name="MemberStatus" EntityType="IBModel.MemberStatu" />
           <EntitySet Name="PostStatus" EntityType="IBModel.PostStatu" />
@@ -865,10 +814,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             <End Role="Member" EntitySet="Members" />
             <End Role="TopStory" EntitySet="TopStories" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserInRole_Member" Association="IBModel.FK_UserInRole_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="UserInRole" EntitySet="UserInRoles" />
-          </AssociationSet>
           <AssociationSet Name="FK_OrderItem_Order" Association="IBModel.FK_OrderItem_Order">
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderItem" EntitySet="OrderItems" />
@@ -888,10 +833,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <AssociationSet Name="FK_ProductTag_Product" Association="IBModel.FK_ProductTag_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="ProductTag" EntitySet="ProductTags" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserInRole_UserRole" Association="IBModel.FK_UserInRole_UserRole">
-            <End Role="UserRole" EntitySet="UserRoles" />
-            <End Role="UserInRole" EntitySet="UserInRoles" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
@@ -1041,7 +982,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <NavigationProperty Name="Products" Relationship="IBModel.FK_Product_Member" FromRole="Member" ToRole="Product" />
           <NavigationProperty Name="Products1" Relationship="IBModel.FK_Product_Member1" FromRole="Member" ToRole="Product" />
           <NavigationProperty Name="TopStories" Relationship="IBModel.FK_TopStory_Member" FromRole="Member" ToRole="TopStory" />
-          <NavigationProperty Name="UserInRoles" Relationship="IBModel.FK_UserInRole_Member" FromRole="Member" ToRole="UserInRole" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1216,24 +1156,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Member" Relationship="IBModel.FK_TopStory_Member" FromRole="TopStory" ToRole="Member" />
           <NavigationProperty Name="Post" Relationship="IBModel.FK_TopStory_Post" FromRole="TopStory" ToRole="Post" />
-        </EntityType>
-        <EntityType Name="UserInRole">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberID" Type="Int64" Nullable="false" />
-          <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="IBModel.FK_UserInRole_Member" FromRole="UserInRole" ToRole="Member" />
-          <NavigationProperty Name="UserRole" Relationship="IBModel.FK_UserInRole_UserRole" FromRole="UserInRole" ToRole="UserRole" />
-        </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserInRoles" Relationship="IBModel.FK_UserInRole_UserRole" FromRole="UserRole" ToRole="UserInRole" />
         </EntityType>
         <EntityType Name="WebsiteSetting">
           <Key>
@@ -1463,18 +1385,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserInRole_Member">
-          <End Type="IBModel.Member" Role="Member" Multiplicity="1" />
-          <End Type="IBModel.UserInRole" Role="UserInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserInRole">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OrderItem_Order">
           <End Type="IBModel.Order" Role="Order" Multiplicity="1" />
           <End Type="IBModel.OrderItem" Role="OrderItem" Multiplicity="*" />
@@ -1532,18 +1442,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
             </Principal>
             <Dependent Role="ProductTag">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserInRole_UserRole">
-          <End Type="IBModel.UserRole" Role="UserRole" Multiplicity="1" />
-          <End Type="IBModel.UserInRole" Role="UserInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserInRole">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1844,23 +1742,6 @@ warning 6013: The table/view 'indiabobbles.dbo.SurveyData' does not have a prima
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserInRoles">
-            <EntityTypeMapping TypeName="IBModel.UserInRole">
-              <MappingFragment StoreEntitySet="UserInRole">
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="IBModel.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
