@@ -29,15 +29,15 @@ Namespace Controllers
         End Function
 
         Function Email(ByVal id As Integer) As ActionResult
-            Dim om As OrderManager = New OrderManager()
+            Dim om As New OrderManager()
             Dim o As Order = om.GetOrderDetail(id)
 
             If o IsNot Nothing Then
                 Try
                     Dim body As String = om.GenerateReceipt(o.ID)
                     Dim eman As New EmailManager()
-                    eman.SendMailAsync(Utility.NewsletterEmail, o.Email, Utility.AdminName, o.Name, body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
-                    eman.SendMailAsync(Utility.NewsletterEmail, "rajkiran.singh@rudrasofttech.com", Utility.AdminName, "Raj Kiran Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                    eman.SendMail(Utility.NewsletterEmail, o.Email, Utility.AdminName, o.Name, body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                    eman.SendMail(Utility.NewsletterEmail, "rajkiran.singh@rudrasofttech.com", Utility.AdminName, "Raj Kiran Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
                 Catch ex As Exception
                     Trace.Write(ex.Message)
                 End Try

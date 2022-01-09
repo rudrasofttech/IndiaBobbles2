@@ -17,8 +17,8 @@ Public Class EmailManager
     Public Sub New()
     End Sub
 
-    Public Async Function SendMailAsync(ByVal fromAddress As String, ByVal toAddress As String, ByVal senderName As String, ByVal recieverName As String, ByVal body As String, ByVal subject As String, ByVal messageType As EmailMessageType, ByVal emailGroup As String) As Task(Of Boolean)
-        Return Await SendMailAsync(fromAddress, toAddress, senderName, recieverName, body, subject, String.Empty, messageType, emailGroup)
+    Public Function SendMail(ByVal fromAddress As String, ByVal toAddress As String, ByVal senderName As String, ByVal recieverName As String, ByVal body As String, ByVal subject As String, ByVal messageType As EmailMessageType, ByVal emailGroup As String) As Boolean
+        Return SendMail(fromAddress, toAddress, senderName, recieverName, body, subject, String.Empty, messageType, emailGroup)
     End Function
 
     Public Function SendMail(ByVal em As EmailMessage) As Boolean
@@ -120,7 +120,7 @@ Public Class EmailManager
     '    End Try
     'End Function
 
-    Public Async Function SendMailAsync(ByVal fromAddress As String, ByVal toAddress As String, ByVal senderName As String, ByVal recieverName As String, ByVal body As String, ByVal subject As String, ByVal ccaddresses As String, ByVal messageType As EmailMessageType, ByVal emailGroup As String) As Task(Of Boolean)
+    Public Function SendMail(ByVal fromAddress As String, ByVal toAddress As String, ByVal senderName As String, ByVal recieverName As String, ByVal body As String, ByVal subject As String, ByVal ccaddresses As String, ByVal messageType As EmailMessageType, ByVal emailGroup As String) As Boolean
         Try
             Dim em As New EmailMessage With {
                 .ID = Guid.NewGuid()

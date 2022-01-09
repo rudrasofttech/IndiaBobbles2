@@ -13,8 +13,9 @@
         Dim cartid As Integer
 
         If Not Integer.TryParse(CookieWorker.GetCookie(CookieWorker.OrderIdKey, "cartid"), cartid) Then
-            o = New [Order]()
-            o.OrderItems = New List(Of OrderItem)
+            o = New [Order] With {
+                .OrderItems = New List(Of OrderItem)
+            }
             'o = Create(String.Empty, String.Empty, Nothing, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, OrderStatusType.[New], String.Empty, String.Empty, DateTime.Now, 0, 0, 0, 0, 0, 0, CODFee, "", "", "", "", "")
             'CookieWorker.SetCookie(CookieWorker.OrderIdKey, "cartid", o.ID.ToString(), DateTime.Now.AddHours(50))
         Else
@@ -29,7 +30,7 @@
     End Function
 
     Public Function Create(ByVal name As String, ByVal email As String, ByVal memberid As Long?, ByVal phone As String, ByVal billingAddress As String, ByVal billingCity As String, ByVal billingState As String, ByVal billingCountry As String, ByVal billingZip As String, ByVal shippingAddress As String, ByVal shippingCity As String, ByVal shippingState As String, ByVal shippingCountry As String, ByVal shippinZip As String, ByVal coupon As String, ByVal status As OrderStatusType, ByVal trackCode As String, ByVal shippingNotes As String, ByVal modified As DateTime, ByVal amount As Decimal, ByVal tax As Decimal, ByVal taxPercentage As Decimal, ByVal discount As Decimal, ByVal total As Decimal, ByVal shippingPrice As Decimal, ByVal cod As Decimal, ByVal paymentMode As String, ByVal shippingService As String, ByVal shippingFirstName As String, ByVal shippingLastName As String, ByVal shippingPhone As String) As Order
-        Dim o As Order = New Order() With {
+        Dim o As New Order() With {
             .Amount = amount,
             .BillingAddress = billingAddress,
             .BillingCity = billingCity,
@@ -75,18 +76,19 @@
         Dim oi As OrderItem = dc.OrderItems.SingleOrDefault(Function(item) item.OrderID = orderId AndAlso item.ProductCode = productCode)
 
         If oi Is Nothing Then
-            oi = New OrderItem()
-            oi.OrderID = orderId
-            oi.Price = price
-            oi.ProductCode = productCode
-            oi.ProductImg = productImg
-            oi.ProductName = productName
-            oi.Quantity = quantity
-            oi.Amount = price * quantity
+            oi = New OrderItem With {
+                .OrderID = orderId,
+                .Price = price,
+                .ProductCode = productCode,
+                .ProductImg = productImg,
+                .ProductName = productName,
+                .Quantity = quantity,
+                .Amount = price * quantity
+            }
             dc.OrderItems.Add(oi)
         Else
             oi.Price = price
-            oi.Quantity = oi.Quantity + quantity
+            oi.Quantity += quantity
             oi.Amount = oi.Quantity * oi.Price
 
             If oi.Quantity <= 0 Then
@@ -145,8 +147,8 @@
     Public Sub AddItemQuantity(ByVal itemId As Integer, ByVal orderId As Integer)
 
         Dim oi As OrderItem = dc.OrderItems.SingleOrDefault(Function(item) item.ID = itemId AndAlso item.OrderID = orderId)
-            oi.Quantity = oi.Quantity + 1
-            oi.Amount = oi.Quantity * oi.Price
+        oi.Quantity += 1
+        oi.Amount = oi.Quantity * oi.Price
             dc.SaveChanges()
             Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
             Dim amount As Decimal = 0
@@ -170,7 +172,7 @@
 
     Public Sub ReduceItemQuantity(ByVal itemId As Integer, ByVal orderId As Integer)
         Dim oi As OrderItem = dc.OrderItems.SingleOrDefault(Function(item) item.ID = itemId AndAlso item.OrderID = orderId)
-        oi.Quantity = oi.Quantity - 1
+        oi.Quantity -= 1
         oi.Amount = oi.Quantity * oi.Price
         dc.SaveChanges()
 
@@ -211,10 +213,6 @@
 
     End Sub
 
-    Public Function CODAllowed(ByVal pincode As String) As Boolean
-        Return False
-    End Function
-
     Public Sub DeleteOrder(ByVal orderId As Integer)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
@@ -224,36 +222,36 @@
 
     End Sub
 
-    Public Sub UpdateOrder(ByVal orderId As Integer, ByVal name As String, ByVal email As String, ByVal memberid As Long?, ByVal phone As String, ByVal billingAddress As String, ByVal billingCity As String, ByVal billingState As String, ByVal billingCountry As String, ByVal billingZip As String, ByVal shippingAddress As String, ByVal shippingCity As String, ByVal shippingState As String, ByVal shippingCountry As String, ByVal shippinZip As String, ByVal coupon As String, ByVal status As OrderStatusType, ByVal trackCode As String, ByVal shippingNotes As String, ByVal modified As DateTime, ByVal amount As Decimal, ByVal tax As Decimal, ByVal taxPercentage As Decimal, ByVal discount As Decimal, ByVal total As Decimal, ByVal shippingPrice As Decimal, ByVal cod As Decimal)
+    Public Sub UpdateOrder(ByVal orderId As Integer, ByVal name As String, ByVal email As String, ByVal memberid As Long?, ByVal phone As String, ByVal billingAddress As String, ByVal billingCity As String, ByVal billingState As String, ByVal billingCountry As String, ByVal billingZip As String, ByVal shippingAddress As String, ByVal shippingCity As String, ByVal shippingState As String, ByVal shippingCountry As String, ByVal shippinZip As String, ByVal coupon As String, ByVal status As OrderStatusType, ByVal trackCode As String, ByVal shippingNotes As String, ByVal amount As Decimal, ByVal tax As Decimal, ByVal taxPercentage As Decimal, ByVal discount As Decimal, ByVal total As Decimal, ByVal shippingPrice As Decimal, ByVal cod As Decimal)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            o.BillingAddress = billingAddress
-            o.BillingCity = billingCity
-            o.BillingCountry = billingCountry
-            o.BillingState = billingState
-            o.BillingZip = billingZip
-            o.Coupon = coupon
-            o.DateModified = DateTime.Now
-            o.Discount = discount
-            o.Email = email
-            o.MemberID = memberid
-            o.Name = name
-            o.Phone = phone
-            o.ShippingAddress = shippingAddress
-            o.ShippingCity = shippingCity
-            o.ShippingCountry = shippingCountry
-            o.ShippingNotes = shippingNotes
-            o.ShippingState = shippingState
-            o.ShippingTrackCode = trackCode
-            o.ShippingZip = shippinZip
-            o.Status = CByte(status)
-            o.Tax = tax
-            o.TaxPercentage = taxPercentage
-            o.Total = total
-            o.Amount = amount
-            o.ShippingPrice = shippingPrice
-            o.COD = cod
-            dc.SaveChanges()
+        o.BillingAddress = billingAddress
+        o.BillingCity = billingCity
+        o.BillingCountry = billingCountry
+        o.BillingState = billingState
+        o.BillingZip = billingZip
+        o.Coupon = coupon
+        o.DateModified = DateTime.Now
+        o.Discount = discount
+        o.Email = email
+        o.MemberID = memberid
+        o.Name = name
+        o.Phone = phone
+        o.ShippingAddress = shippingAddress
+        o.ShippingCity = shippingCity
+        o.ShippingCountry = shippingCountry
+        o.ShippingNotes = shippingNotes
+        o.ShippingState = shippingState
+        o.ShippingTrackCode = trackCode
+        o.ShippingZip = shippinZip
+        o.Status = CByte(status)
+        o.Tax = tax
+        o.TaxPercentage = taxPercentage
+        o.Total = total
+        o.Amount = amount
+        o.ShippingPrice = shippingPrice
+        o.COD = cod
+        dc.SaveChanges()
 
     End Sub
 
@@ -462,7 +460,7 @@
     End Function
 
     Public Function GenerateReceipt(ByVal orderId As Integer) As String
-        Dim builder As StringBuilder = New StringBuilder()
+        Dim builder As New StringBuilder()
 
 
         Dim o As Order = dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)

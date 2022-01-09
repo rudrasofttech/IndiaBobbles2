@@ -48,7 +48,7 @@ Namespace Controllers
 
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Async Function RegisterAsync(ByVal dto As RegisterDTO) As Task(Of ActionResult)
+        Function Register(ByVal dto As RegisterDTO) As ActionResult
             If Not ModelState.IsValid Then
                 ViewBag.Error = "Please check your input."
                 Return View(dto)
@@ -62,20 +62,21 @@ Namespace Controllers
                 Else
                     Dim r As New Random(0)
                     Dim password As String = String.Format("{0}{1}{2}{3}{4}{5}{7}", r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9))
-                    Dim m As New Member()
-                    m.MemberName = dto.Name
-                    m.Email = dto.Email
-                    m.Password = password
-                    m.Createdate = DateTime.UtcNow
-                    m.Mobile = dto.Mobile
-                    m.Newsletter = dto.Newsletter
-                    m.UserType = MemberTypeType.Member
+                    Dim m As New Member With {
+                        .MemberName = dto.Name,
+                        .Email = dto.Email,
+                        .Password = password,
+                        .Createdate = DateTime.UtcNow,
+                        .Mobile = dto.Mobile,
+                        .Newsletter = dto.Newsletter,
+                        .UserType = MemberTypeType.Member
+                    }
                     db.Members.Add(m)
                     db.SaveChanges()
 
                     Dim body As String = String.Format("Dear {0},<br/><br/>You are now a registered member of IndiaBobbles.<br/><br/>Your one time password is <strong>{1}</strong>.<br/><br/>", m.MemberName, password)
                     Dim eman As New EmailManager()
-                    Await eman.SendMailAsync(Utility.NewsletterEmail, m.Email, Utility.AdminName,
+                    eman.SendMail(Utility.NewsletterEmail, m.Email, Utility.AdminName,
                                   m.MemberName, body, "Registration Successfull",
                                   EmailMessageType.Communication, "Registration")
 
@@ -98,7 +99,7 @@ Namespace Controllers
 
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Async Function GenerateOTP(ByVal dto As OTPDTO) As Task(Of ActionResult)
+        Function GenerateOTP(ByVal dto As OTPDTO) As ActionResult
             If Not ModelState.IsValid Then
                 ViewBag.Error = "Please check your input."
                 Return View(dto)
@@ -117,7 +118,7 @@ Namespace Controllers
 
                     Dim body As String = String.Format("Dear {0},<br/><br/>Your one time password is <strong>{1}</strong>.<br/><br/>", user.MemberName, password)
                     Dim eman As New EmailManager()
-                    Await eman.SendMailAsync(Utility.NewsletterEmail, user.Email, Utility.AdminName,
+                    eman.SendMail(Utility.NewsletterEmail, user.Email, Utility.AdminName,
                                   user.MemberName, body, "India Bobbles OTP",
                                   EmailMessageType.Communication, "OTP")
                     ViewBag.Success = String.Format("We have sent OTP to you registered email address. Please check you mail box for an email from {0}", user.Email)

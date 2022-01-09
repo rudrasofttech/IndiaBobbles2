@@ -887,6 +887,7 @@
     <Content Include="theme\khichdi\fonts\Spongeboy Me Bob.ttf" />
     <Content Include="theme\khichdi\img\daku-product-thumb.psd" />
     <Content Include="theme\khichdi\img\meteor-new-poster-comp.psd" />
+    <Content Include="theme\khichdi\img\Paynow.png" />
     <Content Include="Views\Home\Privacy.vbhtml" />
     <Content Include="Views\Home\Terms.vbhtml" />
     <Content Include="Views\Home\Shipping.vbhtml" />

@@ -21,7 +21,7 @@ Namespace Controllers
             If p IsNot Nothing Then
                 Dim o As Order = om.GetCart()
                 If o.ID = 0 Then
-                    o = om.Create(String.Empty, String.Empty, memberid, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, OrderStatusType.[New], String.Empty, String.Empty, DateTime.Now, 0, 0, 0, 0, 0, 0, 40.0, "", "", "", "", "")
+                    o = om.Create(String.Empty, String.Empty, memberid, String.Empty, String.Empty, String.Empty, String.Empty, "India", String.Empty, String.Empty, String.Empty, String.Empty, "India", String.Empty, String.Empty, OrderStatusType.[New], String.Empty, String.Empty, DateTime.Now, 0, 0, 0, 0, 0, 0, 40.0, "", "", "", "", "")
                     CookieWorker.SetCookie(CookieWorker.OrderIdKey, "cartid", o.ID.ToString(), DateTime.Now.AddDays(10))
                 End If
                 Dim imgpath = String.Empty
@@ -142,16 +142,16 @@ Namespace Controllers
                                 Try
                                     Dim body As String = om.GenerateReceipt(o.ID)
                                     Dim eman As New EmailManager()
-                                    eman.SendMailAsync(Utility.NewsletterEmail, o.Email, Utility.AdminName, o.Name, body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
-                                    eman.SendMailAsync(Utility.NewsletterEmail, "preeti.singh@rudrasofttech.com", Utility.AdminName, "Preeti Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
-                                    eman.SendMailAsync(Utility.NewsletterEmail, "rajkiran.singh@rudrasofttech.com", Utility.AdminName, "Raj Kiran Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                                    eman.SendMail(Utility.NewsletterEmail, o.Email, Utility.AdminName, o.Name, body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                                    eman.SendMail(Utility.NewsletterEmail, "preeti.singh@rudrasofttech.com", Utility.AdminName, "Preeti Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                                    eman.SendMail(Utility.NewsletterEmail, "rajkiran.singh@rudrasofttech.com", Utility.AdminName, "Raj Kiran Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
                                 Catch ex As Exception
                                     Trace.Write(ex.Message)
                                 End Try
 
                                 CookieWorker.RemoveCookie(CookieWorker.OrderIdKey)
                                 o = om.GetOrderDetail(Integer.Parse(order_id))
-                                Response.Redirect("~/cart/receipt.aspx?id=" & o.ID)
+                                Response.Redirect("~/orders/detail/" & o.ID)
                             End If
                         End If
                     End If
