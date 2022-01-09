@@ -9,7 +9,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   </PropertyGroup>
   <ItemGroup>
     <File Include="admin/Admin.Master">
-      <publishTime>01/08/2022 11:10:41</publishTime>
+      <publishTime>01/08/2022 19:50:28</publishTime>
     </File>
     <File Include="admin/Articles.aspx">
       <publishTime>12/26/2021 16:23:14</publishTime>
@@ -21,16 +21,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>12/26/2021 21:59:54</publishTime>
     </File>
     <File Include="admin/ManageArticle.aspx">
-      <publishTime>01/08/2022 11:15:12</publishTime>
+      <publishTime>01/08/2022 19:37:58</publishTime>
     </File>
     <File Include="admin/ManageMember.aspx">
-      <publishTime>12/27/2021 20:20:55</publishTime>
+      <publishTime>01/08/2022 19:37:58</publishTime>
     </File>
     <File Include="admin/ManageOrder.aspx">
       <publishTime>12/25/2021 09:04:37</publishTime>
     </File>
     <File Include="admin/ManageProduct.aspx">
-      <publishTime>01/08/2022 11:10:49</publishTime>
+      <publishTime>01/08/2022 19:34:29</publishTime>
     </File>
     <File Include="admin/Members.aspx">
       <publishTime>12/26/2021 15:08:56</publishTime>
@@ -39,22 +39,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>12/26/2021 16:23:59</publishTime>
     </File>
     <File Include="admin/ProductDetail.aspx">
-      <publishTime>01/08/2022 11:11:05</publishTime>
+      <publishTime>01/08/2022 19:34:29</publishTime>
     </File>
     <File Include="admin/Products.aspx">
-      <publishTime>01/08/2022 08:28:42</publishTime>
+      <publishTime>01/08/2022 19:34:29</publishTime>
     </File>
     <File Include="admin/RunQuery.aspx">
-      <publishTime>01/08/2022 12:26:03</publishTime>
+      <publishTime>01/08/2022 19:34:30</publishTime>
     </File>
     <File Include="admin/style.css">
       <publishTime>12/25/2021 08:15:53</publishTime>
     </File>
     <File Include="admin/Tags.aspx">
-      <publishTime>01/06/2022 20:45:01</publishTime>
+      <publishTime>01/08/2022 19:34:30</publishTime>
     </File>
     <File Include="admin/ViewDrive.aspx">
-      <publishTime>01/08/2022 10:37:19</publishTime>
+      <publishTime>01/08/2022 19:34:30</publishTime>
     </File>
     <File Include="Agni/.vs/Agni/config/applicationhost.config">
       <publishTime>10/26/2021 13:32:35</publishTime>
@@ -276,13 +276,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/03/2015 15:02:26</publishTime>
     </File>
     <File Include="bin/IndiaBobbles.dll">
-      <publishTime>01/08/2022 12:59:21</publishTime>
+      <publishTime>01/08/2022 20:46:12</publishTime>
     </File>
     <File Include="bin/IndiaBobbles.pdb">
-      <publishTime>01/08/2022 12:59:21</publishTime>
+      <publishTime>01/08/2022 20:46:12</publishTime>
     </File>
     <File Include="bin/IndiaBobbles.xml">
-      <publishTime>01/08/2022 12:59:21</publishTime>
+      <publishTime>01/08/2022 20:46:12</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authentication.Abstractions.dll">
       <publishTime>12/11/2018 17:29:06</publishTime>
@@ -921,10 +921,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/26/2021 13:33:44</publishTime>
     </File>
     <File Include="Models/IBModel.edmx.diagram">
-      <publishTime>01/06/2022 20:59:53</publishTime>
+      <publishTime>01/08/2022 19:48:53</publishTime>
     </File>
     <File Include="Models/IBModel.edmx.sql">
-      <publishTime>01/01/2022 20:05:11</publishTime>
+      <publishTime>01/08/2022 19:34:29</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>10/24/2021 19:36:26</publishTime>
@@ -1710,25 +1710,25 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>12/27/2021 11:03:59</publishTime>
     </File>
     <File Include="Views/Account/Login.vbhtml">
-      <publishTime>12/27/2021 18:33:25</publishTime>
+      <publishTime>01/08/2022 19:37:58</publishTime>
     </File>
     <File Include="Views/Account/ManageProfile.vbhtml">
-      <publishTime>12/27/2021 20:53:16</publishTime>
+      <publishTime>01/08/2022 19:34:29</publishTime>
     </File>
     <File Include="Views/Account/Register.vbhtml">
       <publishTime>12/27/2021 10:23:52</publishTime>
     </File>
     <File Include="Views/Articles/Detail.vbhtml">
-      <publishTime>01/06/2022 09:03:42</publishTime>
+      <publishTime>01/08/2022 20:23:58</publishTime>
     </File>
     <File Include="Views/Articles/Index.vbhtml">
       <publishTime>10/26/2021 11:37:43</publishTime>
     </File>
     <File Include="Views/Cart/Address.vbhtml">
-      <publishTime>01/06/2022 20:33:29</publishTime>
+      <publishTime>01/08/2022 19:37:58</publishTime>
     </File>
     <File Include="Views/Cart/Checkout.vbhtml">
-      <publishTime>11/12/2021 12:41:02</publishTime>
+      <publishTime>01/08/2022 19:45:29</publishTime>
     </File>
     <File Include="Views/Cart/Index.vbhtml">
       <publishTime>11/12/2021 09:54:09</publishTime>
@@ -1764,7 +1764,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/26/2021 21:58:51</publishTime>
     </File>
     <File Include="Views/Home/Index.vbhtml">
-      <publishTime>01/08/2022 09:30:02</publishTime>
+      <publishTime>01/08/2022 19:53:44</publishTime>
     </File>
     <File Include="Views/Home/Payment.vbhtml">
       <publishTime>10/25/2021 20:56:18</publishTime>
@@ -1776,7 +1776,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/25/2021 20:56:20</publishTime>
     </File>
     <File Include="Views/Home/Tag.vbhtml">
-      <publishTime>01/08/2022 09:45:31</publishTime>
+      <publishTime>01/08/2022 19:34:29</publishTime>
     </File>
     <File Include="Views/Home/Terms.vbhtml">
       <publishTime>10/25/2021 20:57:50</publishTime>
@@ -1791,13 +1791,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/27/2021 09:20:07</publishTime>
     </File>
     <File Include="Views/Product/Detail.vbhtml">
-      <publishTime>01/06/2022 08:47:48</publishTime>
+      <publishTime>01/08/2022 20:18:50</publishTime>
     </File>
     <File Include="Views/Shared/Error.vbhtml">
       <publishTime>10/24/2021 19:36:24</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.vbhtml">
-      <publishTime>01/08/2022 09:26:37</publishTime>
+      <publishTime>01/08/2022 20:08:14</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>10/24/2021 19:36:24</publishTime>
@@ -1806,7 +1806,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/24/2021 19:36:24</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/08/2022 12:59:22</publishTime>
+      <publishTime>01/08/2022 20:46:07</publishTime>
     </File>
   </ItemGroup>
 </Project>

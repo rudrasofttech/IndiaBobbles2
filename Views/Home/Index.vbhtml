@@ -1,4 +1,5 @@
-﻿@Code
+﻿@Imports IndiaBobbles
+@Code
     ViewData("Title") = "Buy Bobble Heads & Figurines Online in India – India Bobbles"
 
 End Code
@@ -27,7 +28,7 @@ End Section
                     </div>
                     <div Class="carousel-inner">
                         @For index = 0 To ViewBag.Highlights.Count - 1
-                            Dim p As IndiaBobbles.Product = ViewBag.Highlights(index)
+                            Dim p As Product = ViewBag.Highlights(index)
                             @<div class="carousel-item @Html.Raw(IIf(index = 0, "active", ""))" data-bs-interval="10000">
                                 <div class="row  align-items-center">
                                     <div class="col-md-7 mb-3 mb-md-0 text-center text-md-end">

@@ -6,7 +6,7 @@ End Code
 
 <div class="container fullbody bg-white">
     <div class="row">
-        <div class="col-6 p-3">
+        <div class="col-md-6 p-3">
             <h2>Login</h2>
             @If ViewBag.Error IsNot Nothing Then
                 @<div Class="alert alert-danger" role="alert">
