@@ -43,7 +43,7 @@ Namespace Controllers
                 End Try
             End If
 
-            Return RedirectToAction("Detail", id)
+            Return Redirect("~/order/detail/" & id)
         End Function
 
         <HttpPost()>
