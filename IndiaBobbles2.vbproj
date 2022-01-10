@@ -378,6 +378,13 @@
       <DependentUpon>RunQuery.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="admin\SaveArctileToDB.aspx.designer.vb">
+      <DependentUpon>SaveArctileToDB.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\SaveArctileToDB.aspx.vb">
+      <DependentUpon>SaveArctileToDB.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="admin\Tags.aspx.designer.vb">
       <DependentUpon>Tags.aspx</DependentUpon>
     </Compile>
@@ -536,6 +543,7 @@
     <Content Include="admin\ProductDetail.aspx" />
     <Content Include="admin\Products.aspx" />
     <Content Include="admin\RunQuery.aspx" />
+    <Content Include="admin\SaveArctileToDB.aspx" />
     <Content Include="admin\style.css" />
     <Content Include="admin\Tags.aspx" />
     <Content Include="admin\ViewDrive.aspx" />

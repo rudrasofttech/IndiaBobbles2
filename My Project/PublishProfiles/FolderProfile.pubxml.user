@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Raj Kiran Singh\IndiaBobbles2\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2022-01-09T14:30:50.0293192Z;True|2022-01-08T12:59:23.0387152+05:30;True|2022-01-08T12:40:18.5897494+05:30;True|2022-01-08T12:26:51.5829231+05:30;True|2022-01-08T11:38:19.6647781+05:30;</History>
+    <History>True|2022-01-10T15:45:42.7008800Z;True|2022-01-10T21:02:37.0830575+05:30;True|2022-01-10T09:39:45.1156424+05:30;True|2022-01-10T09:36:18.0394563+05:30;True|2022-01-09T20:00:50.0293192+05:30;True|2022-01-08T12:59:23.0387152+05:30;True|2022-01-08T12:40:18.5897494+05:30;True|2022-01-08T12:26:51.5829231+05:30;True|2022-01-08T11:38:19.6647781+05:30;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="admin/Admin.Master">
@@ -46,6 +46,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="admin/RunQuery.aspx">
       <publishTime>01/08/2022 19:34:30</publishTime>
+    </File>
+    <File Include="admin/SaveArctileToDB.aspx">
+      <publishTime>01/10/2022 09:32:27</publishTime>
     </File>
     <File Include="admin/style.css">
       <publishTime>12/25/2021 08:15:53</publishTime>
@@ -276,13 +279,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/03/2015 15:02:26</publishTime>
     </File>
     <File Include="bin/IndiaBobbles.dll">
-      <publishTime>01/09/2022 20:06:30</publishTime>
+      <publishTime>01/10/2022 21:15:41</publishTime>
     </File>
     <File Include="bin/IndiaBobbles.pdb">
-      <publishTime>01/09/2022 20:06:30</publishTime>
+      <publishTime>01/10/2022 21:15:41</publishTime>
     </File>
     <File Include="bin/IndiaBobbles.xml">
-      <publishTime>01/09/2022 20:06:30</publishTime>
+      <publishTime>01/10/2022 21:15:41</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authentication.Abstractions.dll">
       <publishTime>12/11/2018 17:29:06</publishTime>
@@ -1722,7 +1725,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>12/27/2021 10:23:52</publishTime>
     </File>
     <File Include="Views/Articles/Detail.vbhtml">
-      <publishTime>01/08/2022 20:23:58</publishTime>
+      <publishTime>01/10/2022 10:04:28</publishTime>
     </File>
     <File Include="Views/Articles/Index.vbhtml">
       <publishTime>10/26/2021 11:37:43</publishTime>

@@ -28,14 +28,11 @@ Public Class Articles
                 Trace.Write(ex.StackTrace)
             End Try
         ElseIf e.CommandName = "DeleteCommand" Then
-
             Try
-
-
-                Dim item = (From u In dc.Posts Where u.ID = Integer.Parse(e.CommandArgument.ToString()) Select u).SingleOrDefault()
+                Dim pid As Integer = Integer.Parse(e.CommandArgument.ToString())
+                Dim item = (From u In dc.Posts Where u.ID = pid Select u).SingleOrDefault()
 
                 If item IsNot Nothing Then
-
                     Try
                         System.IO.File.Delete(Server.MapPath(String.Format("{1}/articlexml-{0}.txt", item.ID, Utility.CustomPageFolder)))
                     Catch iex As Exception
@@ -49,7 +46,7 @@ Public Class Articles
                     dc.SaveChanges()
                 End If
 
-                Response.Redirect("default.aspx")
+                Response.Redirect("~/admin/articles.aspx")
             Catch ex As Exception
                 message1.Text = String.Format("Unable to delete article. Error - {0}", ex.Message)
                 message1.Visible = True

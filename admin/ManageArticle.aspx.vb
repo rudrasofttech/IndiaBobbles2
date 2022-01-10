@@ -14,9 +14,9 @@ Public Class ManageArticle
             Response.Redirect("default.aspx")
         End If
 
-        If Mode = "edit" Then
-            PopulateArticle()
-        End If
+        'If Mode = "edit" Then
+        '    PopulateArticle()
+        'End If
 
         If Not Page.IsCallback AndAlso Not Page.IsPostBack Then
             If Mode = "edit" Then
@@ -25,66 +25,70 @@ Public Class ManageArticle
         End If
     End Sub
 
-    Private Sub PopulateArticle()
+    'Private Sub PopulateArticle()
 
-        Try
-            a = Utility.Deserialize(Of Article)(System.IO.File.ReadAllText(Server.MapPath(String.Format("{1}/articlexml-{0}.txt", TargetID, Utility.ArticleFolder))))
+    '    Try
+    '        a = Utility.Deserialize(Of Article)(System.IO.File.ReadAllText(Server.MapPath(String.Format("{1}/articlexml-{0}.txt", TargetID, Utility.ArticleFolder))))
 
-            If String.IsNullOrEmpty(a.MetaTitle) Then
-                a.MetaTitle = a.Title
-            End If
+    '        If String.IsNullOrEmpty(a.MetaTitle) Then
+    '            a.MetaTitle = a.Title
+    '        End If
 
-        Catch ex As Exception
-            a = New Article()
-            Trace.Write("Unable to read xml file of article.")
-            Trace.Write(ex.Message)
-            Trace.Write(ex.StackTrace)
-            Dim p As Post = (From t In dc.Posts Where t.ID = TargetID Select t).SingleOrDefault()
+    '    Catch ex As Exception
+    '        a = New Article()
+    '        Trace.Write("Unable to read xml file of article.")
+    '        Trace.Write(ex.Message)
+    '        Trace.Write(ex.StackTrace)
+    '        Dim p As Post = (From t In dc.Posts Where t.ID = TargetID Select t).SingleOrDefault()
 
-            If p IsNot Nothing Then
-                a.Category = p.Category
-                a.CreatedBy = p.CreatedBy
-                a.DateCreated = p.DateCreated
-                a.DateModified = p.DateModified
-                a.Description = p.Description
-                a.ID = p.ID
-                a.ModifiedBy = p.ModifiedBy
-                a.Status = CType([Enum].Parse(GetType(PostStatusType), p.Status.ToString()), PostStatusType)
-                a.Tag = p.Tag
-                a.Title = p.Title
-                a.WriterEmail = p.WriterEmail
-                a.WriterName = p.WriterName
-                a.Viewed = p.Viewed
-                a.Sitemap = p.Sitemap
-                a.URL = p.URL
+    '        If p IsNot Nothing Then
+    '            a.Category = p.Category
+    '            a.CreatedBy = p.CreatedBy
+    '            a.DateCreated = p.DateCreated
+    '            a.DateModified = p.DateModified
+    '            a.Description = p.Description
+    '            a.ID = p.ID
+    '            a.ModifiedBy = p.ModifiedBy
+    '            a.Status = CType([Enum].Parse(GetType(PostStatusType), p.Status.ToString()), PostStatusType)
+    '            a.Tag = p.Tag
+    '            a.Title = p.Title
+    '            a.WriterEmail = p.WriterEmail
+    '            a.WriterName = p.WriterName
+    '            a.Viewed = p.Viewed
+    '            a.Sitemap = p.Sitemap
+    '            a.URL = p.URL
 
-                Try
-                    a.Text = System.IO.File.ReadAllText(Server.MapPath(String.Format("{1}/article-{0}.txt", p.ID, Utility.ArticleFolder)))
-                Catch ex2 As Exception
-                    Trace.Write(ex2.Message)
-                    Trace.Write(ex2.StackTrace)
-                End Try
-            Else
-                Response.Redirect("articles.aspx")
-            End If
-        End Try
+    '            Try
+    '                a.Text = System.IO.File.ReadAllText(Server.MapPath(String.Format("{1}/article-{0}.txt", p.ID, Utility.ArticleFolder)))
+    '            Catch ex2 As Exception
+    '                Trace.Write(ex2.Message)
+    '                Trace.Write(ex2.StackTrace)
+    '            End Try
+    '        Else
+    '            Response.Redirect("articles.aspx")
+    '        End If
+    '    End Try
 
-    End Sub
+    'End Sub
 
     Private Sub PopulateForm()
-        TitleTextBox.Text = a.Title
-        TagTextBox.Text = a.Tag
-        WriterTextBox.Text = a.WriterName
-        WriterEmailTextBox.Text = a.WriterEmail
-        CategoryDropDown.SelectedValue = a.Category.ToString()
-        FacebookImageTextBox.Text = a.OGImage
-        FacebookDescTextBox.Text = a.OGDescription
-        StatusDropDown.SelectedValue = (CByte(a.Status)).ToString()
-        DescTextBox.Text = a.Description
-        TextTextBox.Text = a.Text
-        SitemapCheckBox.Checked = a.Sitemap
-        URLTextBox.Text = a.URL
-        MetaTitleTextBox.Text = a.MetaTitle
+        Dim p As Post = (From t In dc.Posts Where t.ID = TargetID Select t).SingleOrDefault()
+
+        If p IsNot Nothing Then
+            TitleTextBox.Text = p.Title
+            TagTextBox.Text = p.Tag
+            WriterTextBox.Text = p.WriterName
+            WriterEmailTextBox.Text = p.WriterEmail
+            CategoryDropDown.SelectedValue = p.Category.ToString()
+            FacebookImageTextBox.Text = p.OGImage
+            FacebookDescTextBox.Text = p.OGDescription
+            StatusDropDown.SelectedValue = (CByte(p.Status)).ToString()
+            DescTextBox.Text = p.Description
+            TextTextBox.Text = p.Article
+            SitemapCheckBox.Checked = p.Sitemap
+            URLTextBox.Text = p.URL
+            MetaTitleTextBox.Text = p.MetaTitle
+        End If
     End Sub
 
     Protected Sub SubmitButton_Click(ByVal sender As Object, ByVal e As EventArgs)
@@ -92,60 +96,64 @@ Public Class ManageArticle
         If Not Page.IsValid Then Return
 
         Try
-            a.Category = Integer.Parse(CategoryDropDown.SelectedValue)
-            a.Description = DescTextBox.Text.Trim()
-            a.OGDescription = FacebookDescTextBox.Text.Trim()
-            a.OGImage = FacebookImageTextBox.Text.Trim()
-            a.TemplateName = String.Empty
-            a.Status = CType([Enum].Parse(GetType(PostStatusType), StatusDropDown.SelectedValue), PostStatusType)
-            a.Tag = TagTextBox.Text.Trim()
-            a.Text = TextTextBox.Text.Trim()
-            a.Title = TitleTextBox.Text.Trim()
-            a.WriterEmail = WriterEmailTextBox.Text.Trim()
-            a.WriterName = WriterTextBox.Text.Trim()
-            a.URL = URLTextBox.Text.Trim()
-            a.Sitemap = SitemapCheckBox.Checked
-            a.MetaTitle = MetaTitleTextBox.Text.Trim()
+            'a.Category = Integer.Parse(CategoryDropDown.SelectedValue)
+            'a.Description = DescTextBox.Text.Trim()
+            'a.OGDescription = FacebookDescTextBox.Text.Trim()
+            'a.OGImage = FacebookImageTextBox.Text.Trim()
+            'a.TemplateName = String.Empty
+            'a.Status = CType([Enum].Parse(GetType(PostStatusType), StatusDropDown.SelectedValue), PostStatusType)
+            'a.Tag = TagTextBox.Text.Trim()
+            'a.Text = TextTextBox.Text.Trim()
+            'a.Title = TitleTextBox.Text.Trim()
+            'a.WriterEmail = WriterEmailTextBox.Text.Trim()
+            'a.WriterName = WriterTextBox.Text.Trim()
+            'a.URL = URLTextBox.Text.Trim()
+            'a.Sitemap = SitemapCheckBox.Checked
+            'a.MetaTitle = MetaTitleTextBox.Text.Trim()
 
             If Mode = "edit" Then
                 Dim p As Post = (From t In dc.Posts Where t.ID = TargetID Select t).SingleOrDefault()
-                p.Category = a.Category
+                p.Category = Integer.Parse(CategoryDropDown.SelectedValue)
                 p.DateModified = DateTime.Now
-                p.Description = a.Description
+                p.Description = DescTextBox.Text.Trim()
                 p.ID = TargetID
                 p.ModifiedBy = CurrentUser.ID
-                p.Status = CByte(a.Status)
-                p.Tag = a.Tag
-                p.Title = a.Title
-                p.WriterEmail = a.WriterEmail
-                p.WriterName = a.WriterName
-                p.OGDescription = a.OGDescription
-                p.OGImage = a.OGImage
-                p.URL = a.URL
-                p.Sitemap = a.Sitemap
+                p.Status = CByte(StatusDropDown.SelectedValue)
+                p.Tag = TagTextBox.Text.Trim()
+                p.Title = TitleTextBox.Text.Trim()
+                p.WriterEmail = WriterEmailTextBox.Text.Trim()
+                p.WriterName = WriterTextBox.Text.Trim()
+                p.OGDescription = FacebookDescTextBox.Text.Trim()
+                p.OGImage = FacebookImageTextBox.Text.Trim()
+                p.URL = URLTextBox.Text.Trim()
+                p.Sitemap = SitemapCheckBox.Checked
+                p.Article = TextTextBox.Text.Trim()
+                p.MetaTitle = MetaTitleTextBox.Text.Trim()
                 dc.SaveChanges()
-                Dim str As String = Utility.Serialize(Of Article)(a)
-                System.IO.File.WriteAllText(Server.MapPath(String.Format("{1}/articlexml-{0}.txt", p.ID, Utility.ArticleFolder)), str)
+                'Dim str As String = Utility.Serialize(Of Article)(a)
+                'System.IO.File.WriteAllText(Server.MapPath(String.Format("{1}/articlexml-{0}.txt", p.ID, Utility.ArticleFolder)), str)
             Else
                 Dim p As Post = New Post()
-                p.Category = a.Category
+                p.Category = Integer.Parse(CategoryDropDown.SelectedValue)
                 p.DateCreated = DateTime.Now
-                p.Description = a.Description
+                p.Description = DescTextBox.Text.Trim()
+                p.ID = TargetID
                 p.CreatedBy = CurrentUser.ID
-                p.Status = CByte(a.Status)
-                p.Tag = a.Tag
-                p.Title = a.Title
-                p.WriterEmail = a.WriterEmail
-                p.WriterName = a.WriterName
-                p.OGDescription = a.OGDescription
-                p.OGImage = a.OGImage
-                p.Article = String.Empty
-                p.URL = a.URL
-                p.Sitemap = a.Sitemap
+                p.Status = CByte(StatusDropDown.SelectedValue)
+                p.Tag = TagTextBox.Text.Trim()
+                p.Title = TitleTextBox.Text.Trim()
+                p.WriterEmail = WriterEmailTextBox.Text.Trim()
+                p.WriterName = WriterTextBox.Text.Trim()
+                p.OGDescription = FacebookDescTextBox.Text.Trim()
+                p.OGImage = FacebookImageTextBox.Text.Trim()
+                p.URL = URLTextBox.Text.Trim()
+                p.Sitemap = SitemapCheckBox.Checked
+                p.Article = TextTextBox.Text.Trim()
+                p.MetaTitle = MetaTitleTextBox.Text.Trim()
                 dc.Posts.Add(p)
                 dc.SaveChanges()
-                Dim str As String = Utility.Serialize(Of Article)(a)
-                System.IO.File.WriteAllText(Server.MapPath(String.Format("{1}/articlexml-{0}.txt", p.ID, Utility.ArticleFolder)), str)
+                'Dim str As String = Utility.Serialize(Of Article)(a)
+                'System.IO.File.WriteAllText(Server.MapPath(String.Format("{1}/articlexml-{0}.txt", p.ID, Utility.ArticleFolder)), str)
             End If
             Response.Redirect("articles.aspx")
         Catch ex As Exception

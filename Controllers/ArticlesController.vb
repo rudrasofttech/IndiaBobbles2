@@ -8,6 +8,7 @@ Namespace Controllers
 
         Function Detail(url As String) As ActionResult
             Dim post = db.Posts.FirstOrDefault(Function(p) p.URL = url)
+
             If post IsNot Nothing Then
                 Return View(post)
             Else

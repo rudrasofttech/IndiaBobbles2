@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class RunQuery
-    Inherits System.Web.UI.Page
+    Inherits AdminPage
     Private ReadOnly dc As New indiabobblesEntities
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
