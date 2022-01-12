@@ -3,7 +3,7 @@
     ViewData("Title") = "Manage Profile"
     Dim countrylist As New List(Of SelectListItem)
     countrylist.Add(New SelectListItem() With {.Text = "Select", .Value = ""})
-    countrylist.Add(New SelectListItem() With {.Text = "India", .Value = "IND"})
+    countrylist.Add(New SelectListItem() With {.Text = "India", .Value = "IN"})
 
     Dim genderlist As New List(Of SelectListItem)
     genderlist.Add(New SelectListItem() With {.Text = "Select", .Value = ""})
@@ -13,7 +13,7 @@
 End Code
 <div class="container fullbody bg-white">
     <div class="row">
-        <div class="col-6 p-3">
+        <div class="col-md-6 p-3">
             <h2>Profile</h2>
             @If ViewBag.Error IsNot Nothing Then
                 @<div Class="alert alert-danger" role="alert">

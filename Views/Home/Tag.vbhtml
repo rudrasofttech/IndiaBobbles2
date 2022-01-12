@@ -17,8 +17,8 @@ End Code
                         <h5 Class="card-title">@item.Name</h5>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li Class="list-group-item">MRP: <span class="badge text-danger">@item.MRP.ToString("C")</span></li>
-                        <li Class="list-group-item">Our Price: <span class="badge bg-success">@item.SalePrice.ToString("C")</span></li>
+                        <li Class="list-group-item">MRP: <span class="badge text-danger">₹@item.MRP.ToString("##00.00")</span></li>
+                        <li Class="list-group-item">Our Price: <span class="badge bg-success">₹@item.SalePrice.ToString("##00.00")</span></li>
                     </ul>
                     <div class="card-body">
                         <div class="row">

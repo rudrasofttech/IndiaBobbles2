@@ -18,11 +18,9 @@ FROM     CategoryTag AS CT INNER JOIN
                 <ControlStyle Height="80px" />
             </asp:ImageField>
             <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-            
             <asp:CheckBoxField DataField="OutofStock" HeaderText="Out of Stock" ReadOnly="True" SortExpression="OutofStock" />
-            
-            <asp:BoundField DataField="MRP" HeaderText="MRP" SortExpression="MRP" DataFormatString="{0:C}" />
-            <asp:BoundField DataField="SalePrice" HeaderText="Sale Price" SortExpression="SalePrice" DataFormatString="{0:C}" />
+            <asp:BoundField DataField="MRP" HeaderText="MRP" SortExpression="MRP" DataFormatString="{0:##00.00}" />
+            <asp:BoundField DataField="SalePrice" HeaderText="Sale Price" SortExpression="SalePrice" DataFormatString="{0:##00.00}" />
             <asp:BoundField DataField="CreateDate" DataFormatString="{0:d.MMM.yyyy}" HeaderText="Create Date" SortExpression="CreateDate" />
             <asp:BoundField DataField="ModifyDate" DataFormatString="{0:d.MMM.yyyy}" HeaderText="Modify Date" SortExpression="ModifyDate" />
             <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />

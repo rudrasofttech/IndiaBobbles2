@@ -111,8 +111,8 @@ Namespace Controllers
                     ViewBag.Error = "This email address is not in our records. Please register before "
                     Return View(dto)
                 Else
-                    Dim r As New Random(0)
-                    Dim password As String = String.Format("{0}{1}{2}{3}{4}{5}{7}", r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9), r.Next(0, 9))
+                    Dim r As New Random()
+                    Dim password As String = r.Next(100000, 999999).ToString()
                     user.Password = password
                     db.SaveChanges()
 
@@ -128,6 +128,31 @@ Namespace Controllers
                 ViewBag.Error = ex.Message
                 Return View(dto)
             End Try
+        End Function
+
+        <Authorize>
+        Function ManageProfile() As ActionResult
+            Dim u = db.Members.FirstOrDefault(Function(m) m.Email = User.Identity.Name)
+            Return View(u)
+        End Function
+
+        <Authorize>
+        <HttpPost>
+        <ValidateAntiForgeryToken>
+        Function ManageProfile(ByVal m As Member) As ActionResult
+            If Not ModelState.IsValid Then
+                Return View(m)
+            End If
+            Dim u = db.Members.FirstOrDefault(Function(t) t.Email = User.Identity.Name)
+            u.Newsletter = m.Newsletter
+            u.MemberName = m.MemberName
+            u.LastName = m.LastName
+            u.DOB = m.DOB
+            u.Country = m.Country
+            u.Mobile = m.Mobile
+            u.Gender = m.Gender
+            db.SaveChanges()
+            Return Redirect("~/account/manageprofile")
         End Function
 
     End Class

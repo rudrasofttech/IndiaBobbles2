@@ -43,7 +43,7 @@
             </ul>
             <div class="col-md-3 text-end">
                 @If Request.IsAuthenticated Then
-                    @<a href="~/account/profile" class="btn btn-success me-2">Profile</a>
+                    @<a href="~/account/manageprofile" class="btn btn-success me-2">Profile</a>
                     @<a href="~/account/logout" class="btn btn-secondary me-2">Logout</a>
                 Else
                     @<a href="~/account/generateotp" class="btn btn-secondary me-2">Login</a>

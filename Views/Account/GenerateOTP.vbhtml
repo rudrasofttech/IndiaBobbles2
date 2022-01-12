@@ -4,7 +4,7 @@
 End Code
 <div class="container fullbody bg-white">
     <div class="row">
-        <div class="col-6 p-3">
+        <div class="col-md-6 p-3">
             <h2>Generate OTP</h2>
             @If ViewBag.Success IsNot Nothing Then
                 @<div Class="alert alert-success" role="alert">

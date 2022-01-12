@@ -33,7 +33,7 @@ End Section
                                 <div class="row  align-items-center">
                                     <div class="col-md-7 mb-3 mb-md-0 text-center text-md-end">
                                         <h2>@p.Name</h2>
-                                        <h3 class="text-success">@p.SalePrice.ToString("C")</h3>
+                                        <h3 class="text-success">₹@p.SalePrice.ToString("##00.00")</h3>
                                         @If p.Description.Length > 100 Then
                                             @<p>@p.Description.Substring(0, 97) ...</p>
                                         Else
