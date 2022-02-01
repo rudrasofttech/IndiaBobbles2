@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="table-responsive">
-        <asp:GridView ID="EmailGrid" AllowPaging="True" PageSize="30"
+        <asp:GridView ID="EmailGrid" AllowPaging="True" PageSize="100"
             AutoGenerateColumns="False" CssClass="table table-striped table-bordered table-condensed"
             GridLines="None" runat="server" DataKeyNames="ID"
             OnPageIndexChanging="EmailGrid_PageIndexChanging" EmptyDataText="No Data Found.">
