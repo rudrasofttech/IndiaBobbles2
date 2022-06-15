@@ -15,7 +15,7 @@ End Code
                     Case 3
     @<span class="badge bg-warning">Paid</span>
                     Case 4
-    @<span class="badge bg-warning">Paid</span>
+    @<span class="badge bg-warning">Cash On Delivery</span>
                     Case 5
     @<span class="badge bg-info">Shipped</span>
                     Case 6

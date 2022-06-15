@@ -33,8 +33,8 @@ End Code
                                         <td>
                                             @o.Quantity
                                         </td>
-                                        <td>@o.Price.ToString("##00.00")</td>
-                                        <td>@o.Amount.ToString("##00.00")</td>
+                                        <td>₹ @o.Price.ToString("##00.00")</td>
+                                        <td>₹ @o.Amount.ToString("##00.00")</td>
                                     </tr>
                                 Next
 
@@ -53,7 +53,7 @@ End Code
                                             </form>
                                         </td>
                                         <td style="text-align:right;">Sub Total</td>
-                                        <td>@Model.Amount.ToString("##00.00")</td>
+                                        <td>₹ @Model.Amount.ToString("##00.00")</td>
                                         <td></td>
                                     </tr>
                                 End If
@@ -75,7 +75,7 @@ End Code
                                         <td colspan="5" class="text-end">
                                             Discount
                                         </td>
-                                        <td>- @Model.Discount.ToString("##00.00")</td>
+                                        <td>- ₹ @Model.Discount.ToString("##00.00")</td>
                                         <td></td>
                                     </tr>
                                 End If
@@ -83,14 +83,14 @@ End Code
                                     <td colspan="5" class="text-end">
                                         Shipping Fee
                                     </td>
-                                    <td>0</td>
+                                    <td>₹ @Model.ShippingPrice.ToString("###0.00")</td>
                                     <td></td>
                                 </tr>
                                 @<tr>
                                     <td colspan="5" class="text-end">
                                         Total
                                     </td>
-                                    <td>@Model.Total.ToString("##00.00")</td>
+                                    <td>₹ @Model.Total.ToString("##00.00")</td>
                                     <td></td>
                                 </tr>
                             End If
@@ -124,7 +124,7 @@ End Code
                                 @Model.ShippingZip
                             </address>
                         </div>
-                        <div Class="col-md-4">
+                        <div Class="col-md-4 text-center">
                             <form action="@ViewBag.action1" method="post">
                                 <input type="hidden" name="hash" value="@ViewBag.hash1" />
                                 <input type="hidden" name="key" value="@ViewBag.key" />
@@ -152,6 +152,16 @@ End Code
                                 <input type="hidden" name="pg" value="" />
                                 <input type="hidden" name="service_provider" value="payu_paisa" />
                                 <input type="image" src="~/theme/khichdi/img/Paynow.png" />
+                            </form>
+                            <div>
+                                <div style="height:20px;position:relative;width:100%;text-align:center;" class="my-3">
+                                    <hr style="width: 100%; position: absolute; top: 0px; padding: 0px;" />
+                                    <span class="bg-light" style=" border-radius: 15px; padding: 5px; position: absolute; left: calc(50% - 15px);">Or</span>
+                                </div>
+                            </div>
+                            <form method="post" action="@Url.Content("~/cart/cod")">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-success btn-lg">Cash On Delivery</button>
                             </form>
                         </div>
                     </div>

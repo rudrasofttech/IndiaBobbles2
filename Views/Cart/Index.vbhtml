@@ -3,21 +3,26 @@
     ViewData("Title") = "Cart"
 End Code
 
-<div class="container bg-white pt-2 fullbody">
-    <div class="row">
-        <div class="col-12 ">
-            <h1 class="text-center">Cart</h1>
-            <div class="pt-2 pb-2 mb-2">
-                <div class="table-responsive">
-                    <table class="table">
+<div Class="container bg-white pt-2 fullbody">
+    <div Class="row">
+        <div Class="col-12 ">
+            <h1 Class="text-center">Cart</h1>
+            @If Model IsNot Nothing Then
+                @<div class="p-2 text-center">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#orderContactModal"><strong>@Model.Name</strong></a>, <a href="#" data-bs-toggle="modal" data-bs-target="#orderContactModal"><i>@Model.Email</i></a>, <a href="#" data-bs-toggle="modal" data-bs-target="#orderContactModal"><i>@Model.Phone</i></a>
+</div>
+            End If
+            <div Class="pt-2 pb-2 mb-2">
+                <div Class="table-responsive">
+                    <Table Class="table">
                         <thead>
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Product Name</th>
-                                <th scope="col">Product Code</th>
-                                <th scope="col" class="text-start">Quantity</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Amount</th>
+                                <th scope="col"> Product Name</th>
+                                <th scope="col"> Product Code</th>
+                                <th scope="col" Class="text-start">Quantity</th>
+                                <th scope="col"> Price</th>
+                                <th scope="col"> Amount</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -37,8 +42,8 @@ End Code
                                                 <li class="page-item"><a class="page-link" href="~/cart/addquantity/@o.ID">+</a></li>
                                             </ul>
                                         </td>
-                                        <td>@o.Price.ToString("##00.00")</td>
-                                        <td>@o.Amount.ToString("##00.00")</td>
+                                        <td>₹ @o.Price.ToString("##00.00")</td>
+                                        <td>₹ @o.Amount.ToString("##00.00")</td>
                                         <td>
                                             <form method="post" action="@Url.Content("~/cart/remove/" & o.ID)">
                                                 @Html.AntiForgeryToken()
@@ -58,12 +63,12 @@ End Code
                                             <form method="post" action="@Url.Content("~/cart/applycoupon")">
                                                 @Html.AntiForgeryToken()
                                                 <input type="text" name="coupon" maxlength="100" placeholder="Coupon Code" />
-                                                <input type="hidden" name="returnto" value="Index"/>
+                                                <input type="hidden" name="returnto" value="Index" />
                                                 <input type="submit" value="Apply" Class="btn btn-light btn-sm" />
                                             </form>
                                         </td>
                                         <td style="text-align:right;">Sub Total</td>
-                                        <td>@Model.Amount.ToString("##00.00")</td>
+                                        <td>₹ @Model.Amount.ToString("##00.00")</td>
                                         <td></td>
                                     </tr>
                                 End If
@@ -85,7 +90,7 @@ End Code
                                         <td colspan="5" class="text-end">
                                             Discount
                                         </td>
-                                        <td>- @Model.Discount.ToString("##00.00")</td>
+                                        <td>- ₹ @Model.Discount.ToString("##00.00")</td>
                                         <td></td>
                                     </tr>
                                 End If
@@ -93,7 +98,7 @@ End Code
 
                             End If
                         </tbody>
-                    </table>
+                    </Table>
                 </div>
             </div>
             @If Model.OrderItems.Count > 0 Then

@@ -14,13 +14,18 @@
             background-image: url( @@Url.Content("~/theme/khichdi/img/India-Bobbles-package-1300.jpg") );
         }*/
 
-        .fullbody{
-            min-height:calc(100vh - 150px);
+        .fullbody {
+            min-height: calc(100vh - 150px);
         }
     </style>
     @RenderSection("head", required:=False)
 </head>
 <body>
+    @Code
+        Dim om = New IndiaBobbles.OrderManager()
+        Dim o As IndiaBobbles.Order = om.GetCart()
+    End Code
+
     <div id="fb-root"></div>
     <script type="text/javascript">
         (function (d, s, id) {
@@ -39,9 +44,13 @@
                 <li><a href="~/tag/collectibles" class="nav-link px-2 link-dark">Bobbles</a></li>
                 <li><a href="~/blog" class="nav-link px-2 link-dark">Blog</a></li>
                 <li><a href="~/orders" class="nav-link px-2 link-dark">My Orders</a></li>
-                <li><a href="~/cart" class="nav-link px-2 link-dark">Cart</a></li>
+                @If o.OrderItems.Count > 0 Then
+                    @<li><a href="@Url.Content("~/cart")" Class="nav-link px-2 link-dark">Cart (@o.OrderItems.Count)</a></li>
+                Else
+                    @<li><a href="@Url.Content("~/cart")" Class="nav-link px-2 link-dark">Cart</a></li>
+                End If
             </ul>
-            <div class="col-md-3 text-end">
+            <div Class="col-md-3 text-end">
                 @If Request.IsAuthenticated Then
                     @<a href="~/account/manageprofile" class="btn btn-success me-2">Profile</a>
                     @<a href="~/account/logout" class="btn btn-secondary me-2">Logout</a>
@@ -53,13 +62,47 @@
             </div>
         </header>
     </div>
-
+    @If o.OrderItems.Count > 0 AndAlso (String.IsNullOrEmpty(o.Name) OrElse String.IsNullOrEmpty(o.Email) OrElse String.IsNullOrEmpty(o.Phone)) Then
+        @<div class="alert alert-primary rounded-0 text-center" role="alert">
+            Your order is missing Name, Email and Phone . <a href="#" data-bs-toggle="modal" data-bs-target="#orderContactModal">Add Now</a>
+        </div>
+    End If
     @RenderBody()
-
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container">
+    @If o IsNot Nothing Then
+        @<div Class="modal fade" id="orderContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div Class="modal-dialog">
+                <div Class="modal-content">
+                    <div Class="modal-header">
+                        <h5 Class="modal-title" id="exampleModalLabel">Contact Information</h5>
+                        <Button type="button" Class="btn-close" data-bs-dismiss="modal" aria-label="Close"></Button>
+                    </div>
+                    <div Class="modal-body">
+                        <form method="get" action="@Url.Content("~/cart/updatecontact")">
+                            <div class="mb-2">
+                                <label for="ordercontactnametxt" class="form-label">Name</label>
+                                <input type="text" maxlength="100" value="@o.Name" name="name" class="form-control" id="ordercontactnametxt" />
+                            </div>
+                            <div class="mb-2">
+                                <label for="ordercontactemailtxt" class="form-label">Email</label>
+                                <input type="email" maxlength="250" value="@o.Email" name="email" class="form-control" id="ordercontactemailtxt" />
+                            </div>
+                            <div class="mb-2">
+                                <label for="ordercontactphonetxt" class="form-label">Phone</label>
+                                <input type="text" maxlength="15" name="Phone" value="@o.Phone" class="form-control" id="ordercontactphonetxt" />
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    End If
+    <footer Class="footer mt-auto py-3 bg-light">
+        <div Class="container">
             <div>
-                <a href="~/about" class="px-2 link-dark">Our Story</a>
+                <a href="~/about" Class="px-2 link-dark">Our Story</a>
                 @If User.Identity.IsAuthenticated Then
                     @<a href="~/account/myaccount" class="px-2 link-dark">My Account</a>
                     @<a href="~/account/logout" class="px-2 link-dark">Logout</a>

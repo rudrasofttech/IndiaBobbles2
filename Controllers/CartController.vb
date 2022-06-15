@@ -74,6 +74,12 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
+        Function UpdateContact(ByVal name As String, ByVal email As String, ByVal phone As String) As ActionResult
+            Dim o As Order = om.GetCart()
+            om.UpdateOrderContact(o.ID, name, email, Nothing, phone)
+            Return RedirectToAction("Index")
+        End Function
+
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function Address(ByVal model As OrderAddressDTO) As ActionResult
@@ -159,6 +165,42 @@ Namespace Controllers
                     Response.Write("Hash value did not matched")
                 End If
 
+            Catch ex As Exception
+                Response.Write("<span style='color:red'>" & ex.Message & "</span>")
+            End Try
+
+            Return View()
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function COD() As ActionResult
+            Try
+
+                Dim om As New OrderManager()
+                Dim o As Order = om.GetCart()
+
+                If o IsNot Nothing Then
+                    om.UpdatePaymentMode(o.ID, "COD")
+                    om.UpdateTotal(o.ID)
+                    om.UpdateOrderPayment(o.ID, "COD", Date.Now, "COD")
+                    Dim notes As String = o.ShippingNotes
+                    om.UpdateOrderStatus(o.ID, OrderStatusType.CODPaid, notes)
+
+                    Try
+                        Dim body As String = om.GenerateReceipt(o.ID)
+                        Dim eman As New EmailManager()
+                        eman.SendMail(Utility.NewsletterEmail, o.Email, Utility.AdminName, o.Name, body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                        eman.SendMail(Utility.NewsletterEmail, "preeti.singh@rudrasofttech.com", Utility.AdminName, "Preeti Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                        eman.SendMail(Utility.NewsletterEmail, "rajkiran.singh@rudrasofttech.com", Utility.AdminName, "Raj Kiran Singh", body, String.Format("Order Receipt : {0} from {1}", o.ID, Utility.SiteName), EmailMessageType.Communication, "Order Receipt")
+                    Catch ex As Exception
+                        Trace.Write(ex.Message)
+                    End Try
+
+                    CookieWorker.RemoveCookie(CookieWorker.OrderIdKey)
+
+                    Response.Redirect("~/orders/detail/" & o.ID)
+                End If
             Catch ex As Exception
                 Response.Write("<span style='color:red'>" & ex.Message & "</span>")
             End Try

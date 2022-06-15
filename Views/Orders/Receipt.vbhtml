@@ -26,7 +26,7 @@ End Code
                         Case 3
         @<span class="badge bg-warning">Paid</span>
                         Case 4
-        @<span class="badge bg-warning">Paid</span>
+        @<span class="badge bg-warning">Cash on Delivery</span>
                         Case 5
         @<span class="badge bg-info">Shipped</span>
                         Case 6
@@ -79,13 +79,13 @@ End Code
                                     <td>
                                         @oi.Quantity
                                     </td>
-                                    <td>@oi.Price.ToString("###0.00")</td>
-                                    <td>@oi.Amount.ToString("###0.00")</td>
+                                    <td>₹ @oi.Price.ToString("###0.00")</td>
+                                    <td>₹ @oi.Amount.ToString("###0.00")</td>
                                 </tr>
                             Next
                             @<tr>
                                 <td colspan="4" class="text-right">Sub Total</td>
-                                <td>@Model.Amount.ToString("###0.00")</td>
+                                <td>₹ @Model.Amount.ToString("###0.00")</td>
                             </tr>
                             @if Model.Coupon <> "" Then
                                 @<tr>
@@ -96,22 +96,22 @@ End Code
                             @if Model.Discount > 0 Then
                                 @<tr>
                                     <td colspan="4" class="text-right">Discount</td>
-                                    <td>- @Model.Discount.ToString("###0.00")</td>
+                                    <td>- ₹ @Model.Discount.ToString("###0.00")</td>
                                 </tr>
                             End If
                             @<tr>
                                 <td colspan="4" class="text-right">Shipping Fee</td>
-                                <td>@Model.ShippingPrice.ToString("###0.00")</td>
+                                <td>₹ @Model.ShippingPrice.ToString("###0.00")</td>
                             </tr>
                             @if (Model.PaymentMode = "COD") Then
                                 @<tr>
                                     <td colspan="4" class="text-right">Cash On Delivery Fee</td>
-                                    <td>@Model.COD.ToString("###0.00")</td>
+                                    <td>₹ @Model.COD.ToString("###0.00")</td>
                                 </tr>
                             End If
                             @<tr>
                                 <td colspan="4" class="text-right">Total</td>
-                                <td>@Model.Total.ToString("###0.00")</td>
+                                <td>₹ @Model.Total.ToString("###0.00")</td>
                             </tr>
                         End If
                     </tbody>

@@ -4,7 +4,6 @@
     Public CODFee As Decimal = 50
     Private ReadOnly dc As New indiabobblesEntities
 
-
     Public Sub New()
     End Sub
 
@@ -149,23 +148,23 @@
         Dim oi As OrderItem = dc.OrderItems.SingleOrDefault(Function(item) item.ID = itemId AndAlso item.OrderID = orderId)
         oi.Quantity += 1
         oi.Amount = oi.Quantity * oi.Price
-            dc.SaveChanges()
-            Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            Dim amount As Decimal = 0
+        dc.SaveChanges()
+        Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
+        Dim amount As Decimal = 0
 
-            For Each i As OrderItem In o.OrderItems
-                amount += i.Amount
-            Next
+        For Each i As OrderItem In o.OrderItems
+            amount += i.Amount
+        Next
 
-            o.Amount = amount
+        o.Amount = amount
 
-            If o.Amount = 0 Then
-                o.Coupon = ""
-                o.Discount = 0
-                o.ShippingPrice = 0
-                o.COD = 0
-                o.PaymentMode = ""
-            End If
+        If o.Amount = 0 Then
+            o.Coupon = ""
+            o.Discount = 0
+            o.ShippingPrice = 0
+            o.COD = 0
+            o.PaymentMode = ""
+        End If
 
         dc.SaveChanges()
     End Sub
@@ -216,9 +215,9 @@
     Public Sub DeleteOrder(ByVal orderId As Integer)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            dc.OrderItems.RemoveRange(o.OrderItems)
-            dc.Orders.Remove(o)
-            dc.SaveChanges()
+        dc.OrderItems.RemoveRange(o.OrderItems)
+        dc.Orders.Remove(o)
+        dc.SaveChanges()
 
     End Sub
 
@@ -258,29 +257,29 @@
     Public Sub UpdateOrderBillingAddress(ByVal orderId As Integer, ByVal billingAddress As String, ByVal billingCity As String, ByVal billingState As String, ByVal billingCountry As String, ByVal billingZip As String)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            o.BillingAddress = billingAddress
-            o.BillingCity = billingCity
-            o.BillingCountry = billingCountry
-            o.BillingState = billingState
-            o.BillingZip = billingZip
-            o.DateModified = DateTime.Now
-            dc.SaveChanges()
+        o.BillingAddress = billingAddress
+        o.BillingCity = billingCity
+        o.BillingCountry = billingCountry
+        o.BillingState = billingState
+        o.BillingZip = billingZip
+        o.DateModified = DateTime.Now
+        dc.SaveChanges()
 
     End Sub
 
     Public Sub UpdateOrderShippingAddress(ByVal orderId As Integer, ByVal shippingAddress As String, ByVal shippingCity As String, ByVal shippingState As String, ByVal shippingCountry As String, ByVal shippingZip As String, ByVal shippingFirstName As String, ByVal shippingLastName As String, ByVal shippingPhone As String)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            o.ShippingAddress = shippingAddress
-            o.ShippingCity = shippingCity
-            o.ShippingCountry = shippingCountry
-            o.ShippingState = shippingState
-            o.ShippingZip = shippingZip
-            o.DateModified = DateTime.Now
-            o.ShippingFirstName = shippingFirstName
-            o.ShippingLastName = shippingLastName
-            o.ShippingPhone = shippingPhone
-            dc.SaveChanges()
+        o.ShippingAddress = shippingAddress
+        o.ShippingCity = shippingCity
+        o.ShippingCountry = shippingCountry
+        o.ShippingState = shippingState
+        o.ShippingZip = shippingZip
+        o.DateModified = DateTime.Now
+        o.ShippingFirstName = shippingFirstName
+        o.ShippingLastName = shippingLastName
+        o.ShippingPhone = shippingPhone
+        dc.SaveChanges()
 
     End Sub
 
@@ -300,41 +299,41 @@
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
 
-            If o.PaymentMode = "COD" Then
+        If o.PaymentMode = "COD" Then
+            o.COD = 0
+            'If (o.Amount + o.ShippingPrice + o.Tax - o.Discount) > 2000 Then
+            '    o.COD = ((o.Amount + o.ShippingPrice + o.Tax - o.Discount) / 100) * 2
+            'Else
+            '    o.COD = 40
+            'End If
+        Else
+            o.COD = 0
+        End If
 
-                If (o.Amount + o.ShippingPrice + o.Tax - o.Discount) > 2000 Then
-                    o.COD = ((o.Amount + o.ShippingPrice + o.Tax - o.Discount) / 100) * 2
-                Else
-                    o.COD = 40
-                End If
-            Else
-                o.COD = 0
-            End If
-
-            o.DateModified = DateTime.Now
-            dc.SaveChanges()
+        o.DateModified = DateTime.Now
+        dc.SaveChanges()
 
     End Sub
 
     Public Sub UpdateShippingPrice(ByVal orderId As Integer)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            Dim quantity As Integer = 0
+        Dim quantity As Integer = 0
 
-            For Each item As OrderItem In o.OrderItems
-                quantity += item.Quantity
-            Next
+        For Each item As OrderItem In o.OrderItems
+            quantity += item.Quantity
+        Next
 
-            If o.ShippingState.ToLower() = "jammu and kashmir" OrElse o.ShippingState.ToLower() = "andaman and nicobar islands" OrElse o.ShippingState.ToLower() = "lakshadweep" Then
-                o.ShippingPrice = quantity * 200
-            ElseIf o.ShippingState.ToLower() = "national capital territory of delhi" Then
-                o.ShippingPrice = quantity * 0
-            Else
-                o.ShippingPrice = 0
-            End If
+        If o.ShippingState.ToLower() = "jammu and kashmir" OrElse o.ShippingState.ToLower() = "andaman and nicobar islands" OrElse o.ShippingState.ToLower() = "lakshadweep" Then
+            o.ShippingPrice = quantity * 200
+        ElseIf o.ShippingState.ToLower() = "national capital territory of delhi" Then
+            o.ShippingPrice = quantity * 0
+        Else
+            o.ShippingPrice = 0
+        End If
 
-            o.DateModified = DateTime.Now
-            dc.SaveChanges()
+        o.DateModified = DateTime.Now
+        dc.SaveChanges()
 
     End Sub
 
@@ -344,18 +343,18 @@
 
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            o.Total = o.Amount + o.ShippingPrice + o.COD + o.Tax - o.Discount
-            o.DateModified = DateTime.Now
-            dc.SaveChanges()
+        o.Total = o.Amount + o.ShippingPrice + o.COD + o.Tax - o.Discount
+        o.DateModified = DateTime.Now
+        dc.SaveChanges()
 
     End Sub
 
     Public Sub UpdateOrderShippingService(ByVal orderId As Integer, ByVal shippingservice As String)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-            o.ShippingService = shippingservice
-            o.DateModified = DateTime.Now
-            dc.SaveChanges()
+        o.ShippingService = shippingservice
+        o.DateModified = DateTime.Now
+        dc.SaveChanges()
 
     End Sub
 
@@ -424,6 +423,7 @@
         o.TransactionCode = transactionCode
         o.TransactionDate = transactionDate
         o.TransactionDetail = transactionDetail
+
         o.DateModified = DateTime.Now
         dc.SaveChanges()
 
