@@ -64,7 +64,7 @@
     </div>
     @If o.OrderItems.Count > 0 AndAlso (String.IsNullOrEmpty(o.Name) OrElse String.IsNullOrEmpty(o.Email) OrElse String.IsNullOrEmpty(o.Phone)) Then
         @<div class="alert alert-primary rounded-0 text-center" role="alert">
-            Your order is missing Name, Email and Phone . <a href="#" data-bs-toggle="modal" data-bs-target="#orderContactModal">Add Now</a>
+            Your order is missing Name, Email and Phone. <button type="button" id="addcontactorderanchor" data-bs-toggle="modal" data-bs-target="#orderContactModal" class="btn btn-link">Add Now</button>
         </div>
     End If
     @RenderBody()
@@ -77,6 +77,9 @@
                         <Button type="button" Class="btn-close" data-bs-dismiss="modal" aria-label="Close"></Button>
                     </div>
                     <div Class="modal-body">
+                        <p>
+                            Your order is missing crucial contact information.
+                        </p>
                         <form method="get" action="@Url.Content("~/cart/updatecontact")">
                             <div class="mb-2">
                                 <label for="ordercontactnametxt" class="form-label">Name</label>

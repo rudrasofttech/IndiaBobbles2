@@ -153,7 +153,7 @@ End Code
                                 <input type="hidden" name="service_provider" value="payu_paisa" />
                                 <input type="image" src="~/theme/khichdi/img/Paynow.png" />
                             </form>
-                            <div>
+                            @*<div>
                                 <div style="height:20px;position:relative;width:100%;text-align:center;" class="my-3">
                                     <hr style="width: 100%; position: absolute; top: 0px; padding: 0px;" />
                                     <span class="bg-light" style=" border-radius: 15px; padding: 5px; position: absolute; left: calc(50% - 15px);">Or</span>
@@ -162,7 +162,7 @@ End Code
                             <form method="post" action="@Url.Content("~/cart/cod")">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-success btn-lg">Cash On Delivery</button>
-                            </form>
+                            </form>*@
                         </div>
                     </div>
                 End If

@@ -20,7 +20,11 @@
         Else
             o = dc.Orders.SingleOrDefault(Function(item) item.ID = cartid)
         End If
-
+        If o Is Nothing Then
+            o = New [Order] With {
+                .OrderItems = New List(Of OrderItem)
+            }
+        End If
         Return o
     End Function
 

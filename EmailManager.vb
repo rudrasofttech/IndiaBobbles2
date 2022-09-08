@@ -120,7 +120,10 @@ Public Class EmailManager
     '    End Try
     'End Function
 
-    Public Function SendMail(ByVal fromAddress As String, ByVal toAddress As String, ByVal senderName As String, ByVal recieverName As String, ByVal body As String, ByVal subject As String, ByVal ccaddresses As String, ByVal messageType As EmailMessageType, ByVal emailGroup As String) As Boolean
+    Public Function SendMail(ByVal fromAddress As String,
+                             ByVal toAddress As String,
+                             ByVal senderName As String,
+                             ByVal recieverName As String, ByVal body As String, ByVal subject As String, ByVal ccaddresses As String, ByVal messageType As EmailMessageType, ByVal emailGroup As String) As Boolean
         Try
             Dim em As New EmailMessage With {
                 .ID = Guid.NewGuid()
@@ -131,6 +134,7 @@ Public Class EmailManager
             emessage = emessage.Replace("[message]", body)
             emessage = emessage.Replace("[id]", em.ID.ToString())
             emessage = emessage.Replace("[toaddress]", toAddress)
+            emessage = emessage.Replace("[toname]", recieverName)
             emessage = emessage.Replace("[sitename]", Utility.SiteName)
             emessage = emessage.Replace("[sitetitle]", Utility.SiteTitle)
             emessage = emessage.Replace("[address]", Utility.Address)

@@ -301,6 +301,13 @@
       <DependentUpon>Articles.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="admin\Communicate.aspx.designer.vb">
+      <DependentUpon>Communicate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Communicate.aspx.vb">
+      <DependentUpon>Communicate.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="admin\controls\Message.ascx.designer.vb">
       <DependentUpon>Message.ascx</DependentUpon>
     </Compile>
@@ -532,6 +539,7 @@
       <LastGenOutput>IBModel.Designer.vb</LastGenOutput>
     </EntityDeploy>
     <Content Include="admin\Articles.aspx" />
+    <Content Include="admin\Communicate.aspx" />
     <Content Include="admin\controls\Message.ascx" />
     <Content Include="admin\Emails.aspx" />
     <Content Include="admin\ManageArticle.aspx" />

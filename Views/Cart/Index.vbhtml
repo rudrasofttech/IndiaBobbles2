@@ -2,6 +2,13 @@
 @Code
     ViewData("Title") = "Cart"
 End Code
+@Section scripts
+    @If String.IsNullOrEmpty(Model.Name) OrElse String.IsNullOrEmpty(Model.Email) OrElse String.IsNullOrEmpty(Model.Phone) Then
+        @<script>
+             $("#addcontactorderanchor").click();
+        </script>
+    End If
+End Section
 
 <div Class="container bg-white pt-2 fullbody">
     <div Class="row">
@@ -10,7 +17,7 @@ End Code
             @If Model IsNot Nothing Then
                 @<div class="p-2 text-center">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#orderContactModal"><strong>@Model.Name</strong></a>, <a href="#" data-bs-toggle="modal" data-bs-target="#orderContactModal"><i>@Model.Email</i></a>, <a href="#" data-bs-toggle="modal" data-bs-target="#orderContactModal"><i>@Model.Phone</i></a>
-</div>
+                </div>
             End If
             <div Class="pt-2 pb-2 mb-2">
                 <div Class="table-responsive">
@@ -105,6 +112,7 @@ End Code
                 @<div class="text-end">
                     <a href="@Url.Content("~/cart/address")" class="btn btn-primary">Proceed To Checkout</a>
                 </div>
+
             End If
         </div>
     </div>
