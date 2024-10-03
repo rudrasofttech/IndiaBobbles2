@@ -17,7 +17,10 @@ End Code
     <div class="row">
         <div class="col-12 ">
             <h1 class="text-center">Address</h1>
-
+            @If ViewBag.Exception IsNot Nothing Then
+                @<span class="text-danger">@ViewBag.Exception.Message</span>
+                @<span class="text-danger">@ViewBag.Exception.StackTrace</span>
+            End If
             @Using (Html.BeginForm())
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(True, "", New With {.class = "text-danger"})

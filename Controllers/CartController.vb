@@ -86,13 +86,24 @@ Namespace Controllers
             If Not ModelState.IsValid Then
                 Return View(model)
             End If
-            Dim o As Order = om.GetCart()
-            Dim m As Member = db.Members.FirstOrDefault(Function(item) item.Email = model.Email)
-            om.UpdateOrderContact(o.ID, model.Name, model.Email, IIf(m Is Nothing, Nothing, m.ID), model.Phone)
-            om.UpdateOrderBillingAddress(o.ID, model.BillingAddress, model.BillingCity, model.BillingState, model.BillingCountry, model.BillingPinCode)
-            om.UpdateOrderShippingAddress(o.ID, model.ShippingAddress, model.ShippingCity, model.ShippingState, model.ShippingCountry, model.ShippingPincode, model.ShippingName, "", model.ShippingPhone)
-            om.UpdateTotal(o.ID)
-            Return RedirectToAction("Checkout")
+            Try
+                Dim o As Order = om.GetCart()
+                Dim m As Member = db.Members.FirstOrDefault(Function(item) item.Email = model.Email)
+                If m Is Nothing Then
+                    om.UpdateOrderContact(o.ID, model.Name, model.Email, Nothing, model.Phone)
+                Else
+                    om.UpdateOrderContact(o.ID, model.Name, model.Email, m.ID, model.Phone)
+                End If
+
+                om.UpdateOrderBillingAddress(o.ID, model.BillingAddress, model.BillingCity, model.BillingState, model.BillingCountry, model.BillingPinCode)
+                om.UpdateOrderShippingAddress(o.ID, model.ShippingAddress, model.ShippingCity, model.ShippingState, model.ShippingCountry, model.ShippingPincode, model.ShippingName, "", model.ShippingPhone)
+                om.UpdateTotal(o.ID)
+                Return RedirectToAction("Checkout")
+            Catch ex As Exception
+                ViewBag.Exception = ex
+                Return View(model)
+            End Try
+
         End Function
 
         Function Address() As ActionResult

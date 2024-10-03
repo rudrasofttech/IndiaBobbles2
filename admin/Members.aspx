@@ -27,7 +27,8 @@
         <div class="col">
             <asp:Button ID="SubmitButton" runat="server" Text="Filter" CssClass="btn btn-primary me-3"
                 CausesValidation="false" OnClick="SubmitButton_Click" />
-            <asp:Button ID="DeleteButton" runat="server" Text="Remove" OnClientClick="return confirm('You are about to delete members, are you sure?')" CssClass="btn btn-dark float-end"
+            <asp:Button ID="DeleteFilteredButton" runat="server" CausesValidation="false" Text="Delete Filtered" OnClientClick="return confirm('You are about to delete members, are you sure?')" CssClass="ms-2 btn btn-dark" />
+            <asp:Button ID="DeleteButton" runat="server" Text="Remove Selected" OnClientClick="return confirm('You are about to delete members, are you sure?')" CssClass="btn btn-dark float-end"
                 CausesValidation="false" OnClick="DeleteButton_Click" />
         </div>
     </div>
@@ -44,7 +45,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:CheckBox ID="cbSelect" CssClass="gridCB" runat="server"></asp:CheckBox>
-                        <asp:Literal ID="MemberIDLt" Text='<%# Eval("ID") %>' Visible="false" runat="server"></asp:Literal>
+                        <asp:Literal ID="MemberIDLt" Text='<%# Eval("ID") %>' runat="server"></asp:Literal>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email" />

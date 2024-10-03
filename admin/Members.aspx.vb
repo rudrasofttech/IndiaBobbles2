@@ -135,4 +135,46 @@ Public Class Members
         Next
         Bind(MemberGridView.PageIndex)
     End Sub
+
+    Protected Sub DeleteFilteredButton_Click(sender As Object, e As EventArgs) Handles DeleteFilteredButton.Click
+        Try
+            Dim members = dc.Members.Where(Function(t) True)
+
+            If FilterTextBox.Text.Trim() <> "" Then
+                If FilterTextBox.Text.Trim().StartsWith("*") Then
+                    members = members.Where(Function(t) t.Email.EndsWith(FilterTextBox.Text.Trim().TrimStart("*".ToCharArray())))
+                ElseIf FilterTextBox.Text.Trim().EndsWith("*") Then
+                    members = members.Where(Function(t) t.Email.StartsWith(FilterTextBox.Text.Trim().TrimEnd("*".ToCharArray())))
+                Else
+                    members = members.Where(Function(t) t.Email.Contains(FilterTextBox.Text.Trim()))
+                End If
+
+            End If
+
+            If StatusDropDown.SelectedValue <> "" Then
+
+                Select Case StatusDropDown.SelectedValue
+                    Case "0"
+                        members = members.Where(Function(t) t.Status = CByte(GeneralStatusType.Active))
+                    Case "1"
+                        members = members.Where(Function(t) t.Status = CByte(GeneralStatusType.Inactive))
+                    Case "2"
+                        members = members.Where(Function(t) t.Status = CByte(GeneralStatusType.Deleted))
+                End Select
+            End If
+
+            If SubscribeList.SelectedValue <> "" Then
+                members = members.Where(Function(t) t.Newsletter)
+            End If
+
+            members = members.OrderByDescending(Function(t) t.Createdate)
+            dc.Members.RemoveRange(members)
+            dc.SaveChanges()
+
+        Catch ex As Exception
+            Trace.Write("Unable to fetch member records.")
+            Trace.Write(ex.Message)
+            Trace.Write(ex.StackTrace)
+        End Try
+    End Sub
 End Class
