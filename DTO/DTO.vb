@@ -35,6 +35,9 @@ Public Class RegisterDTO
     Public Property Name As String = String.Empty
     <MaxLength(20)>
     Public Property Mobile As String = String.Empty
+    Public Property CaptchaKey As Guid
+    Public Property CaptchaImage As String
+    Public Property CaptchaValue As String
 End Class
 
 Public Class OTPDTO

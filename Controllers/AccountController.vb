@@ -6,7 +6,22 @@ Namespace Controllers
     Public Class AccountController
         Inherits Controller
 
-        Private ReadOnly db As New indiabobblesEntities
+        Private ReadOnly db As indiabobblesEntities
+        Private ReadOnly _captchaManager As CaptchaManager
+        Public Property CaptchaKey As Guid
+        Public Property CaptchaImage As String
+
+        Public Sub New()
+            db = New indiabobblesEntities()
+            _captchaManager = New CaptchaManager(db)
+        End Sub
+
+        Private Sub LoadCaptcha()
+            _captchaManager.RemoveOld()
+            Dim c = _captchaManager.GenerateCaptcha()
+            CaptchaKey = c.Id
+            CaptchaImage = _captchaManager.CaptchaImage
+        End Sub
 
         ' GET: Account/Login
         Function Login() As ActionResult
@@ -43,7 +58,12 @@ Namespace Controllers
         End Function
 
         Function Register() As ActionResult
-            Return View(New RegisterDTO())
+            LoadCaptcha()
+            Dim model As New RegisterDTO With {
+                .CaptchaImage = CaptchaImage,
+                .CaptchaKey = CaptchaKey
+            }
+            Return View(model)
         End Function
 
         <HttpPost()>
@@ -51,6 +71,19 @@ Namespace Controllers
         Function Register(ByVal dto As RegisterDTO) As ActionResult
             If Not ModelState.IsValid Then
                 ViewBag.Error = "Please check your input."
+                LoadCaptcha()
+                dto.CaptchaValue = String.Empty
+                dto.CaptchaImage = CaptchaImage
+                dto.CaptchaKey = CaptchaKey
+                Return View(dto)
+            End If
+            If Not _captchaManager.IsValid(dto.CaptchaKey, dto.CaptchaValue) Then
+
+                ViewBag.Error = "Invalid Captcha"
+                LoadCaptcha()
+                dto.CaptchaValue = String.Empty
+                dto.CaptchaImage = CaptchaImage
+                dto.CaptchaKey = CaptchaKey
                 Return View(dto)
             End If
 
@@ -58,6 +91,10 @@ Namespace Controllers
                 Dim user = db.Members.FirstOrDefault(Function(m) m.Email = dto.Email)
                 If user IsNot Nothing Then
                     ViewBag.Error = "This email address is already in our records."
+                    LoadCaptcha()
+                    dto.CaptchaValue = String.Empty
+                    dto.CaptchaImage = CaptchaImage
+                    dto.CaptchaKey = CaptchaKey
                     Return View(dto)
                 Else
                     Dim r As New Random(0)
@@ -77,7 +114,7 @@ Namespace Controllers
                     Dim body As String = String.Format("Dear {0},<br/><br/>You are now a registered member of IndiaBobbles.<br/><br/>Your one time password is <strong>{1}</strong>.<br/><br/>", m.MemberName, password)
                     Dim eman As New EmailManager()
                     eman.SendMail(Utility.NewsletterEmail, m.Email, Utility.AdminName,
-                                  m.MemberName, body, "Registration Successfull",
+                                  m.MemberName, body, "Registration Successful",
                                   EmailMessageType.Communication, "Registration")
 
                     Return Redirect("~/account/login")

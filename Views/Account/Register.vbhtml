@@ -37,6 +37,18 @@ End Code
                         @Html.EditorFor(Function(model) model.Newsletter, New With {.htmlAttributes = New With {.class = "form-check-input"}})
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Captcha</label>
+                        <div class="row g-0">
+                            <div class="col-5">
+                                <img src="@Model.CaptchaImage" class="img-fluid" />
+                            </div>
+                            <div class="col">
+                                <input type="hidden" name="CaptchaKey" value="@Model.CaptchaKey" />
+                                <input type="text" class="form-control" required name="CaptchaValue" maxlength="20" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
                         <input type="submit" value="Submit" class="btn btn-secondary" />
                     </div>
                 </div>

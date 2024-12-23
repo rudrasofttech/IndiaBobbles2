@@ -315,6 +315,13 @@
       <DependentUpon>Message.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="admin\CouponCodes.aspx.designer.vb">
+      <DependentUpon>CouponCodes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\CouponCodes.aspx.vb">
+      <DependentUpon>CouponCodes.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="admin\Emails.aspx.designer.vb">
       <DependentUpon>Emails.aspx</DependentUpon>
     </Compile>
@@ -412,8 +419,12 @@
     <Compile Include="App_Start\WebApiConfig.vb" />
     <Compile Include="Article.vb" />
     <Compile Include="CacheManager.vb" />
+    <Compile Include="CaptchaManager.vb" />
     <Compile Include="DriveManager.vb" />
     <Compile Include="EmailManager.vb" />
+    <Compile Include="Models\Captcha.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
@@ -541,6 +552,7 @@
     <Content Include="admin\Articles.aspx" />
     <Content Include="admin\Communicate.aspx" />
     <Content Include="admin\controls\Message.ascx" />
+    <Content Include="admin\CouponCodes.aspx" />
     <Content Include="admin\Emails.aspx" />
     <Content Include="admin\ManageArticle.aspx" />
     <Content Include="admin\ManageMember.aspx" />

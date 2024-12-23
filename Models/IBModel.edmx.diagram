@@ -50,6 +50,7 @@
         <AssociationConnector Association="IBModel.FK_Product_Member1" />
         <AssociationConnector Association="IBModel.FK_ProductPhoto_Product" />
         <AssociationConnector Association="IBModel.FK_ProductTag_Product" />
+        <EntityTypeShape EntityType="IBModel.Captcha" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
