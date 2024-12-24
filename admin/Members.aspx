@@ -41,7 +41,7 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        Select
+                       <div style="cursor:pointer;" onclick="var checkBoxes = $('.gridCB > input'); checkBoxes.prop('checked', !checkBoxes.prop('checked'));">Select</div> 
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:CheckBox ID="cbSelect" CssClass="gridCB" runat="server"></asp:CheckBox>
