@@ -145,7 +145,7 @@
 
     </script>
     <script type="text/javascript">
-        var vt_root = "//rudrasofttech.com/vtracker/";
+        var vt_root = "//www.webstats.co.in/";
         var vt_website_id = "2";
         var vt_wvri = "";
         var VTInit = (function () {

@@ -36,7 +36,7 @@
     <uc1:Message runat="server" ID="message" Visible="false" />
     <div class="table-responsive">
         <asp:GridView ID="MemberGridView" runat="server" AutoGenerateColumns="False" EmptyDataText="No Members Found" AllowPaging="True" CssClass="table table-striped table-bordered table-condensed"
-            PageSize="50" OnPageIndexChanging="MemberGridView_PageIndexChanging"
+            PageSize="100" OnPageIndexChanging="MemberGridView_PageIndexChanging"
             OnRowDataBound="MemberGridView_RowDataBound" OnRowCommand="MemberGridView_RowCommand">
             <Columns>
                 <asp:TemplateField>
