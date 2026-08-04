@@ -357,6 +357,13 @@
       <DependentUpon>ManageProduct.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="admin\ManageSitemap.aspx.designer.vb">
+      <DependentUpon>ManageSitemap.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ManageSitemap.aspx.vb">
+      <DependentUpon>ManageSitemap.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="admin\Members.aspx.designer.vb">
       <DependentUpon>Members.aspx</DependentUpon>
     </Compile>
@@ -558,6 +565,7 @@
     <Content Include="admin\ManageMember.aspx" />
     <Content Include="admin\ManageOrder.aspx" />
     <Content Include="admin\ManageProduct.aspx" />
+    <Content Include="admin\ManageSitemap.aspx" />
     <Content Include="admin\Members.aspx" />
     <Content Include="admin\Orders.aspx" />
     <Content Include="admin\ProductDetail.aspx" />

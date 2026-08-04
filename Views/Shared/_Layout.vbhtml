@@ -2,6 +2,9 @@
 <html>
 <head>
     @RenderSection("meta", required:=False)
+    @If Not String.IsNullOrEmpty(ViewBag.CanonicalUrl) Then
+        @<link rel="canonical" href="@ViewBag.CanonicalUrl" />
+    End If
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="rtXgIUyaLbBtd_tsln3F6ZB9ZboSPHZe7K_zB6uRgv8" />

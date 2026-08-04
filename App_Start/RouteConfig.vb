@@ -12,7 +12,8 @@ Public Module RouteConfig
         routes.MapRoute(
             name:="ProductRoute",
             url:="product/{id}/{name}",
-            defaults:=New With {.controller = "Product", .action = "Detail", .id = UrlParameter.Optional}
+            defaults:=New With {.controller = "Product", .action = "Detail", .name = UrlParameter.Optional},
+            constraints:=New With {.id = "\d+"}
         )
         routes.MapRoute(
             name:="TagRoute",
@@ -28,6 +29,11 @@ Public Module RouteConfig
             name:="About",
             url:="about",
             defaults:=New With {.controller = "Home", .action = "About", .id = UrlParameter.Optional}
+        )
+        routes.MapRoute(
+            name:="Contact",
+            url:="contact",
+            defaults:=New With {.controller = "Home", .action = "Contact", .id = UrlParameter.Optional}
         )
         routes.MapRoute(
             name:="Terms",
@@ -106,7 +112,7 @@ Public Module RouteConfig
         )
         routes.MapRoute(
             name:="BlogPost",
-            url:="blog/{url}",
+            url:="blog/{*url}",
             defaults:=New With {.controller = "Articles", .action = "Detail", .url = UrlParameter.Optional}
         )
         routes.MapRoute(

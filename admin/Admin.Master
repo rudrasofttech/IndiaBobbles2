@@ -43,6 +43,9 @@
                     <li class="nav-item">
                         <a class="nav-link" runat="server" href="~/admin/communicate.aspx">Communicate</a>
                     </li>
+                    <li class="nav-item">
+    <a class="nav-link" runat="server" href="~/admin/managesitemap.aspx">Sitemap</a>
+</li>
                 </ul>
             </div>
         </div>

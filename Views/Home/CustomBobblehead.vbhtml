@@ -1,5 +1,6 @@
 ﻿@Code
     ViewData("Title") = "Order Custom Bobble heads"
+    ViewBag.CanonicalUrl = IndiaBobbles.Utility.SiteURL & "/order-custom-bobbleheads"
 End Code
 @section meta
     <meta name="description" content="Order customized bobbleheads in India. Creating a customized bobble head needs patience and skill." />

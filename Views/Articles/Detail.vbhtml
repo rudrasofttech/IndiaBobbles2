@@ -2,6 +2,7 @@
 @Code
     If Model IsNot Nothing Then
         ViewData("Title") = Model.Title
+        ViewBag.CanonicalUrl = IndiaBobbles.Utility.SiteURL & "/blog/" & Model.URL.ToLower()
     Else
         ViewData("Title") = ""
     End If

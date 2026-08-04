@@ -1,6 +1,7 @@
 ﻿@ModelType List(Of IndiaBobbles.Article)
 @Code
     ViewData("Title") = "Blog"
+    ViewBag.CanonicalUrl = IndiaBobbles.Utility.SiteURL & "/blog"
 End Code
 
 <div class="container bg-white">
