@@ -7,18 +7,27 @@ End Code
     <div class="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-4">
         @For Each item In Model
             @<div Class="col">
-                <div Class="card h-100">
+                <div Class="card h-100 @IIf(item.OutofStock, "out-of-stock", "")">
                     @If Not String.IsNullOrEmpty(item.ThumbPath) Then
-                        @<a href="@Url.Content("~/product/" & item.ID & "/" & IndiaBobbles.Utility.Slugify(item.Name))">
-                            <img src="@item.ThumbPath" Class="card-img-top" alt="Photo of @item.Name" />
-                        </a>
+                        @<div class="position-relative">
+                            <a href="@Url.Content("~/product/" & item.ID & "/" & IndiaBobbles.Utility.Slugify(item.Name))">
+                                <img src="@item.ThumbPath" Class="card-img-top" alt="Photo of @item.Name" />
+                            </a>
+                            @If item.OutofStock Then
+                                @<span class="badge bg-secondary position-absolute top-0 start-0 m-2">Out of stock</span>
+                            End If
+                        </div>
                     End If
                     <div Class="card-body">
                         <h5 Class="card-title">@item.Name</h5>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li Class="list-group-item">MRP: <span class="badge text-danger">₹@item.MRP.ToString("##00.00")</span></li>
-                        <li Class="list-group-item">Our Price: <span class="badge bg-success">₹@item.SalePrice.ToString("##00.00")</span></li>
+                        @If item.MRP > item.SalePrice Then
+                            @<li Class="list-group-item">MRP: <span class="text-danger"><s>₹@item.MRP.ToString("##00.00")</s></span></li>
+                            @<li Class="list-group-item">Sale: <span class="text-success">₹@item.SalePrice.ToString("##00.00")</span></li>
+                        Else
+                            @<li Class="list-group-item">MRP: <span class="text-primary">₹@item.MRP.ToString("##00.00")</span></li>
+                        End If
                     </ul>
                     <div class="card-body">
                         <div class="row">
@@ -31,10 +40,10 @@ End Code
                                 Else
                                     @<button disabled class="btn btn-warning">Out of Stock</button>
                                 End If
-                                                    </div>
+                            </div>
                         </div>
-                        
-                        
+
+
                     </div>
                 </div>
             </div>

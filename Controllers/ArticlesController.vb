@@ -7,12 +7,18 @@ Namespace Controllers
         Private ReadOnly db As New indiabobblesEntities
 
         Function Detail(url As String) As ActionResult
+            ' catch-all route may pass full path e.g. "gags/long-live-revolution"
+            ' extract the last segment to match the stored URL slug
+            If Not String.IsNullOrEmpty(url) AndAlso url.Contains("/") Then
+                url = url.Split("/"c).Last()
+            End If
+
             Dim post = db.Posts.FirstOrDefault(Function(p) p.URL = url)
 
             If post IsNot Nothing Then
                 Return View(post)
             Else
-                Return View()
+                Return HttpNotFound()
             End If
         End Function
 

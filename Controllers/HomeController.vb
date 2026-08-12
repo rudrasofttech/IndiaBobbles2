@@ -17,7 +17,7 @@
         Dim t = db.CategoryTags.FirstOrDefault(Function(m) m.UrlName = id)
         ViewBag.Tag = id
         If t IsNot Nothing Then
-            Return View(db.ProductTags.Where(Function(m) m.TagID = t.ID).Select(Function(m) m.Product).ToList())
+            Return View(db.ProductTags.Where(Function(m) m.TagID = t.ID).OrderBy(Function(m) m.Product.OutofStock).Select(Function(m) m.Product).ToList())
         Else
             Return View(New List(Of Product))
         End If

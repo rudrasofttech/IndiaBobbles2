@@ -16,6 +16,9 @@
         /*body {
             background-image: url( @@Url.Content("~/theme/khichdi/img/India-Bobbles-package-1300.jpg") );
         }*/
+        .card.out-of-stock {
+            opacity: 0.55;
+        }
 
         .fullbody {
             min-height: calc(100vh - 150px);
