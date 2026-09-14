@@ -9,7 +9,7 @@
         Else
             ViewBag.Highlights = New List(Of Product)
         End If
-        ViewBag.CanonicalUrl = IndiaBobbles.Utility.SiteURL
+        ViewBag.CanonicalUrl = IndiaBobbles.Utility.SiteURL & "/"
         Return View()
     End Function
 
@@ -69,9 +69,16 @@
     End Function
 
     ' GET: /contact/whatsapp
-    Function WhatsAppRedirect() As ActionResult
+    Function WhatsAppRedirect(Optional ByVal message As String = Nothing) As ActionResult
         Dim number As String = "919871500276"
-        Dim message As String = Uri.EscapeDataString("Hi, I am interested in a bobblehead")
-        Return Redirect($"https://wa.me/{number}?text={message}")
+        Dim defaultMessage As String = "Hi, I am interested in a bobblehead"
+        Dim finalMessage As String = If(String.IsNullOrWhiteSpace(message), defaultMessage, message.Trim())
+
+        If finalMessage.Length > 200 Then
+            finalMessage = finalMessage.Substring(0, 200)
+        End If
+
+        Dim encodedMessage As String = Uri.EscapeDataString(finalMessage)
+        Return Redirect($"https://wa.me/{number}?text={encodedMessage}")
     End Function
 End Class

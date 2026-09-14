@@ -49,6 +49,7 @@ Namespace Controllers
 
             Dim o As Order = om.GetCart()
             om.UpdateCouponCode(o.ID, coupon)
+            om.UpdateTotal(o.ID)
             Return RedirectToAction(returnto)
         End Function
 
@@ -58,7 +59,7 @@ Namespace Controllers
 
             Dim o As Order = om.GetCart()
             om.UpdateCouponCode(o.ID, "")
-
+            om.UpdateTotal(o.ID)
             Return RedirectToAction(returnto)
         End Function
 

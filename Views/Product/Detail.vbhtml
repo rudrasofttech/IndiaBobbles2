@@ -188,6 +188,10 @@ End Section
                     </tr>
                 </tbody>
             </Table>
+            <div class="py-3">
+                <p>For any questions about the bobblehead or for discount coupon codes. </p>
+                <a target="_blank" class="btn btn-lg btn-success text-white fw-bold"  href="@Url.Action("WhatsAppRedirect", "Home", New With {.message = "Hi, I have a question about " & Model.Name})">Chat on Whatsapp</a>
+            </div>
         </div>
     </div>
 </div>

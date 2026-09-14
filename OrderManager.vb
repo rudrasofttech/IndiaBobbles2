@@ -15,8 +15,8 @@
             o = New [Order] With {
                 .OrderItems = New List(Of OrderItem)
             }
-            'o = Create(String.Empty, String.Empty, Nothing, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, OrderStatusType.[New], String.Empty, String.Empty, DateTime.Now, 0, 0, 0, 0, 0, 0, CODFee, "", "", "", "", "")
-            'CookieWorker.SetCookie(CookieWorker.OrderIdKey, "cartid", o.ID.ToString(), DateTime.Now.AddHours(50))
+            'o = Create(String.Empty, String.Empty, Nothing, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, OrderStatusType.[New], String.Empty, String.Empty, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, CODFee, "", "", "", "", "")
+            'CookieWorker.SetCookie(CookieWorker.OrderIdKey, "cartid", o.ID.ToString(), DateTime.UtcNow.AddHours(50))
         Else
             o = dc.Orders.SingleOrDefault(Function(item) item.ID = cartid)
         End If
@@ -41,7 +41,7 @@
             .BillingState = billingState,
             .BillingZip = billingZip,
             .Coupon = coupon,
-            .DateCreated = DateTime.Now,
+            .DateCreated = DateTime.UtcNow,
             .DateModified = modified,
             .Discount = discount,
             .Email = email,
@@ -234,7 +234,7 @@
         o.BillingState = billingState
         o.BillingZip = billingZip
         o.Coupon = coupon
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         o.Discount = discount
         o.Email = email
         o.MemberID = memberid
@@ -266,7 +266,7 @@
         o.BillingCountry = billingCountry
         o.BillingState = billingState
         o.BillingZip = billingZip
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -279,7 +279,7 @@
         o.ShippingCountry = shippingCountry
         o.ShippingState = shippingState
         o.ShippingZip = shippingZip
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         o.ShippingFirstName = shippingFirstName
         o.ShippingLastName = shippingLastName
         o.ShippingPhone = shippingPhone
@@ -294,7 +294,7 @@
         o.Email = email
         o.MemberID = memberid
         o.Phone = phone
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -314,7 +314,7 @@
             o.COD = 0
         End If
 
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -336,7 +336,7 @@
             o.ShippingPrice = 0
         End If
 
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -348,7 +348,7 @@
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.Total = o.Amount + o.ShippingPrice + o.COD + o.Tax - o.Discount
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -357,7 +357,7 @@
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.ShippingService = shippingservice
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -366,7 +366,7 @@
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.ShippingTrackCode = trackingCode
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -376,15 +376,19 @@
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.Coupon = String.Empty
         o.Discount = 0
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         Dim coupons As List(Of CouponCode) = dc.CouponCodes.Where(Function(t) t.Status = CByte(GeneralStatusType.Active)).ToList()
 
         For Each cc As CouponCode In coupons
 
             If coupon.ToLower() = cc.Name.ToLower().Trim() Then
+                If cc.IsPercent Then
+                    o.Discount = (o.Amount * cc.Value) / 100
+                Else
+                    o.Discount = cc.Value
+                End If
                 o.Coupon = cc.Name
-                o.Discount = cc.Value
-                o.DateModified = DateTime.Now
+                o.DateModified = DateTime.UtcNow
                 Exit For
             End If
         Next
@@ -397,7 +401,7 @@
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.ShippingNotes = shippingNotes
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -407,7 +411,7 @@
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.Status = CByte(status)
         o.ShippingNotes = notes
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -416,7 +420,7 @@
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.ShippingTrackCode = trackingcode
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -428,7 +432,7 @@
         o.TransactionDate = transactionDate
         o.TransactionDetail = transactionDetail
 
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -437,7 +441,7 @@
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.TransactionDetail = transactionDetail
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
@@ -551,7 +555,7 @@
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.PaymentMode = paymentmode
-        o.DateModified = DateTime.Now
+        o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
