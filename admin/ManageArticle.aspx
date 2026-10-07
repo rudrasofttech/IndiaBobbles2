@@ -105,7 +105,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="<%: FacebookImageTextBox.ClientID %>">
-                    Facebook Image (<a href="#driveModal" data-toggle="modal" role="button">Open Drive</a>)</label>
+                    Facebook Image (<a href="#" data-bs-toggle="modal" data-bs-target="#driveModal" role="button">Open Drive</a>)</label>
                 <asp:TextBox CssClass="form-control" ID="FacebookImageTextBox" MaxLength="250" runat="server"></asp:TextBox>
             </div>
             <div class="mb-3">
@@ -127,23 +127,23 @@
             <div class="mb-3">
                 <div class="form-check">
                     <label class="form-check-label" for="SlideShowCheckBox">Slide Show</label>
-                        <asp:CheckBox CssClass="form-check-input" ID="SlideShowCheckBox" ClientIDMode="Static" Text="" runat="server" />
+                    <asp:CheckBox CssClass="form-check-input" ID="SlideShowCheckBox" ClientIDMode="Static" Text="" runat="server" />
                 </div>
                 <div class="form-check">
                     <label class="form-check-label" for="QuestionCheckBox">Question</label>
-                        <asp:CheckBox CssClass="form-check-input" ID="QuestionCheckBox" ClientIDMode="Static" Text="" runat="server" />
+                    <asp:CheckBox CssClass="form-check-input" ID="QuestionCheckBox" ClientIDMode="Static" Text="" runat="server" />
                 </div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="<%: DescTextBox.ClientID %>">
                     Small Description</label>
-                    <asp:TextBox CssClass="form-control" ID="DescTextBox" TextMode="MultiLine" Rows="5" runat="server"></asp:TextBox><asp:RequiredFieldValidator
-                        ID="DescReqVal" ValidationGroup="VideoGrp" ControlToValidate="DescTextBox" runat="server"
-                        ErrorMessage="Required" CssClass="validate" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator>
+                <asp:TextBox CssClass="form-control" ID="DescTextBox" TextMode="MultiLine" Rows="5" runat="server"></asp:TextBox><asp:RequiredFieldValidator
+                    ID="DescReqVal" ValidationGroup="VideoGrp" ControlToValidate="DescTextBox" runat="server"
+                    ErrorMessage="Required" CssClass="validate" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="<%: TextTextBox.ClientID %>">
-                    Text (<a href="#driveModal" data-toggle="modal" role="button">Open Drive</a>)</label>
+                    Text (<a href="#" data-bs-toggle="modal" data-bs-target="#driveModal" role="button">Open Drive</a>)</label>
 
                 <asp:TextBox CssClass="form-control" ID="TextTextBox" TextMode="MultiLine" Rows="20" runat="server"></asp:TextBox><asp:RequiredFieldValidator
                     ID="TextReqVal" ValidationGroup="VideoGrp" ControlToValidate="TextTextBox" runat="server"
@@ -157,14 +157,18 @@
             </div>
         </div>
     </div>
-    <div id="driveModal" class="modal hide fade" tabindex="-1" role="dialog">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                &times;</button>
-            <h3>Drive</h3>
-        </div>
-        <div class="modal-body">
-            <iframe style="border: none; width: 100%; height: 400px;" src="viewdrive.aspx"></iframe>
+    <div id="driveModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>
+                    <h3>Drive</h3>
+                </div>
+                <div class="modal-body">
+                    <iframe style="border: none; width: 100%; height: 400px;" src="viewdrive.aspx"></iframe>
+                </div>
+            </div>
         </div>
     </div>
 </asp:Content>

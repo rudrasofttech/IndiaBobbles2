@@ -18,11 +18,7 @@ Public Module BundleConfig
         bundles.Add(New ScriptBundle("~/bundles/bootstrap").Include(
                   "~/theme/khichdi/js/bootstrap.min.js"))
 
-        bundles.Add(New StyleBundle("~/theme/khichdi/css").Include(
-                  "~/theme/khichdi/css/bootstrap.min.css",
-                  "~/theme/khichdi/css/indiabobbles.css",
-                  "~/theme/khichdi/css/indiabobbles-sm.css",
-                  "~/theme/khichdi/css/animate.css"))
+        bundles.Add(New StyleBundle("~/theme/khichdi/css").Include("~/theme/khichdi/css/indiabobbles.css"))
     End Sub
 End Module
 

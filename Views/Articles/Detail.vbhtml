@@ -13,10 +13,10 @@ End Code
         <div class="col-md-9" id="article">
             @If Model IsNot Nothing Then
                 @<h1>@Model.Title</h1>
-                @<div>@Model.WriterName | @Model.DateCreated</div>
-                @<div>@Model.Tag</div>
+                @<div class="py-2">@Model.WriterName | @Model.DateCreated.ToShortDateString()</div>
+                @<div class="py-2">@Model.Tag</div>
 
-                @Html.Raw(Model.Article.Replace("<datasource name=""ShareDataSource"" />", "").Replace("<datasource name=""DisqusDataSource"" />", ""))
+                @Html.Raw(Model.Article.Replace("<datasource name=""ShareDataSource"" />", "").Replace("<datasource name=""DisqusDataSource"" />", "").Replace(System.Environment.NewLine, "<br />"))
 
                 @<div id="disqus_thread"></div>
                 @<script type="text/javascript">
