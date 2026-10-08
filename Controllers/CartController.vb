@@ -13,17 +13,26 @@ Namespace Controllers
         End Function
 
         Function Add(ByVal id As Integer) As ActionResult
+            Dim member As Member = Nothing
             Dim memberid As Long? = Nothing
+            Dim memberName As String = String.Empty
+
             If Session("member") IsNot Nothing Then
-                memberid = CType(Session("member"), Member).ID
+                member = CType(Session("member"), Member)
+                memberid = member.ID
+                memberName = member.MemberName
             End If
+
             Dim p = db.Products.FirstOrDefault(Function(t) t.ID = id)
             If p IsNot Nothing Then
                 Dim o As Order = om.GetCart()
                 If o.ID = 0 Then
-                    o = om.Create(String.Empty, String.Empty, memberid, String.Empty, String.Empty, String.Empty, String.Empty, "India", String.Empty, String.Empty, String.Empty, String.Empty, "India", String.Empty, String.Empty, OrderStatusType.[New], String.Empty, String.Empty, DateTime.Now, 0, 0, 0, 0, 0, 0, 40.0, "", "", "", "", "")
+                    o = om.Create(memberName, String.Empty, memberid, String.Empty, String.Empty, String.Empty, String.Empty, "India", String.Empty, String.Empty, String.Empty, String.Empty, "India", String.Empty, String.Empty, OrderStatusType.[New], String.Empty, String.Empty, DateTime.Now, 0, 0, 0, 0, 0, 0, 40.0, "", "", "", "", "")
                     CookieWorker.SetCookie(CookieWorker.OrderIdKey, "cartid", o.ID.ToString(), DateTime.Now.AddDays(10))
+                ElseIf member IsNot Nothing AndAlso String.IsNullOrWhiteSpace(o.Name) Then
+                    om.UpdateOrderContact(o.ID, member.MemberName, o.Email, member.ID, o.Phone)
                 End If
+
                 Dim imgpath = String.Empty
                 If p.ProductPhotoes.Count > 0 Then
                     imgpath = p.ProductPhotoes.First().ImagePath

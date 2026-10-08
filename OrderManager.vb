@@ -467,88 +467,172 @@
 
     End Function
 
+    ' =====================================================================
+    '  GenerateReceipt – branded, mobile-friendly HTML email receipt
+    '  • Email-safe: tables + inline styles only (works in Gmail, Outlook, Apple Mail)
+    '  • All customer-entered text is HTML-encoded
+    '  • Same signature as before: Public Function GenerateReceipt(orderId) As String
+    ' =====================================================================
     Public Function GenerateReceipt(ByVal orderId As Integer) As String
-        Dim builder As New StringBuilder()
-
-
         Dim o As Order = dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)
-        builder.Append(String.Format("<h1>Order Number: {0}</h1>", o.ID))
-        builder.Append("<table style='width:100%;'>")
-        builder.Append("<thead><th style='text-align:left;'>Name</th><th style='text-align:left;'>Code</th><th style='text-align:left;'>Price</th><th style='text-align:left;'>Quantity</th><th style='text-align:left;'>Amount</th></tr></thead>")
-        builder.Append("<tbody>")
+        If o Is Nothing Then Return String.Empty
 
+        Dim site As String = "https://www.indiabobbles.com"
+        Dim inr As New System.Globalization.CultureInfo("en-IN")
+        Dim enc = Function(s As Object) System.Net.WebUtility.HtmlEncode(If(s, "").ToString())
+        Dim money = Function(d As Decimal) "&#8377;" & d.ToString("#,##0.00", inr)
+        Dim absUrl = Function(p As String) As String
+                         If String.IsNullOrEmpty(p) Then Return ""
+                         If p.StartsWith("http", StringComparison.OrdinalIgnoreCase) Then Return p
+                         If p.StartsWith("//") Then Return "https:" & p
+                         p = p.TrimStart("~"c)
+                         Return site & If(p.StartsWith("/"), "", "/") & p
+                     End Function
+
+        ' Friendly status
+        Dim statusText As String = "Order placed"
+        Dim statusBg As String = "#eef0f3", statusFg As String = "#4b5563"
+        Select Case o.Status
+            Case 1 : statusText = "Awaiting payment"
+            Case 2 : statusText = "Being prepared" : statusBg = "#e8f0fe" : statusFg = "#1d4ed8"
+            Case 3 : statusText = "Paid" : statusBg = "#fff4cc" : statusFg = "#330B3F"
+            Case 4 : statusText = "Cash on delivery" : statusBg = "#fff4cc" : statusFg = "#330B3F"
+            Case 5 : statusText = "Shipped" : statusBg = "#e0f2fe" : statusFg = "#0369a1"
+            Case 6 : statusText = "Delivered" : statusBg = "#e7f6ec" : statusFg = "#157a3c"
+            Case 7 : statusText = "Refunded" : statusBg = "#f3e8ff" : statusFg = "#7e22ce"
+            Case 8 : statusText = "Cancelled" : statusBg = "#fdecee" : statusFg = "#b4232f"
+        End Select
+
+        Dim firstName As String = If(String.IsNullOrWhiteSpace(o.Name), "there", o.Name.Trim().Split(" "c)(0))
+        Dim shipName As String = Trim(If(o.ShippingFirstName, "") & " " & If(o.ShippingLastName, ""))
+        Dim font As String = "font-family:Arial,Helvetica,sans-serif;"
+        Dim muted As String = "color:#6b5f72;"
+        Dim b As New StringBuilder()
+
+        ' ---------- Wrapper ----------
+        b.Append("<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>")
+        b.AppendFormat("<title>India Bobbles – Order #{0}</title></head>", o.ID)
+        b.AppendFormat("<body style='margin:0;padding:0;background:#f4f1f6;{0}'>", font)
+        ' Preheader (inbox preview text)
+        b.AppendFormat("<div style='display:none;max-height:0;overflow:hidden;'>Your India Bobbles order #{0} – {1}. Total {2}.</div>", o.ID, statusText, money(o.Total))
+
+        b.Append("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='background:#f4f1f6;'><tr><td align='center' style='padding:24px 12px;'>")
+        b.Append("<table role='presentation' width='600' cellpadding='0' cellspacing='0' style='width:100%;max-width:600px;background:#ffffff;border-radius:14px;overflow:hidden;'>")
+
+        ' ---------- Header ----------
+        b.Append("<tr><td style='background:#ffc107;padding:18px 24px;' align='left'>")
+        b.AppendFormat("<a href='{0}'><img src='{0}/theme/khichdi/img/ib-logo.png' alt='India Bobbles' height='44' style='display:block;border:0;height:44px;'></a>", site)
+        b.Append("</td></tr>")
+
+        ' ---------- Hero ----------
+        b.Append("<tr><td style='background:#330B3F;padding:26px 24px;color:#ffffff;'>")
+        b.AppendFormat("<div style='font-size:22px;font-weight:bold;margin-bottom:6px;'>Thank you, {0}! &#127881;</div>", enc(firstName))
+        b.Append("<div style='font-size:14px;color:#e2d3ea;line-height:1.5;'>Here's your receipt. Every piece is hand-painted by our artists and packed with care.</div>")
+        b.Append("</td></tr>")
+
+        ' ---------- Order meta ----------
+        b.Append("<tr><td style='padding:20px 24px 8px;'>")
+        b.Append("<table role='presentation' width='100%' cellpadding='0' cellspacing='0'><tr>")
+        b.AppendFormat("<td style='font-size:13px;{0}'>Order number<br><span style='font-size:22px;font-weight:bold;color:#330B3F;'>#{1}</span></td>", muted, o.ID)
+        b.AppendFormat("<td align='right' valign='top'><span style='display:inline-block;background:{0};color:{1};font-size:12px;font-weight:bold;padding:6px 12px;border-radius:20px;'>{2}</span></td>", statusBg, statusFg, statusText)
+        b.Append("</tr></table>")
+
+        b.AppendFormat("<div style='font-size:13px;{0}margin-top:8px;line-height:1.7;'>", muted)
+        b.AppendFormat("Order date: <b style='color:#1f1724;'>{0}</b>", o.DateCreated.ToString("d MMM yyyy"))
+        If Not String.IsNullOrEmpty(o.PaymentMode) Then b.AppendFormat(" &nbsp;·&nbsp; Payment: <b style='color:#1f1724;'>{0}</b>", enc(o.PaymentMode))
+        If Not String.IsNullOrEmpty(o.TransactionCode) Then b.AppendFormat("<br>Transaction: <b style='color:#1f1724;'>{0}</b>", enc(o.TransactionCode))
+        If o.TransactionDate.HasValue Then b.AppendFormat(" &nbsp;·&nbsp; {0}", o.TransactionDate.Value.ToString("d MMM yyyy, h:mm tt"))
+        b.Append("</div>")
+
+        ' Tracking box
+        If Not String.IsNullOrEmpty(o.ShippingTrackCode) Then
+            b.Append("<div style='background:#e0f2fe;color:#0369a1;border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;'>&#128666; ")
+            If Not String.IsNullOrEmpty(o.ShippingService) Then b.AppendFormat("Shipped via <b>{0}</b> · ", enc(o.ShippingService))
+            b.AppendFormat("Tracking number: <b>{0}</b></div>", enc(o.ShippingTrackCode))
+        End If
+        b.Append("</td></tr>")
+
+        ' ---------- Items ----------
+        b.Append("<tr><td style='padding:12px 24px;'>")
+        b.Append("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='border-top:2px solid #330B3F;'>")
         For Each oi As OrderItem In o.OrderItems
-            builder.Append("<tr>")
-            builder.Append(String.Format("<td style='text-align:left;'>{0}</td>", oi.ProductName))
-            builder.Append(String.Format("<td style='text-align:left;'>{0}</td>", oi.ProductCode))
-            builder.Append(String.Format("<td style='text-align:left;'>{0}</td>", oi.Price))
-            builder.Append(String.Format("<td style='text-align:left;'>{0}</td>", oi.Quantity))
-            builder.Append(String.Format("<td style='text-align:left;'>{0}</td>", oi.Amount))
-            builder.Append("</tr>")
+            Dim img As String = absUrl(oi.ProductImg)
+            b.Append("<tr>")
+            If img <> "" Then
+                b.AppendFormat("<td width='64' style='padding:12px 12px 12px 0;border-bottom:1px solid #ece6ef;' valign='top'><img src='{0}' alt='' width='56' height='56' style='display:block;width:56px;height:56px;object-fit:contain;background:#faf8fb;border-radius:8px;border:0;'></td>", enc(img))
+            End If
+            b.AppendFormat("<td style='padding:12px 0;border-bottom:1px solid #ece6ef;font-size:14px;' valign='top'><b style='color:#1f1724;'>{0}</b>", enc(oi.ProductName))
+            b.AppendFormat("<br><span style='font-size:12px;{0}'>{1}Qty {2} × {3}</span></td>",
+                       muted, If(String.IsNullOrEmpty(oi.ProductCode), "", enc(oi.ProductCode) & " · "), oi.Quantity, money(oi.Price))
+            b.AppendFormat("<td align='right' style='padding:12px 0;border-bottom:1px solid #ece6ef;font-size:14px;font-weight:bold;color:#330B3F;white-space:nowrap;' valign='top'>{0}</td>", money(oi.Amount))
+            b.Append("</tr>")
         Next
+        b.Append("</table>")
 
-        builder.Append(String.Format("<tr><td colspan='4' align='right'>Amount</td><td>{0}</td></tr>", o.Amount.ToString("##00.00")))
-        builder.Append(String.Format("<tr><td colspan='4' align='right'>Shipping</td><td>{0}</td></tr>", o.ShippingPrice.ToString("##00.00")))
+        ' ---------- Totals ----------
+        Dim row = Function(label As String, value As String, style As String) _
+        String.Format("<tr><td style='padding:5px 0;font-size:14px;{2}'>{0}</td><td align='right' style='padding:5px 0;font-size:14px;{2}'>{1}</td></tr>", label, value, style)
 
+        b.Append("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='margin-top:10px;'>")
+        b.Append(row("Subtotal", money(o.Amount), "color:#3e3445;"))
         If o.Discount > 0 Then
-            builder.Append(String.Format("<tr><td colspan='4' align='right'>Discount</td><td>- {0}</td></tr>", o.Discount.ToString("##00.00")))
+            b.Append(row("Discount" & If(String.IsNullOrEmpty(o.Coupon), "", " (" & enc(o.Coupon) & ")"), "&minus; " & money(o.Discount), "color:#157a3c;"))
+        End If
+        b.Append(row("Shipping", If(o.ShippingPrice = 0, "<b style='color:#157a3c;'>FREE</b>", money(o.ShippingPrice)), "color:#3e3445;"))
+        If o.PaymentMode = "COD" Then b.Append(row("Cash on delivery fee", money(o.COD), "color:#3e3445;"))
+        b.AppendFormat("<tr><td style='padding:12px 0 4px;border-top:1px solid #ece6ef;font-size:18px;font-weight:bold;color:#330B3F;'>Total</td><td align='right' style='padding:12px 0 4px;border-top:1px solid #ece6ef;font-size:18px;font-weight:bold;color:#330B3F;'>{0}</td></tr>", money(o.Total))
+        b.AppendFormat("<tr><td colspan='2' style='font-size:11px;{0}'>Inclusive of all taxes</td></tr>", muted)
+        b.Append("</table>")
+        b.Append("</td></tr>")
+
+        ' ---------- Addresses (2 columns, stack on narrow screens) ----------
+        b.Append("<tr><td style='padding:12px 24px 4px;'>")
+        b.Append("<table role='presentation' width='100%' cellpadding='0' cellspacing='0'><tr>")
+
+        b.Append("<td valign='top' width='50%' style='padding:0 8px 12px 0;'><div style='background:#faf8fb;border-radius:10px;padding:14px;font-size:13px;line-height:1.6;color:#3e3445;'>")
+        b.Append("<div style='font-weight:bold;color:#330B3F;margin-bottom:4px;'>&#128666; Delivery address</div>")
+        b.AppendFormat("<b>{0}</b><br>{1}<br>{2}, {3} – {4}<br>{5}", enc(shipName), enc(o.ShippingAddress), enc(o.ShippingCity), enc(o.ShippingState), enc(o.ShippingZip), enc(o.ShippingCountry))
+        If Not String.IsNullOrEmpty(o.ShippingPhone) Then b.AppendFormat("<br>&#128222; +91 {0}", enc(o.ShippingPhone))
+        b.Append("</div></td>")
+
+        b.Append("<td valign='top' width='50%' style='padding:0 0 12px 8px;'><div style='background:#faf8fb;border-radius:10px;padding:14px;font-size:13px;line-height:1.6;color:#3e3445;'>")
+        b.Append("<div style='font-weight:bold;color:#330B3F;margin-bottom:4px;'>&#128179; Billing</div>")
+        b.AppendFormat("<b>{0}</b><br>{1}<br>+91 {2}<br>{3}<br>{4}, {5} – {6}", enc(o.Name), enc(o.Email), enc(o.Phone), enc(o.BillingAddress), enc(o.BillingCity), enc(o.BillingState), enc(o.BillingZip))
+        b.Append("</div></td>")
+
+        b.Append("</tr></table></td></tr>")
+
+        ' ---------- What's next ----------
+        If o.Status = 3 OrElse o.Status = 4 OrElse o.Status = 2 Then
+            b.Append("<tr><td style='padding:4px 24px 8px;'><div style='background:#fff4cc;border-radius:10px;padding:14px;font-size:13px;color:#330B3F;line-height:1.6;'>")
+            b.Append("<b>What happens next?</b><br>We pack your order within 2 business days and email you the tracking number once it ships. Delivery usually takes 2–3 days to metros and up to 8–10 working days elsewhere.")
+            b.Append("</div></td></tr>")
         End If
 
-        If o.Coupon <> String.Empty Then
-            builder.Append(String.Format("<tr><td colspan='4' align='right'>Coupon</td><td>{0}</td></tr>", o.Coupon))
-        End If
+        ' ---------- Buttons ----------
+        b.Append("<tr><td align='center' style='padding:16px 24px 8px;'>")
+        b.AppendFormat("<a href='{0}/orders' style='display:inline-block;background:#330B3F;color:#ffffff;text-decoration:none;font-weight:bold;font-size:14px;padding:12px 22px;border-radius:8px;margin:4px;'>View my orders</a>", site)
+        b.AppendFormat("<a href='{0}/tag/collectibles' style='display:inline-block;background:#ffc107;color:#330B3F;text-decoration:none;font-weight:bold;font-size:14px;padding:12px 22px;border-radius:8px;margin:4px;'>Shop more bobbleheads</a>", site)
+        b.Append("</td></tr>")
 
-        If o.PaymentMode = "COD" Then
-            builder.Append(String.Format("<tr><td colspan='4' align='right'>COD</td><td>{0}</td></tr>", o.COD.ToString("##00.00")))
-        Else
-        End If
+        ' ---------- Help ----------
+        b.AppendFormat("<tr><td style='padding:12px 24px 22px;font-size:13px;{0}line-height:1.7;' align='center'>", muted)
+        b.AppendFormat("Questions? Reply to this email or write to <a href='mailto:indiabobbles@rudrasofttech.com?subject=Order%20%23{0}' style='color:#330B3F;font-weight:bold;'>indiabobbles@rudrasofttech.com</a><br>", o.ID)
+        b.Append("or call <a href='tel:+919871500276' style='color:#330B3F;font-weight:bold;'>+91 98715 00276</a> (Mon–Sat, 10 AM–6 PM). Please mention your order number.<br>")
+        b.AppendFormat("Damaged in transit? Email photos within 4 hours of delivery. <a href='{0}/shipping-policy' style='color:#330B3F;'>Shipping &amp; Returns</a>", site)
+        b.Append("</td></tr>")
 
-        builder.Append(String.Format("<tr><td colspan='4' align='right'>Total</td><td>{0}</td></tr>", o.Total.ToString("##00.00")))
-        builder.Append("</tbody>")
-        builder.Append("</table>")
-        builder.Append("<table style='width:100%; border:0px;'>")
-        builder.Append("<tr>")
-        builder.Append("<td><h3>Billing Address</h3>")
-        builder.Append(String.Format("<div>{0}</div>", o.Name))
-        builder.Append(String.Format("<div>{0}</div>", o.Email))
-        builder.Append(String.Format("<div>{0}</div>", o.Phone))
-        builder.Append(String.Format("<div>{0}</div>", o.BillingAddress))
-        builder.Append(String.Format("<div>{0}</div>", o.BillingCity))
-        builder.Append(String.Format("<div>{0}</div>", o.BillingState))
-        builder.Append(String.Format("<div>{0}</div>", o.BillingZip))
-        builder.Append(String.Format("<div>{0}</div>", o.BillingCountry))
-        builder.Append("</td>")
-        builder.Append("<td><h3>Shipping Address</h3>")
-        builder.Append(String.Format("<div>{0} {1}</div>", o.ShippingFirstName, o.ShippingLastName))
-        builder.Append(String.Format("<div>{0}</div>", o.ShippingPhone))
-        builder.Append(String.Format("<div>{0}</div>", o.ShippingAddress))
-        builder.Append(String.Format("<div>{0}</div>", o.ShippingCity))
-        builder.Append(String.Format("<div>{0}</div>", o.ShippingState))
-        builder.Append(String.Format("<div>{0}</div>", o.ShippingZip))
-        builder.Append(String.Format("<div>{0}</div>", o.ShippingCountry))
-        builder.Append("</td>")
-        builder.Append("</tr>")
-        builder.Append("</table>")
-        builder.Append("<div>")
-        builder.Append(String.Format("<div>Order Status : {0}</div>", [Enum].Parse(GetType(OrderStatusType), o.Status.ToString()).ToString()))
+        ' ---------- Footer ----------
+        b.Append("<tr><td style='background:#330B3F;padding:18px 24px;color:#cbb8d4;font-size:12px;line-height:1.6;' align='center'>")
+        b.Append("<b style='color:#ffc107;'>India Bobbles</b> · Hand-painted Bollywood &amp; Indian bobbleheads<br>")
+        b.Append("H104, Ajnara Daffodil, Sector 137, Noida, Uttar Pradesh – 201305<br>")
+        b.AppendFormat("<a href='{0}' style='color:#ffc107;text-decoration:none;'>indiabobbles.com</a> &nbsp;·&nbsp; ", site)
+        b.Append("<a href='https://www.instagram.com/indiabobbles' style='color:#ffc107;text-decoration:none;'>Instagram</a> &nbsp;·&nbsp; ")
+        b.Append("<a href='https://www.facebook.com/IndiaBobbles' style='color:#ffc107;text-decoration:none;'>Facebook</a>")
+        b.Append("</td></tr>")
 
-        If o.ShippingTrackCode <> "" Then
-            builder.Append(String.Format("<div>Shipping Tracking Code : {0}</div>", o.ShippingTrackCode))
-        End If
-
-        If o.TransactionCode <> "" Then
-            builder.Append(String.Format("<div>Transaction Code : {0}</div>", o.TransactionCode))
-        End If
-
-        If o.TransactionDate.HasValue Then
-            builder.Append(String.Format("<div>Transaction Date : {0}</div>", o.TransactionDate.Value.ToString()))
-        End If
-
-        builder.Append("<p>Thanks for your Purchase. If you have any questions please contact us at ib@rudrasofttech.com or call us at 9871500276. Please provide your order number.</p>")
-        builder.Append("</div>")
-
-
-        Return builder.ToString()
+        b.Append("</table></td></tr></table></body></html>")
+        Return b.ToString()
     End Function
 
     Public Sub UpdatePaymentMode(ByVal orderId As Integer, ByVal paymentmode As String)

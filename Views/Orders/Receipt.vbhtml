@@ -58,7 +58,6 @@ End Code
                       <span>
                           <strong>Seller:</strong> Rudra Softtech LLP<br/>
                           <strong>PAN No:</strong> AAMFR0653C<br/>
-                          <strong>GST Registration No:</strong> 07AAMFR0653C2ZD
                       </span>
                 <table class="table">
                     <thead>

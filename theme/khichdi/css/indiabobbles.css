@@ -20,6 +20,10 @@
    17. Accessibility & motion
    18. Shipping & returns (.ib-ship)
    19. Payment options (.ib-pay)
+   20. Cart (.ib-cart)
+   21. Checkout address (.ib-addr)
+   22. Checkout review & pay (.ib-co)
+   23. Order detail (.ib-order)
    All class names are unchanged, so no view needs editing.
    ===================================================================== */
 
@@ -89,11 +93,6 @@
     --ib-grad-radial: radial-gradient(circle at 75% 40%, var(--ib-p3) 0, var(--ib-p) 58%);
     --ib-grad-linear: linear-gradient(90deg, var(--ib-p), var(--ib-p2));
 }
-
-h1, h2, h3, h4 {
-    font-family: "Spongeboy Me Bob", sans-serif;
-}
-
 
 
 /* =====================================================================
@@ -3172,3 +3171,1043 @@ h1, h2, h3, h4 {
     .ib-pay .secure b {
         color: var(--ib-ok);
     }
+
+
+/* =====================================================================
+   20. CART (.ib-cart)
+   ===================================================================== */
+.ib-cart h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--ib-p);
+}
+
+.ib-cart .count {
+    font-size: .9rem;
+    font-weight: 700;
+    background: var(--ib-y2);
+    color: var(--ib-p);
+    padding: 4px 10px;
+    border-radius: 20px;
+    vertical-align: middle;
+    margin-left: 6px;
+}
+
+.ib-cart .keep {
+    color: var(--ib-p);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .ib-cart .keep:hover {
+        text-decoration: underline;
+    }
+
+/* Empty cart */
+.ib-cart .empty {
+    text-align: center;
+    padding: 60px 20px;
+    border: 1px dashed var(--ib-line);
+    border-radius: var(--ib-r-lg);
+}
+
+    .ib-cart .empty > i {
+        font-size: 3rem;
+        color: var(--ib-y);
+    }
+
+    .ib-cart .empty h2 {
+        font-weight: 800;
+        color: var(--ib-p);
+        margin: 12px 0 6px;
+    }
+
+    .ib-cart .empty p {
+        color: var(--ib-mut);
+    }
+
+.ib-cart .btn-ibp {
+    background: var(--ib-p);
+    color: #fff;
+    font-weight: 700;
+    border-radius: var(--ib-r-sm);
+    padding: .8rem 1.4rem;
+}
+
+    .ib-cart .btn-ibp:hover {
+        background: var(--ib-p2);
+        color: var(--ib-y);
+    }
+
+/* Items */
+.ib-cart .item {
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    gap: 16px;
+    align-items: start;
+    border: 1px solid var(--ib-line);
+    border-radius: var(--ib-r);
+    padding: 14px;
+    margin-bottom: 12px;
+    background: #fff;
+}
+
+    .ib-cart .item img {
+        width: 96px;
+        height: 96px;
+        object-fit: contain;
+        background: var(--ib-bg);
+        border-radius: 10px;
+        padding: 4px;
+    }
+
+    .ib-cart .item .name {
+        font-weight: 700;
+        color: var(--ib-ink);
+        font-size: 1.05rem;
+        line-height: 1.3;
+    }
+
+    .ib-cart .item .code {
+        color: var(--ib-mut);
+        font-size: .8rem;
+    }
+
+    .ib-cart .item .unit {
+        color: var(--ib-mut);
+        font-size: .88rem;
+        margin-top: 2px;
+    }
+
+    .ib-cart .item .amt {
+        font-weight: 800;
+        color: var(--ib-p);
+        font-size: 1.15rem;
+        white-space: nowrap;
+    }
+
+.ib-cart .qty {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid var(--ib-line);
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+    .ib-cart .qty a {
+        width: 36px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ib-p);
+        font-weight: 800;
+        font-size: 1.1rem;
+        text-decoration: none;
+    }
+
+        .ib-cart .qty a:hover {
+            background: var(--ib-y2);
+        }
+
+    .ib-cart .qty span {
+        min-width: 30px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+.ib-cart .remove {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--ib-mut);
+    font-size: .88rem;
+}
+
+    .ib-cart .remove:hover {
+        color: var(--ib-err);
+    }
+
+.ib-cart .perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    color: var(--ib-mut);
+    font-size: .88rem;
+    margin-top: 8px;
+}
+
+    .ib-cart .perks i {
+        color: var(--ib-p);
+        margin-right: 4px;
+    }
+
+/* Summary */
+.ib-cart .summary {
+    border: 1px solid var(--ib-line);
+    border-radius: var(--ib-r-lg);
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(51,11,63,.08);
+    position: sticky;
+    top: 110px;
+}
+
+.ib-cart .contact {
+    background: var(--ib-y2);
+    border-radius: var(--ib-r);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+    .ib-cart .contact h3 {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--ib-p);
+        margin: 0 0 4px;
+    }
+
+        .ib-cart .contact h3 i {
+            color: var(--ib-wa);
+            font-size: 1.15rem;
+        }
+
+    .ib-cart .contact .sub {
+        color: var(--ib-text2);
+        font-size: .85rem;
+        margin-bottom: 10px;
+    }
+
+    .ib-cart .contact .form-label {
+        font-weight: 600;
+        font-size: .85rem;
+        margin-bottom: 3px;
+        color: var(--ib-ink);
+    }
+
+    .ib-cart .contact .opt {
+        color: var(--ib-mut);
+        font-weight: 400;
+    }
+
+    .ib-cart .contact .form-control {
+        border: 2px solid #f1e3a8;
+        border-radius: var(--ib-r-sm);
+    }
+
+        .ib-cart .contact .form-control:focus {
+            border-color: var(--ib-p);
+            box-shadow: var(--ib-focus);
+        }
+
+    .ib-cart .contact .input-group-text {
+        border: 2px solid #f1e3a8;
+        border-right: 0;
+        background: #fff;
+        font-weight: 600;
+        color: var(--ib-mut);
+    }
+
+    .ib-cart .contact .input-group .form-control {
+        border-left: 0;
+    }
+
+.ib-cart .privacy {
+    color: var(--ib-mut);
+    font-size: .75rem;
+}
+
+    .ib-cart .privacy a {
+        color: var(--ib-p);
+    }
+
+.ib-cart .save-status {
+    font-size: .78rem;
+    color: var(--ib-mut);
+}
+
+    .ib-cart .save-status.ok {
+        color: var(--ib-ok);
+        font-weight: 700;
+    }
+
+    .ib-cart .save-status.err {
+        color: var(--ib-err);
+    }
+
+.ib-cart .coupon {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+    .ib-cart .coupon .form-control {
+        border: 2px solid var(--ib-line);
+        border-radius: var(--ib-r-sm);
+    }
+
+.ib-cart .btn-apply {
+    border: 2px solid var(--ib-p);
+    color: var(--ib-p);
+    font-weight: 700;
+    border-radius: var(--ib-r-sm);
+    background: #fff;
+}
+
+    .ib-cart .btn-apply:hover {
+        background: var(--ib-p);
+        color: #fff;
+    }
+
+.ib-cart .coupon.applied {
+    justify-content: space-between;
+    align-items: center;
+    background: var(--ib-ok-bg);
+    color: var(--ib-ok);
+    border-radius: var(--ib-r-sm);
+    padding: 10px 12px;
+}
+
+.ib-cart .coupon .link {
+    background: none;
+    border: 0;
+    color: var(--ib-err);
+    font-weight: 600;
+    text-decoration: underline;
+    padding: 0;
+}
+
+.ib-cart .totals > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    color: var(--ib-text2);
+}
+
+.ib-cart .totals .disc {
+    color: var(--ib-ok);
+}
+
+.ib-cart .totals .free {
+    color: var(--ib-ok);
+    font-weight: 700;
+}
+
+.ib-cart .totals .grand {
+    border-top: 1px solid var(--ib-line);
+    margin-top: 6px;
+    padding-top: 12px;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--ib-p);
+}
+
+.ib-cart .totals .tax {
+    display: block;
+    color: var(--ib-mut);
+    font-size: .78rem;
+    padding-top: 0;
+}
+
+.ib-cart .btn-checkout {
+    background: var(--ib-p);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: .9rem;
+    font-size: 1.05rem;
+    margin-top: 12px;
+}
+
+    .ib-cart .btn-checkout:hover {
+        background: var(--ib-p2);
+        color: var(--ib-y);
+    }
+
+.ib-cart .secure {
+    text-align: center;
+    color: var(--ib-mut);
+    font-size: .8rem;
+    margin: 10px 0 0;
+}
+
+@media (max-width: 991.98px) {
+    .ib-cart .summary {
+        position: static;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .ib-cart .item {
+        grid-template-columns: 72px 1fr;
+    }
+
+        .ib-cart .item img {
+            width: 72px;
+            height: 72px;
+        }
+
+        .ib-cart .item .amt {
+            grid-column: 2;
+        }
+}
+
+
+/* =====================================================================
+   21. CHECKOUT ADDRESS (.ib-addr)
+   ===================================================================== */
+/* Progress steps (reusable on later checkout pages) */
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 26px;
+    flex-wrap: wrap;
+}
+
+    .progress-steps li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--ib-mut);
+        font-weight: 600;
+        font-size: .92rem;
+    }
+
+        .progress-steps li:not(:last-child)::after {
+            content: "";
+            width: 40px;
+            height: 2px;
+            background: var(--ib-line);
+            margin-left: 8px;
+        }
+
+        .progress-steps li span {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--ib-line);
+            color: var(--ib-mut);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: .85rem;
+        }
+
+        .progress-steps li a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-steps li.done span {
+            background: var(--ib-ok);
+            color: #fff;
+        }
+
+        .progress-steps li.done::after {
+            background: var(--ib-ok);
+        }
+
+        .progress-steps li.on {
+            color: var(--ib-p);
+        }
+
+            .progress-steps li.on span {
+                background: var(--ib-p);
+                color: var(--ib-y);
+            }
+
+.ib-addr h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--ib-p);
+    margin: 0 0 4px;
+}
+
+.ib-addr .sub {
+    color: var(--ib-mut);
+    margin-bottom: 20px;
+}
+
+.ib-addr .card-ib {
+    background: #fff;
+    border: 1px solid var(--ib-line);
+    border-radius: var(--ib-r-lg);
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: var(--ib-shadow-sm);
+}
+
+    .ib-addr .card-ib h2 {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--ib-p);
+        margin: 0 0 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .ib-addr .card-ib h2 .n {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--ib-y);
+            color: var(--ib-p);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .9rem;
+        }
+
+.ib-addr .form-label {
+    font-weight: 600;
+    color: var(--ib-ink);
+    margin-bottom: 4px;
+    font-size: .92rem;
+}
+
+.ib-addr .form-control, .ib-addr .form-select {
+    border: 2px solid var(--ib-line);
+    border-radius: 10px;
+    padding: .7rem .9rem;
+}
+
+    .ib-addr .form-control:focus, .ib-addr .form-select:focus {
+        border-color: var(--ib-p);
+        box-shadow: var(--ib-focus);
+    }
+
+    .ib-addr .form-control[readonly] {
+        background: var(--ib-bg);
+        color: var(--ib-mut);
+    }
+
+    .ib-addr .form-control:invalid:not(:placeholder-shown):not(:focus) {
+        border-color: #f0a3aa;
+    }
+
+.ib-addr .input-group-text {
+    border: 2px solid var(--ib-line);
+    border-right: 0;
+    background: var(--ib-bg);
+    font-weight: 600;
+    color: var(--ib-mut);
+    border-radius: 10px 0 0 10px;
+}
+
+.ib-addr .input-group .form-control {
+    border-left: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.ib-addr .input-group:focus-within .input-group-text {
+    border-color: var(--ib-p);
+}
+
+.ib-addr .hint {
+    color: var(--ib-mut);
+    font-size: .8rem;
+    margin-top: 4px;
+    min-height: 1em;
+}
+
+.ib-addr #ibPinHint .fa, .ib-addr #ibBPinHint .fa {
+    color: var(--ib-ok);
+}
+
+.ib-addr .toggle {
+    background: var(--ib-y2);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+    .ib-addr .toggle .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin: 2px 0 0;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+        .ib-addr .toggle .form-check-input:checked {
+            background-color: var(--ib-p);
+            border-color: var(--ib-p);
+        }
+
+    .ib-addr .toggle label {
+        color: var(--ib-p);
+        font-size: .92rem;
+        cursor: pointer;
+    }
+
+.ib-addr .msg-err {
+    background: var(--ib-err-bg);
+    color: var(--ib-err);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+}
+
+    .ib-addr .msg-err a {
+        color: var(--ib-err);
+        font-weight: 700;
+    }
+
+.ib-addr .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.ib-addr .back {
+    color: var(--ib-p);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .ib-addr .back:hover {
+        text-decoration: underline;
+    }
+
+.ib-addr .btn-main {
+    background: var(--ib-p);
+    color: #fff;
+    font-weight: 700;
+    border: 0;
+    border-radius: 10px;
+    padding: .9rem 2rem;
+    font-size: 1.05rem;
+}
+
+    .ib-addr .btn-main:hover {
+        background: var(--ib-p2);
+        color: var(--ib-y);
+    }
+
+.ib-addr .secure {
+    color: var(--ib-mut);
+    font-size: .82rem;
+    margin-top: 14px;
+    text-align: right;
+}
+
+    .ib-addr .secure a {
+        color: var(--ib-p);
+    }
+
+@media (max-width: 575.98px) {
+    .ib-addr .card-ib {
+        padding: 18px 16px;
+    }
+
+    .ib-addr h1 {
+        font-size: 1.5rem;
+    }
+
+    .ib-addr .actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .ib-addr .btn-main {
+        width: 100%;
+    }
+
+    .ib-addr .secure {
+        text-align: center;
+    }
+
+    .progress-steps li:not(:last-child)::after {
+        width: 18px;
+    }
+}
+
+
+/* =====================================================================
+   22. CHECKOUT REVIEW & PAY (.ib-cart.ib-co)
+   Reuses cart styles (summary, coupon, totals, buttons) + progress steps.
+   ===================================================================== */
+.ib-co .box {
+    background: #fff;
+    border: 1px solid var(--ib-line);
+    border-radius: var(--ib-r);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    line-height: 1.6;
+}
+
+.ib-co .box-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+    .ib-co .box-head h3 {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--ib-p);
+        margin: 0;
+    }
+
+        .ib-co .box-head h3 i {
+            width: 22px;
+            color: var(--ib-mut);
+        }
+
+.ib-co .change {
+    color: var(--ib-p);
+    font-weight: 700;
+    font-size: .88rem;
+}
+
+.ib-co .eta {
+    color: var(--ib-ok);
+    font-size: .85rem;
+    font-weight: 600;
+    margin: 10px 0 0;
+}
+
+.ib-co .line {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-top: 1px solid var(--ib-line);
+}
+
+    .ib-co .line:first-of-type {
+        border-top: 0;
+    }
+
+    .ib-co .line img {
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
+        background: var(--ib-bg);
+        border-radius: 8px;
+        padding: 3px;
+    }
+
+    .ib-co .line .name {
+        font-weight: 700;
+        color: var(--ib-ink);
+    }
+
+    .ib-co .line .amt {
+        font-weight: 800;
+        color: var(--ib-p);
+        white-space: nowrap;
+    }
+
+.ib-co .sum-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--ib-p);
+    margin: 0 0 14px;
+}
+
+.ib-co .btn-checkout {
+    font-size: 1.1rem;
+    padding: 1rem;
+}
+
+.ib-co .pay-methods {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    color: var(--ib-text2);
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+    .ib-co .pay-methods i {
+        color: var(--ib-p);
+        margin-right: 3px;
+    }
+
+.ib-co .terms {
+    text-align: center;
+    color: var(--ib-mut);
+    font-size: .78rem;
+    margin: 8px 0 0;
+}
+
+    .ib-co .terms a {
+        color: var(--ib-p);
+    }
+
+/* On phones, show the pay box first after the heading would push it far down – keep natural order but make summary prominent */
+@media (max-width: 991.98px) {
+    .ib-co .summary {
+        box-shadow: 0 -6px 20px rgba(51,11,63,.08);
+    }
+}
+
+
+/* =====================================================================
+   23. ORDER DETAIL (.ib-cart.ib-co.ib-order)
+   Reuses cart + checkout styles (box, line, totals, buttons).
+   ===================================================================== */
+.ib-order .thanks {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    background: var(--ib-ok-bg);
+    border-radius: var(--ib-r-lg);
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    color: #124d2a;
+}
+
+    .ib-order .thanks .tick {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: var(--ib-ok);
+        color: #fff;
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .ib-order .thanks h1 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--ib-ok);
+        margin: 0 0 2px;
+    }
+
+.ib-order .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+    .ib-order .head h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--ib-p);
+        margin: 0;
+    }
+
+.ib-order .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    color: var(--ib-mut);
+    font-size: .88rem;
+    margin-top: 4px;
+}
+
+.ib-order .status {
+    font-weight: 800;
+    font-size: .85rem;
+    padding: 7px 14px;
+    border-radius: 20px;
+}
+
+.ib-order .st-new {
+    background: #eef0f3;
+    color: #4b5563;
+}
+
+.ib-order .st-proc {
+    background: #e8f0fe;
+    color: #1d4ed8;
+}
+
+.ib-order .st-paid {
+    background: var(--ib-y2);
+    color: var(--ib-p);
+}
+
+.ib-order .st-ship {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.ib-order .st-done {
+    background: var(--ib-ok-bg);
+    color: var(--ib-ok);
+}
+
+.ib-order .st-ref {
+    background: #f3e8ff;
+    color: #7e22ce;
+}
+
+.ib-order .st-del {
+    background: var(--ib-err-bg);
+    color: var(--ib-err);
+}
+
+/* Progress tracker */
+.ib-order .tracker ol {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.ib-order .tracker li {
+    text-align: center;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--ib-mut);
+    position: relative;
+}
+
+    .ib-order .tracker li:not(:first-child)::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 50%;
+        width: 100%;
+        height: 3px;
+        background: var(--ib-line);
+        z-index: 0;
+    }
+
+    .ib-order .tracker li.done::before, .ib-order .tracker li.on::before {
+        background: var(--ib-ok);
+    }
+
+.ib-order .tracker .dot {
+    position: relative;
+    z-index: 1;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--ib-line);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 6px;
+    border: 4px solid #fff;
+}
+
+.ib-order .tracker li.done .dot {
+    background: var(--ib-ok);
+}
+
+.ib-order .tracker li.done {
+    color: var(--ib-ok);
+}
+
+.ib-order .tracker li.on .dot {
+    background: var(--ib-p);
+    color: var(--ib-y);
+    box-shadow: 0 0 0 3px var(--ib-y);
+}
+
+.ib-order .tracker li.on {
+    color: var(--ib-p);
+}
+
+.ib-order .track {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: var(--ib-bg);
+    border-radius: var(--ib-r-sm);
+    padding: 10px 14px;
+    margin-top: 16px;
+    font-size: .9rem;
+}
+
+    .ib-order .track > div {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+.ib-order .copy {
+    border: 2px solid var(--ib-p);
+    background: #fff;
+    color: var(--ib-p);
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: .8rem;
+}
+
+.ib-order .notice {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: var(--ib-y2);
+    color: var(--ib-p);
+}
+
+.ib-order .btn-wa {
+    background: var(--ib-wa);
+    color: #fff;
+    font-weight: 700;
+    border-radius: var(--ib-r-sm);
+    padding: .7rem;
+}
+
+    .ib-order .btn-wa:hover {
+        background: var(--ib-wa-dark);
+        color: #fff;
+    }
+
+.ib-order .help a {
+    color: var(--ib-p);
+}
+
+.ib-order .help p {
+    line-height: 1.9;
+}
+
+@media (max-width: 575.98px) {
+    .ib-order .tracker li {
+        font-size: .72rem;
+    }
+
+    .ib-order .tracker .dot {
+        width: 34px;
+        height: 34px;
+    }
+
+    .ib-order .tracker li:not(:first-child)::before {
+        top: 16px;
+    }
+
+    .ib-order .head h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media print {
+    .ib-topbar, .ib-header, .ib-footer, .ib-order .help, .ib-order .actions-box, .ib-order .no-print {
+        display: none !important;
+    }
+}

@@ -30,7 +30,7 @@
             js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=490407121012387";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-       <!-- Announcement bar -->
+    <!-- Announcement bar -->
     <div class="ib-topbar text-center py-2 px-2">
         <i class="fa fa-truck" aria-hidden="true"></i>Free shipping across India
         <span class="d-none d-md-inline">&nbsp;·&nbsp;<i class="fa fa-paint-brush" aria-hidden="true"></i>Every piece hand-painted by artists</span>
@@ -85,7 +85,7 @@
             </div>
         </nav>
     </header>
-    @If o.OrderItems.Count > 0 AndAlso (String.IsNullOrEmpty(o.Name) OrElse String.IsNullOrEmpty(o.Email) OrElse String.IsNullOrEmpty(o.Phone)) Then
+    @If o.OrderItems.Count > 0 AndAlso Not Request.Path.ToLower().StartsWith("/cart") AndAlso (String.IsNullOrEmpty(o.Name) OrElse String.IsNullOrEmpty(o.Email) OrElse String.IsNullOrEmpty(o.Phone)) Then
         @<div class="alert alert-primary rounded-0 text-center" role="alert">
             Your order is missing Name, Email and Phone. <button type="button" id="addcontactorderanchor" data-bs-toggle="modal" data-bs-target="#orderContactModal" class="btn btn-link">Add Now</button>
         </div>
