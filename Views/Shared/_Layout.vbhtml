@@ -169,7 +169,7 @@
                     <ul>
                         <li><a href="~/about">Our Story</a></li>
                         @If User.Identity.IsAuthenticated Then
-                            @<li><a href="~/account/myaccount">My Account</a></li>
+                            @<li><a href="~/account/manageprofile">My Account</a></li>
                         Else
                             @<li><a href="~/account/login">Login</a> / <a href="~/account/register">Register</a></li>
                         End If
