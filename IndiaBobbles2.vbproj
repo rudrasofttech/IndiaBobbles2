@@ -877,10 +877,6 @@
     <Content Include="sitedata\CustomPage\cpagexml-7.txt" />
     <Content Include="sitedata\CustomPage\cpagexml-8.txt" />
     <Content Include="sitedata\CustomPage\cpagexml-9.txt" />
-    <Content Include="theme\khichdi\css\bootstrap-theme.css.map" />
-    <Content Include="theme\khichdi\css\bootstrap-theme.min.css.map" />
-    <Content Include="theme\khichdi\css\bootstrap.css.map" />
-    <Content Include="theme\khichdi\css\bootstrap.min.css.map" />
     <Content Include="theme\khichdi\FAVICON.jpg" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.eot" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.ttf" />
@@ -950,6 +946,7 @@
     <Content Include="Views\Account\GenerateOTP.vbhtml" />
     <Content Include="Views\Account\ManageProfile.vbhtml" />
     <Content Include="Views\Home\Tag.vbhtml" />
+    <Content Include="Views\Account\OtpLogin.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -962,19 +959,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="theme\khichdi\css\animate.css" />
-    <Content Include="theme\khichdi\css\bootstrap-theme.css" />
-    <Content Include="theme\khichdi\css\bootstrap-theme.min.css" />
-    <Content Include="theme\khichdi\css\bootstrap.css" />
-    <Content Include="theme\khichdi\css\bootstrap.min.css" />
-    <Content Include="theme\khichdi\css\hover-min.css" />
-    <Content Include="theme\khichdi\css\indiabobbles-article-sm.css" />
-    <Content Include="theme\khichdi\css\indiabobbles-article.css" />
-    <Content Include="theme\khichdi\css\indiabobbles-list-sm.css" />
-    <Content Include="theme\khichdi\css\indiabobbles-list.css" />
-    <Content Include="theme\khichdi\css\indiabobbles-sm.css" />
     <Content Include="theme\khichdi\css\indiabobbles.css" />
-    <Content Include="theme\khichdi\css\productlist.css" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\css\font-awesome.css" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\css\font-awesome.min.css" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.svg" />

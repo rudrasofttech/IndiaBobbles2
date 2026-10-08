@@ -25,6 +25,7 @@ Namespace Controllers
 
         ' GET: Account/Login
         Function Login() As ActionResult
+            Return RedirectPermanent("~/account/otplogin")
             Return View(New LoginDTO())
         End Function
 
@@ -117,7 +118,7 @@ Namespace Controllers
                                   m.MemberName, body, "Registration Successful",
                                   EmailMessageType.Communication, "Registration")
 
-                    Return Redirect("~/account/login")
+                    Return Redirect("~/account/otplogin")
                 End If
             Catch ex As Exception
                 ViewBag.Error = ex.Message
@@ -192,5 +193,78 @@ Namespace Controllers
             Return Redirect("~/account/manageprofile")
         End Function
 
+
+        Function OtpLogin() As ActionResult
+            Return View(New OtpLoginDTO())
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function OtpLogin(ByVal dto As OtpLoginDTO, ByVal command As String) As ActionResult
+            If String.Equals(command, "send", StringComparison.OrdinalIgnoreCase) Then
+                ModelState.Remove("OTP")
+
+                If Not ModelState.IsValid Then
+                    ViewBag.Error = "Please check your input."
+                    dto.StepNo = 1
+                    Return View(dto)
+                End If
+
+                Try
+                    Dim user = db.Members.FirstOrDefault(Function(m) m.Email = dto.Email)
+                    If user Is Nothing Then
+                        ViewBag.Error = "This email address is not in our records. Please register before login."
+                        dto.StepNo = 1
+                        Return View(dto)
+                    End If
+
+                    Dim r As New Random()
+                    Dim password As String = r.Next(100000, 999999).ToString()
+                    user.Password = password
+                    db.SaveChanges()
+
+                    Dim body As String = String.Format("Dear {0},<br/><br/>Your one time password is <strong>{1}</strong>.<br/><br/>", user.MemberName, password)
+                    Dim eman As New EmailManager()
+                    eman.SendMail(Utility.NewsletterEmail, user.Email, Utility.AdminName,
+                                  user.MemberName, body, "India Bobbles OTP",
+                                  EmailMessageType.Communication, "OTP")
+
+                    ViewBag.Success = String.Format("OTP sent to {0}. Please check your mailbox.", user.Email)
+                    dto.StepNo = 2
+                    Return View(dto)
+                Catch ex As Exception
+                    ViewBag.Error = ex.Message
+                    dto.StepNo = 1
+                    Return View(dto)
+                End Try
+            End If
+
+            dto.StepNo = 2
+            If Not ModelState.IsValid Then
+                ViewBag.Error = "Please enter valid OTP."
+                Return View(dto)
+            End If
+
+            Try
+                Dim user = db.Members.FirstOrDefault(Function(m) m.Email = dto.Email And m.Password = dto.OTP)
+                If user Is Nothing Then
+                    ViewBag.Error = "Invalid OTP."
+                    Return View(dto)
+                End If
+
+                user.Status = GeneralStatusType.Active
+                db.SaveChanges()
+                FormsAuthentication.SetAuthCookie(user.Email, True)
+
+                If user.UserType = CByte(MemberTypeType.Admin) Then
+                    Return Redirect("~/admin/orders.aspx")
+                Else
+                    Return Redirect("~")
+                End If
+            Catch ex As Exception
+                ViewBag.Error = ex.Message
+                Return View(dto)
+            End Try
+        End Function
     End Class
 End Namespace
