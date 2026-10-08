@@ -1,142 +1,187 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="ProductDetail.aspx.vb" Inherits="IndiaBobbles.ProductDetail" %>
+﻿<%@ Page Title="Product" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="ProductDetail.aspx.vb" Inherits="IndiaBobbles.ProductDetail" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
-    <asp:SqlDataSource ID="ProductDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>" SelectCommand="SELECT ID, Name, MRP, SalePrice, CASE WHEN Status = 0 THEN 'Active' WHEN Status = 1 THEN 'Inactive' WHEN Status = 2 THEN 'Deleted' ELSE '' END AS Status, Dimension, Color, Weight, Material, Manufacturer, CareInstructions, RecommendedAge, CountryofOrigin, Fragile, ShippingTime, Handmade, OutofStock, ThumbPath, URL, ProductCode FROM Product WHERE (ID = @ID)">
+
+    <%-- Tags on this product --%>
+    <asp:SqlDataSource ID="ProductTagDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>"
+        SelectCommand="SELECT CT.ID, CT.DisplayName FROM ProductTag AS PT INNER JOIN CategoryTag AS CT ON CT.ID = PT.TagID WHERE PT.ProductID = @ProductID ORDER BY CT.DisplayName">
         <SelectParameters>
-            <asp:QueryStringParameter DefaultValue="0" Name="ID" QueryStringField="id" Type="Int32" />
+            <asp:QueryStringParameter Name="ProductID" QueryStringField="id" Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
-    <asp:SqlDataSource ID="ProductTagDataSource" runat="server"
-        ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>"
-        SelectCommand="SELECT CT.DisplayName AS 'Display Name', PT.ID FROM CategoryTag AS CT INNER JOIN ProductTag AS PT ON CT.ID = PT.TagID WHERE (PT.ProductID = @ProductID) ORDER BY 'Display Name'"
-        DeleteCommand="DELETE FROM ProductTag WHERE (ProductID = @ProductID) AND (ID = @ID)"
-        InsertCommand="INSERT INTO ProductTag(ProductID, TagID) VALUES (@ProductID, @TagID)">
-        <DeleteParameters>
-            <asp:QueryStringParameter Name="ProductID" QueryStringField="id" />
-            <asp:Parameter Name="ID" />
-        </DeleteParameters>
-        <InsertParameters>
-            <asp:QueryStringParameter Name="ProductID" QueryStringField="id" />
-            <asp:ControlParameter ControlID="TagDropDown" Name="TagID" PropertyName="SelectedValue" />
-        </InsertParameters>
+
+    <%-- Tags that can still be added (already-assigned tags are left out, so no duplicates) --%>
+    <asp:SqlDataSource ID="TagDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>"
+        SelectCommand="SELECT ID, DisplayName FROM CategoryTag WHERE ID NOT IN (SELECT TagID FROM ProductTag WHERE ProductID = @ProductID) ORDER BY DisplayName">
         <SelectParameters>
-            <asp:QueryStringParameter DefaultValue="0" Name="ProductID" QueryStringField="id" />
+            <asp:QueryStringParameter Name="ProductID" QueryStringField="id" Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
-    <asp:SqlDataSource ID="TagDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:indiabobblesConnectionString %>" SelectCommand="SELECT [ID], [DisplayName] FROM [CategoryTag]"></asp:SqlDataSource>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Product Detail</h2>
-            <asp:DetailsView ID="ProductDetailsView" CssClass="table" runat="server" AutoGenerateRows="False" DataKeyNames="ID" DataSourceID="ProductDataSource" Height="50px" Width="100%">
-                <Fields>
-                    <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                    <asp:BoundField DataField="MRP" HeaderText="MRP" SortExpression="MRP" />
-                    <asp:BoundField DataField="SalePrice" HeaderText="SalePrice" SortExpression="SalePrice" />
-                    <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
-                    <asp:BoundField DataField="Dimension" HeaderText="Dimension" SortExpression="Dimension" />
-                    <asp:BoundField DataField="Color" HeaderText="Color" SortExpression="Color" />
-                    <asp:BoundField DataField="Weight" HeaderText="Weight" SortExpression="Weight" />
-                    <asp:BoundField DataField="Material" HeaderText="Material" SortExpression="Material" />
-                    <asp:BoundField DataField="Manufacturer" HeaderText="Manufacturer" SortExpression="Manufacturer" />
-                    <asp:BoundField DataField="CareInstructions" HeaderText="CareInstructions" SortExpression="CareInstructions" />
-                    <asp:BoundField DataField="RecommendedAge" HeaderText="RecommendedAge" SortExpression="RecommendedAge" />
-                    <asp:BoundField DataField="CountryofOrigin" HeaderText="CountryofOrigin" SortExpression="CountryofOrigin" />
-                    <asp:CheckBoxField DataField="Fragile" HeaderText="Fragile" SortExpression="Fragile" />
-                    <asp:BoundField DataField="ShippingTime" HeaderText="ShippingTime" SortExpression="ShippingTime" />
-                    <asp:CheckBoxField DataField="Handmade" HeaderText="Handmade" SortExpression="Handmade" />
-                    <asp:CheckBoxField DataField="OutofStock" HeaderText="OutofStock" SortExpression="OutofStock" />
-                    <asp:BoundField DataField="URL" HeaderText="URL" SortExpression="URL" />
-                    <asp:BoundField DataField="ProductCode" HeaderText="ProductCode" SortExpression="ProductCode" />
-                    <asp:ImageField DataImageUrlField="ThumbPath" HeaderText="Thumbpath" ReadOnly="True" ControlStyle-Height="70px">
-                    </asp:ImageField>
-                </Fields>
-                <HeaderStyle Font-Bold="True" />
-            </asp:DetailsView>
-        </div>
-        <div class="col-md-6">
-            <h2>Product Photos</h2>
-            <asp:UpdatePanel ID="PhotoUP" runat="server">
-                <ContentTemplate>
-                    <asp:GridView ID="PhotoGridView" CssClass="table" runat="server" AutoGenerateColumns="False" AutoGenerateDeleteButton="True" AutoGenerateEditButton="True">
-                        <Columns>
-                            <asp:TemplateField HeaderText="ID" Visible="false">
 
-                                <ItemTemplate>
-                                    <asp:Label ID="PhotoIDLabel" runat="server" Text='<%# Eval("ID") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Picture">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="ImagePathTextBox" CssClass="form-control" runat="server" Text='<%# Eval("ImagePath") %>'></asp:TextBox>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Image ID="Image1" Height="100px" CssClass="img-thumbnail" runat="server" ImageUrl='<%# Eval("ImagePath") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField ItemStyle-Width="150px" SortExpression="Sequence" HeaderText="Sequence">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="SequenceTextBox" CssClass="form-control" runat="server" Text='<%# Bind("Sequence") %>'></asp:TextBox>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("Sequence") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="SaveButton" EventName="Click" />
-                </Triggers>
-            </asp:UpdatePanel>
+    <asp:Panel ID="NotFoundPanel" runat="server" Visible="false" CssClass="adm-panel text-center py-5">
+        <i class="fa fa-question-circle fa-3x text-muted"></i>
+        <h1 class="h4 mt-3">Product not found</h1>
+        <p class="text-muted">It may have been removed.</p>
+        <a runat="server" href="~/admin/products.aspx" class="btn btn-ib">Back to products</a>
+    </asp:Panel>
 
-            <h4>Add Photo</h4>
-            <div class="p-1">
-                <label for="PhotoPathTextBox" class="form-label">Photo Path (<a role="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#driveModal">View Drive</a>)</label>
-                <asp:TextBox ID="PhotoPathTextBox" ValidationGroup="photogrp" ClientIDMode="Static" MaxLength="300" CssClass="form-control" runat="server"></asp:TextBox>
-                <asp:RequiredFieldValidator ForeColor="Red" ControlToValidate="PhotoPathTextBox" Display="Dynamic" ValidationGroup="photogrp" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
+    <asp:Panel ID="DetailPanel" runat="server">
 
+        <a runat="server" href="~/admin/products.aspx" class="adm-back"><i class="fa fa-angle-left"></i> All products</a>
+
+        <!-- ============ Hero ============ -->
+        <div class="pd-hero">
+            <div class="pd-thumb">
+                <asp:Image ID="HeroImage" runat="server" AlternateText="" />
+                <asp:PlaceHolder ID="HeroEmpty" runat="server"><span class="empty"><i class="fa fa-image"></i></span></asp:PlaceHolder>
             </div>
-            <div class="p-1">
-                <label for="SequenceTextBox" class="form-label">Sequence</label>
-                <asp:TextBox ID="SequenceTextBox" TextMode="Number" ClientIDMode="Static" MaxLength="3" CssClass="form-control" runat="server"></asp:TextBox>
-                <asp:RequiredFieldValidator Display="Dynamic" ForeColor="Red" ControlToValidate="SequenceTextBox" ValidationGroup="photogrp" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
+            <div class="pd-main">
+                <div class="pd-badges"><asp:Literal ID="BadgesLiteral" runat="server" /> <span class="pd-id">ID <asp:Literal ID="IDLiteral" runat="server" /></span></div>
+                <h1><asp:Literal ID="NameLiteral" runat="server" /></h1>
+                <div class="pd-price"><asp:Literal ID="PriceLiteral" runat="server" /></div>
+                <div class="pd-actions">
+                    <asp:HyperLink ID="EditLink" runat="server" CssClass="btn btn-ib"><i class="fa fa-pencil"></i> Edit product</asp:HyperLink>
+                    <asp:HyperLink ID="ViewLink" runat="server" CssClass="btn btn-ib-o" Target="_blank" rel="noopener"><i class="fa fa-external-link"></i> View on website</asp:HyperLink>
+                </div>
             </div>
-            <div class="well p-1">
-                <asp:Button ID="SaveButton" runat="server" Text="Save Photo" ValidationGroup="photogrp" CssClass="btn btn-primary" CausesValidation="true" />
+            <div class="pd-quick">
+                <div class="lbl">Quick actions</div>
+                <asp:LinkButton ID="StockButton" runat="server" CssClass="qa" CausesValidation="false" />
+                <asp:LinkButton ID="StatusButton" runat="server" CssClass="qa" CausesValidation="false"
+                    OnClientClick="return confirm('Change whether this product is shown on the website?');" />
             </div>
         </div>
-    </div>
-    <h2 class="mt-2">Product Category Tags
-    </h2>
-    <div class="row">
-        <div class="col-md-6">
-            <asp:UpdatePanel ID="ProductTagUP" runat="server">
-                <ContentTemplate>
-                    <asp:GridView ID="ProductTagGridView" runat="server" AllowSorting="True" AutoGenerateDeleteButton="True" CssClass="table" DataSourceID="ProductTagDataSource" EmptyDataText="No Tags Found" AutoGenerateColumns="False" DataKeyNames="ID" EnableSortingAndPagingCallbacks="True">
-                        <Columns>
-                            <asp:BoundField DataField="Display Name" HeaderText="Display Name" SortExpression="Display Name" />
-                            <asp:BoundField DataField="ID" Visible="false" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-                        </Columns>
-                    </asp:GridView>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="SaveTagButton" EventName="Click" />
-                </Triggers>
-            </asp:UpdatePanel>
-        </div>
-        <div class="col-md-6">
-            <h4>Add Tag</h4>
-            <div class="p-1">
-                <label for="TagDropDown" class="form-label">Tag</label>
-                <asp:DropDownList ID="TagDropDown" ClientIDMode="Static" runat="server" CssClass="form-select" DataSourceID="TagDataSource" DataTextField="DisplayName" DataValueField="ID"></asp:DropDownList>
-            </div>
-            <div class="well p-1">
-                <asp:Button ID="SaveTagButton" runat="server" Text="Save Tag" CssClass="btn btn-primary" CausesValidation="false" />
-            </div>
-        </div>
-    </div>
 
+        <asp:Label ID="MessageLabel" runat="server" CssClass="adm-flash" Visible="false" EnableViewState="false" />
+
+        <div class="row g-3">
+            <!-- ============ Left column ============ -->
+            <div class="col-xl-8">
+
+                <!-- Photos -->
+                <div class="adm-panel" id="photos">
+                    <div class="pd-ph-head">
+                        <h2><i class="fa fa-picture-o"></i> Photos <span class="pd-count"><asp:Literal ID="PhotoCountLiteral" runat="server" /></span></h2>
+                        <asp:HyperLink ID="PhotosEditLink" runat="server" CssClass="pd-link"><i class="fa fa-upload"></i> Upload photos</asp:HyperLink>
+                    </div>
+
+                    <div class="gallery pd-gallery">
+                        <asp:Repeater ID="PhotoRepeater" runat="server">
+                            <ItemTemplate>
+                                <div class="ph">
+                                    <a href='<%#: Eval("ImagePath") %>' target="_blank" rel="noopener" title="Open full size">
+                                        <img src='<%#: Eval("ImagePath") %>' alt='<%# "Photo " & Eval("Sequence") %>' loading="lazy" />
+                                    </a>
+                                    <span class='<%# If(CBool(Eval("IsFirst")), "tag-main", "tag-seq") %>'><%# If(CBool(Eval("IsFirst")), "Main", Eval("Sequence").ToString()) %></span>
+                                    <%# If(CBool(Eval("IsThumb")), "<span class=""tag-thumb"" title=""Used as thumbnail""><i class=""fa fa-star""></i></span>", "") %>
+                                    <div class="tools">
+                                        <asp:LinkButton runat="server" CommandName="Left" CommandArgument='<%# Eval("ID") %>' ToolTip="Move left" Enabled='<%# Not CBool(Eval("IsFirst")) %>' CausesValidation="false"><i class="fa fa-chevron-left"></i></asp:LinkButton>
+                                        <asp:LinkButton runat="server" CommandName="Thumb" CommandArgument='<%# Eval("ID") %>' ToolTip="Use as thumbnail" Visible='<%# Not CBool(Eval("IsThumb")) %>' CausesValidation="false"><i class="fa fa-star-o"></i></asp:LinkButton>
+                                        <asp:LinkButton runat="server" CommandName="First" CommandArgument='<%# Eval("ID") %>' ToolTip="Make main photo" Visible='<%# Not CBool(Eval("IsFirst")) %>' CausesValidation="false"><i class="fa fa-angle-double-left"></i></asp:LinkButton>
+                                        <asp:LinkButton runat="server" CommandName="Remove" CommandArgument='<%# Eval("ID") %>' ToolTip="Remove from gallery" CssClass="del" CausesValidation="false"
+                                            OnClientClick="return confirm('Remove this photo from the product? The file stays in Drive.');"><i class="fa fa-trash"></i></asp:LinkButton>
+                                        <asp:LinkButton runat="server" CommandName="Right" CommandArgument='<%# Eval("ID") %>' ToolTip="Move right" Enabled='<%# Not CBool(Eval("IsLast")) %>' CausesValidation="false"><i class="fa fa-chevron-right"></i></asp:LinkButton>
+                                    </div>
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </div>
+
+                    <asp:Panel ID="NoPhotosPanel" runat="server" CssClass="adm-empty" Visible="false">
+                        <i class="fa fa-picture-o"></i> No photos yet. Upload some or add one by path below.
+                    </asp:Panel>
+
+                    <div class="pd-add">
+                        <label class="form-label" for="<%= PhotoPathTextBox.ClientID %>">Add a photo from Drive</label>
+                        <div class="url-row mb-0">
+                            <asp:TextBox ID="PhotoPathTextBox" runat="server" CssClass="form-control" placeholder="/drive/products/photo.jpg or https://…" MaxLength="500" />
+                            <button type="button" class="btn btn-ib-o text-nowrap" data-bs-toggle="modal" data-bs-target="#driveModal" title="Browse Drive"><i class="fa fa-folder-open"></i></button>
+                            <asp:Button ID="SaveButton" runat="server" Text="Add" CssClass="btn btn-ib" ValidationGroup="photogrp" />
+                        </div>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="PhotoPathTextBox" ValidationGroup="photogrp"
+                            ErrorMessage="Enter the photo path" CssClass="val" Display="Dynamic" />
+                        <div class="hint">Hover a photo to reorder, set it as the thumbnail ★ or remove it. The first photo is the main one on the website.</div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="adm-panel">
+                    <h2><i class="fa fa-align-left"></i> Description</h2>
+                    <div class="pd-desc" id="pdDesc"><asp:Literal ID="DescLiteral" runat="server" Mode="PassThrough" /></div>
+                    <button type="button" class="pd-more d-none" id="pdMore">Show more <i class="fa fa-angle-down"></i></button>
+                </div>
+            </div>
+
+            <!-- ============ Right column ============ -->
+            <div class="col-xl-4">
+
+                <!-- Tags -->
+                <div class="adm-panel">
+                    <h2><i class="fa fa-tags"></i> Category tags <span class="pd-count"><asp:Literal ID="TagCountLiteral" runat="server" /></span></h2>
+                    <div class="pd-tags">
+                        <asp:Repeater ID="TagRepeater" runat="server" DataSourceID="ProductTagDataSource">
+                            <ItemTemplate>
+                                <span class="pd-chip"><%#: Eval("DisplayName") %>
+                                    <asp:LinkButton runat="server" CommandName="RemoveTag" CommandArgument='<%# Eval("ID") %>' ToolTip="Remove tag" CausesValidation="false"
+                                        OnClientClick="return confirm('Remove this tag?');"><i class="fa fa-times"></i></asp:LinkButton>
+                                </span>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                        <asp:PlaceHolder ID="NoTagsPanel" runat="server" Visible="false">
+                            <span class="adm-warn d-block"><i class="fa fa-exclamation-circle"></i> No tags – this product won't appear on any category page.</span>
+                        </asp:PlaceHolder>
+                    </div>
+                    <div class="pd-tag-add">
+                        <asp:DropDownList ID="TagDropDown" runat="server" CssClass="form-select" DataSourceID="TagDataSource"
+                            DataTextField="DisplayName" DataValueField="ID" AppendDataBoundItems="true" aria-label="Tag to add" />
+                        <asp:Button ID="SaveTagButton" runat="server" Text="Add" CssClass="btn btn-ib" CausesValidation="false" />
+                    </div>
+                </div>
+
+                <!-- Specifications -->
+                <div class="adm-panel">
+                    <h2><i class="fa fa-list-ul"></i> Specifications</h2>
+                    <dl class="pd-spec">
+                        <asp:Repeater ID="SpecRepeater" runat="server">
+                            <ItemTemplate>
+                                <dt><%#: Eval("Key") %></dt>
+                                <dd><%# If(String.IsNullOrWhiteSpace(Convert.ToString(Eval("Value"))), "<span class=""missing"">Not set</span>", HttpUtility.HtmlEncode(Convert.ToString(Eval("Value")))) %></dd>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </dl>
+                </div>
+
+                <!-- History -->
+                <div class="adm-panel">
+                    <h2><i class="fa fa-clock-o"></i> History</h2>
+                    <dl class="pd-spec mb-0">
+                        <dt>Created</dt><dd><asp:Literal ID="CreatedLiteral" runat="server" /></dd>
+                        <dt>Last updated</dt><dd><asp:Literal ID="ModifiedLiteral" runat="server" /></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </asp:Panel>
+
+    <script>
+        (function () {
+            // Collapse long descriptions
+            var d = document.getElementById('pdDesc'), b = document.getElementById('pdMore');
+            if (d && b && d.scrollHeight > 340) {
+                d.classList.add('clip'); b.classList.remove('d-none');
+                b.addEventListener('click', function () {
+                    var open = d.classList.toggle('clip') === false;
+                    b.innerHTML = open ? 'Show less <i class="fa fa-angle-up"></i>' : 'Show more <i class="fa fa-angle-down"></i>';
+                });
+            }
+            // "e" opens the editor
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'e' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) {
+                    location.href = document.getElementById('<%= EditLink.ClientID %>').href;
+                }
+            });
+        })();
+    </script>
 </asp:Content>

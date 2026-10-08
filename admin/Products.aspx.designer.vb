@@ -23,6 +23,15 @@ Partial Public Class Products
     Protected WithEvents ProductsDataSource As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
+    '''MessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MessageLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''ProductsGridView control.
     '''</summary>
     '''<remarks>

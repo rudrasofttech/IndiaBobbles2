@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class ProductDetail
 
     '''<summary>
-    '''ProductDataSource control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ProductDataSource As Global.System.Web.UI.WebControls.SqlDataSource
-
-    '''<summary>
     '''ProductTagDataSource control.
     '''</summary>
     '''<remarks>
@@ -41,31 +32,157 @@ Partial Public Class ProductDetail
     Protected WithEvents TagDataSource As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
-    '''ProductDetailsView control.
+    '''NotFoundPanel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ProductDetailsView As Global.System.Web.UI.WebControls.DetailsView
+    Protected WithEvents NotFoundPanel As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''PhotoUP control.
+    '''DetailPanel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents PhotoUP As Global.System.Web.UI.UpdatePanel
+    Protected WithEvents DetailPanel As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''PhotoGridView control.
+    '''HeroImage control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents PhotoGridView As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents HeroImage As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''HeroEmpty control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents HeroEmpty As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
+    '''BadgesLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents BadgesLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''IDLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents IDLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''NameLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents NameLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''PriceLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PriceLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''EditLink control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents EditLink As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''ViewLink control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ViewLink As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''StockButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents StockButton As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''StatusButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents StatusButton As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''MessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MessageLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''PhotoCountLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PhotoCountLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''PhotosEditLink control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PhotosEditLink As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''PhotoRepeater control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PhotoRepeater As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''NoPhotosPanel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents NoPhotosPanel As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''PhotoPathTextBox control.
@@ -77,33 +194,6 @@ Partial Public Class ProductDetail
     Protected WithEvents PhotoPathTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''RequiredFieldValidator1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''SequenceTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SequenceTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''RequiredFieldValidator2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
     '''SaveButton control.
     '''</summary>
     '''<remarks>
@@ -113,22 +203,40 @@ Partial Public Class ProductDetail
     Protected WithEvents SaveButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''ProductTagUP control.
+    '''DescLiteral control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ProductTagUP As Global.System.Web.UI.UpdatePanel
+    Protected WithEvents DescLiteral As Global.System.Web.UI.WebControls.Literal
 
     '''<summary>
-    '''ProductTagGridView control.
+    '''TagCountLiteral control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ProductTagGridView As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents TagCountLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''TagRepeater control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TagRepeater As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''NoTagsPanel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents NoTagsPanel As Global.System.Web.UI.WebControls.PlaceHolder
 
     '''<summary>
     '''TagDropDown control.
@@ -147,4 +255,31 @@ Partial Public Class ProductDetail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents SaveTagButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''SpecRepeater control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SpecRepeater As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''CreatedLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CreatedLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''ModifiedLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ModifiedLiteral As Global.System.Web.UI.WebControls.Literal
 End Class

@@ -41,6 +41,51 @@ Partial Public Class ManageProduct
     Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
+    '''DescTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DescTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''RequiredFieldValidator2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''PhotoUpload control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PhotoUpload As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''PhotosHidden control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PhotosHidden As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''PhotoErrorLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PhotoErrorLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''MRPTextBox control.
     '''</summary>
     '''<remarks>
@@ -77,33 +122,6 @@ Partial Public Class ManageProduct
     Protected WithEvents RequiredFieldValidator4 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
-    '''DescTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents DescTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''RequiredFieldValidator2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''StatusDropDown control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents StatusDropDown As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''DimensionTextBox control.
     '''</summary>
     '''<remarks>
@@ -111,15 +129,6 @@ Partial Public Class ManageProduct
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents DimensionTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''ColorTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ColorTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''WeightTextBox control.
@@ -140,6 +149,15 @@ Partial Public Class ManageProduct
     Protected WithEvents MaterialTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''ColorTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ColorTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''ManufacturerTextBox control.
     '''</summary>
     '''<remarks>
@@ -149,13 +167,13 @@ Partial Public Class ManageProduct
     Protected WithEvents ManufacturerTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''CareTextBox control.
+    '''CountryOriginTextBox control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents CareTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents CountryOriginTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''RecommendAgeTextBox control.
@@ -167,13 +185,40 @@ Partial Public Class ManageProduct
     Protected WithEvents RecommendAgeTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''CountryOriginTextBox control.
+    '''ShippingTimeTextBox control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents CountryOriginTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents ShippingTimeTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''CareTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CareTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''StatusDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents StatusDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''OutofStockCheckBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents OutofStockCheckBox As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''FragileCheckBox control.
@@ -194,22 +239,13 @@ Partial Public Class ManageProduct
     Protected WithEvents HandmadeCheckBox As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''OutofStockCheckBox control.
+    '''SaveButton control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents OutofStockCheckBox As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''ShippingTimeTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ShippingTimeTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents SaveButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''ThumbPathTextBox control.
@@ -219,13 +255,4 @@ Partial Public Class ManageProduct
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ThumbPathTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''SaveButton control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SaveButton As Global.System.Web.UI.WebControls.Button
 End Class
