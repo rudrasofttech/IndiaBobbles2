@@ -17,6 +17,10 @@ body {
     background-image: url(https://www.indiabobbles.com/theme/khichdi/img/India-Bobbles-package-1300.jpg);
 }
 
+.fullbody {
+    min-height: calc(100vh - 150px);
+}
+
 .ib-cust {
     --p: #330B3F;
     --p2: #4d1460;
@@ -1194,9 +1198,9 @@ body {
 
     .ib-header .btn-ib {
         background: #330B3F;
-        color: #fff;
-        font-weight: 600;
-        border: none;
+    color: #fff;
+    font-weight: 600;
+    border: none;
     }
 
         .ib-header .btn-ib:hover {
@@ -2126,5 +2130,305 @@ body {
 
     .ib-post .side {
         position: static;
+    }
+}
+
+.ib-auth {
+    --p: #330B3F;
+    --p2: #4d1460;
+    --y: #ffc107;
+    --y2: #fff4cc;
+    --mut: #6b5f72;
+    --line: #ece6ef;
+}
+
+    .ib-auth .wrap {
+        max-width: 1000px;
+        margin: 40px auto;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 18px 50px rgba(51,11,63,.15);
+        background: #fff;
+        display: grid;
+        grid-template-columns: .9fr 1.1fr;
+    }
+
+    /* Left brand panel */
+    .ib-auth .brand {
+        background: radial-gradient(circle at 70% 30%,#5a1870 0,var(--p) 60%);
+        color: #fff;
+        padding: 44px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        .ib-auth .brand img {
+            max-height: 52px;
+            align-self: flex-start;
+        }
+
+        .ib-auth .brand h2 {
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin: 26px 0 10px;
+            line-height: 1.2;
+        }
+
+            .ib-auth .brand h2 em {
+                font-style: normal;
+                color: var(--y);
+            }
+
+        .ib-auth .brand p {
+            color: #e2d3ea;
+            margin-bottom: 22px;
+        }
+
+        .ib-auth .brand ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ib-auth .brand li {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 14px;
+            color: #f3e8f7;
+        }
+
+            .ib-auth .brand li i {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                background: rgba(255,193,7,.15);
+                color: var(--y);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+    /* Right form panel */
+    .ib-auth .form-side {
+        padding: 40px;
+    }
+
+    .ib-auth .steps {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 22px;
+    }
+
+        .ib-auth .steps span {
+            height: 6px;
+            flex: 1;
+            border-radius: 4px;
+            background: var(--line);
+        }
+
+            .ib-auth .steps span.on {
+                background: var(--p);
+            }
+
+    .ib-auth h1 {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: var(--p);
+        margin: 0 0 6px;
+    }
+
+    .ib-auth .sub {
+        color: var(--mut);
+        margin-bottom: 22px;
+    }
+
+    .ib-auth .form-label {
+        font-weight: 600;
+        color: #1f1724;
+        margin-bottom: 4px;
+    }
+
+    .ib-auth .form-control {
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        padding: .75rem 1rem;
+        font-size: 1rem;
+    }
+
+        .ib-auth .form-control:focus {
+            border-color: var(--p);
+            box-shadow: 0 0 0 .2rem rgba(51,11,63,.12);
+        }
+
+    .ib-auth .otp-input {
+        text-align: center;
+        font-size: 1.6rem !important;
+        font-weight: 800;
+        letter-spacing: .5em;
+        padding-left: 1.5em !important;
+    }
+
+    .ib-auth .input-group-text {
+        border: 2px solid var(--line);
+        border-right: 0;
+        background: #faf8fb;
+        border-radius: 10px 0 0 10px;
+        font-weight: 600;
+        color: var(--mut);
+    }
+
+    .ib-auth .input-group .form-control {
+        border-left: 0;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .ib-auth .input-group:focus-within .input-group-text {
+        border-color: var(--p);
+    }
+
+    .ib-auth .hint {
+        color: var(--mut);
+        font-size: .8rem;
+        margin-top: 4px;
+    }
+
+    .ib-auth .news-box {
+        background: var(--y2);
+        border-radius: 12px;
+        padding: 14px 16px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+        .ib-auth .news-box input[type=checkbox] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            accent-color: #330B3F;
+        }
+
+        .ib-auth .news-box label {
+            color: var(--p);
+            font-size: .92rem;
+            cursor: pointer;
+        }
+
+            .ib-auth .news-box label b {
+                display: block;
+            }
+
+    .ib-auth .captcha {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        align-items: center;
+    }
+
+        .ib-auth .captcha img {
+            height: 56px;
+            border-radius: 8px;
+            border: 2px solid var(--line);
+        }
+
+    .ib-auth .btn-main {
+        background: var(--p);
+        color: #fff;
+        font-weight: 700;
+        border: 0;
+        border-radius: 10px;
+        padding: .85rem;
+        font-size: 1.05rem;
+        width: 100%;
+    }
+
+        .ib-auth .btn-main:hover {
+            background: var(--p2);
+            color: var(--y);
+        }
+
+    .ib-auth .btn-link-ib,
+    .ib-auth .link-btn {
+        background: none;
+        border: 0;
+        padding: 0;
+        color: var(--p);
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    .ib-auth .btn-link-ib:disabled {
+        color: var(--mut);
+        text-decoration: none;
+        cursor: default;
+    }
+
+    .ib-auth .msg {
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: .92rem;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 18px;
+    }
+
+    .ib-auth .msg-ok {
+        background: #e7f6ec;
+        color: #157a3c;
+    }
+
+    .ib-auth .msg-err {
+        background: #fdecee;
+        color: #b4232f;
+    }
+
+    .ib-auth .divider {
+        border-top: 1px solid var(--line);
+        margin: 22px 0 16px;
+    }
+
+    .ib-auth .terms {
+        color: var(--mut);
+        font-size: .8rem;
+    }
+
+    .ib-auth .small-note {
+        color: var(--mut);
+        font-size: .9rem;
+    }
+
+    .ib-auth .terms a,
+    .ib-auth .small-note a {
+        color: var(--p);
+        font-weight: 700;
+    }
+
+    .ib-auth .validation-summary-errors ul {
+        padding-left: 1rem;
+        margin-bottom: 12px;
+    }
+
+@media (max-width: 767.98px) {
+    .ib-auth .wrap {
+        grid-template-columns: 1fr;
+        margin: 16px auto;
+        border-radius: 16px;
+    }
+
+    .ib-auth .brand {
+        display: none;
+    }
+
+    .ib-auth .form-side {
+        padding: 28px 22px;
+    }
+
+    .ib-auth .captcha {
+        grid-template-columns: 1fr;
     }
 }

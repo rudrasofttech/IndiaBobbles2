@@ -283,3 +283,14 @@ Public Class OrderAddressDTO
     End Sub
 End Class
 
+Public Class OtpLoginDTO
+    <Required>
+    <EmailAddress>
+    Public Property Email As String = String.Empty
+
+    <Required>
+    Public Property OTP As String = String.Empty
+
+    Public Property StepNo As Integer = 1
+End Class
+

@@ -950,6 +950,7 @@
     <Content Include="Views\Account\GenerateOTP.vbhtml" />
     <Content Include="Views\Account\ManageProfile.vbhtml" />
     <Content Include="Views\Home\Tag.vbhtml" />
+    <Content Include="Views\Account\OtpLogin.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

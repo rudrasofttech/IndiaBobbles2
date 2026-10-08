@@ -13,18 +13,6 @@
     <link href="~/theme/khichdi/css/indiabobbles.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
-    <style>
-        /*body {
-            background-image: url( @@Url.Content("~/theme/khichdi/img/India-Bobbles-package-1300.jpg") );
-        }*/
-        .card.out-of-stock {
-            opacity: 0.55;
-        }
-
-        .fullbody {
-            min-height: calc(100vh - 150px);
-        }
-    </style>
     @RenderSection("head", required:=False)
 </head>
 <body>
@@ -90,7 +78,7 @@
                         @<a href="~/account/manageprofile" class="btn btn-ib btn-sm px-3"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
                         @<a href="~/account/logout" class="btn btn-ib-outline btn-sm px-3">Logout</a>
                     Else
-                        @<a href="~/account/generateotp" class="btn btn-ib-outline btn-sm px-3">Login</a>
+                        @<a href="~/account/otplogin" class="btn btn-ib-outline btn-sm px-3">Login</a>
                         @<a href="~/account/register" class="btn btn-ib btn-sm px-3">Sign up</a>
                     End If
                 </div>
