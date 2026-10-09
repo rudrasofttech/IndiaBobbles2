@@ -116,6 +116,11 @@ Public Module RouteConfig
             defaults:=New With {.controller = "Articles", .action = "Detail", .url = UrlParameter.Optional}
         )
         routes.MapRoute(
+            name:="EmailOpen",
+            url:="email/open/{id}",
+            defaults:=New With {.controller = "Account", .action = "EmailOpen"}
+        )
+        routes.MapRoute(
             name:="Default",
             url:="{controller}/{action}/{id}",
             defaults:=New With {.controller = "Home", .action = "Index", .id = UrlParameter.Optional}

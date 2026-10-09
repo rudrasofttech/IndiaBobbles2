@@ -374,4 +374,28 @@ Namespace Controllers
             Return sb.ToString()
         End Function
     End Class
+
+    Partial Public Class AccountController
+        Private Shared ReadOnly OnePixelGif As Byte() =
+            Convert.FromBase64String("R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==")
+
+        <AllowAnonymous>
+        Function EmailOpen(ByVal id As Guid) As ActionResult
+            Try
+                Dim em = db.EmailMessages.FirstOrDefault(Function(x) x.ID = id)
+                If em IsNot Nothing AndAlso Not em.IsRead Then
+                    em.IsRead = True
+                    em.ReadDate = DateTime.UtcNow
+                    db.SaveChanges()
+                End If
+            Catch ex As Exception
+                Trace.Write("Unable to mark email as read.")
+                Trace.Write(ex.Message)
+            End Try
+
+            Response.Cache.SetCacheability(HttpCacheability.NoCache)
+            Response.Cache.SetNoStore()
+            Return File(OnePixelGif, "image/gif")
+        End Function
+    End Class
 End Namespace
