@@ -23,29 +23,155 @@ Partial Public Class ViewDrive
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
-    '''message4 control.
+    '''UpLink control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents message4 As Global.IndiaBobbles.Message
+    Protected WithEvents UpLink As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''FolderTableRepeater control.
+    '''BreadcrumbLiteral control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents FolderTableRepeater As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents BreadcrumbLiteral As Global.System.Web.UI.WebControls.Literal
 
     '''<summary>
-    '''FileItemRepeater control.
+    '''NewFolderPanel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents FileItemRepeater As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents NewFolderPanel As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''NewFolderTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents NewFolderTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''CreateFolderButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CreateFolderButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''FlashLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FlashLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''UploadInput control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UploadInput As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''UploadButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UploadButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''TargetHidden control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TargetHidden As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''NewNameHidden control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents NewNameHidden As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''JustUploadedHidden control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents JustUploadedHidden As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''RenameButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RenameButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''DeleteButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DeleteButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''SummaryLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SummaryLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''FolderRepeater control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FolderRepeater As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''FileRepeater control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileRepeater As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''EmptyPanel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents EmptyPanel As Global.System.Web.UI.WebControls.Panel
 End Class

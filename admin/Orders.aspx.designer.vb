@@ -32,6 +32,87 @@ Partial Public Class Orders
     Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
+    '''MessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MessageLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ToShipLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ToShipLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''ShippedLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ShippedLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''LeadLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LeadLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''MonthSalesLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MonthSalesLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''MonthLabelLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MonthLabelLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''ToolbarPanel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ToolbarPanel As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''SearchTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SearchTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''SearchButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SearchButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''StatusDropDown control.
     '''</summary>
     '''<remarks>
@@ -39,6 +120,33 @@ Partial Public Class Orders
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents StatusDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''HideCartsCheckBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents HideCartsCheckBox As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''ClearButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ClearButton As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''ExportButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ExportButton As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''UpdateProgress1 control.
@@ -57,4 +165,13 @@ Partial Public Class Orders
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents GridView1 As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''CountLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CountLiteral As Global.System.Web.UI.WebControls.Literal
 End Class

@@ -23,15 +23,6 @@ Partial Public Class ManageArticle
     Protected WithEvents CategorySource As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
-    '''message1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents message1 As Global.IndiaBobbles.Message
-
-    '''<summary>
     '''HeadingLit control.
     '''</summary>
     '''<remarks>
@@ -39,6 +30,24 @@ Partial Public Class ManageArticle
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents HeadingLit As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''ViewLink control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ViewLink As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''message1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents message1 As Global.IndiaBobbles.Message
 
     '''<summary>
     '''TitleTextBox control.
@@ -57,33 +66,6 @@ Partial Public Class ManageArticle
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TitleReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''MetaTitleTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents MetaTitleTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''RequiredFieldValidator2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''UpdatePanel1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
     '''URLTextBox control.
@@ -111,132 +93,6 @@ Partial Public Class ManageArticle
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents CustomValidator1 As Global.System.Web.UI.WebControls.CustomValidator
-
-    '''<summary>
-    '''TagTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents TagTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''TagReqVal control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents TagReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''SitemapCheckBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SitemapCheckBox As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''WriterTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents WriterTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''WriterReqVal control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents WriterReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''WriterEmailTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents WriterEmailTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''WriterEmailReqVal control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents WriterEmailReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''CategoryDropDown control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CategoryDropDown As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''CategoryReqVal control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CategoryReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
-    '''FacebookImageTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents FacebookImageTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''FacebookDescTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents FacebookDescTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''StatusDropDown control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents StatusDropDown As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''SlideShowCheckBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SlideShowCheckBox As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''QuestionCheckBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents QuestionCheckBox As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''DescTextBox control.
@@ -275,6 +131,42 @@ Partial Public Class ManageArticle
     Protected WithEvents TextReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
+    '''StatusDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents StatusDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''SitemapCheckBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SitemapCheckBox As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''SlideShowCheckBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SlideShowCheckBox As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''QuestionCheckBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents QuestionCheckBox As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''SubmitButton control.
     '''</summary>
     '''<remarks>
@@ -282,4 +174,112 @@ Partial Public Class ManageArticle
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents SubmitButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''SaveStayButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SaveStayButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''CategoryDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CategoryDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''CategoryReqVal control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CategoryReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''WriterTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents WriterTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''WriterReqVal control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents WriterReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''WriterEmailTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents WriterEmailTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''WriterEmailReqVal control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents WriterEmailReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''MetaTitleTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MetaTitleTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TagTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TagTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TagReqVal control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TagReqVal As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''FacebookImageTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FacebookImageTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''FacebookDescTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FacebookDescTextBox As Global.System.Web.UI.WebControls.TextBox
 End Class

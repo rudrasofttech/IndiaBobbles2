@@ -23,15 +23,6 @@ Partial Public Class Articles
     Protected WithEvents ArticleSource As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
-    '''CategorySource control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CategorySource As Global.System.Web.UI.WebControls.SqlDataSource
-
-    '''<summary>
     '''message1 control.
     '''</summary>
     '''<remarks>
@@ -41,22 +32,13 @@ Partial Public Class Articles
     Protected WithEvents message1 As Global.IndiaBobbles.Message
 
     '''<summary>
-    '''StatusDropDown control.
+    '''MessageLabel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents StatusDropDown As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''SubmitButton control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SubmitButton As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents MessageLabel As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''ArticleGridView control.

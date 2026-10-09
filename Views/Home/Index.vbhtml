@@ -31,7 +31,7 @@ End Section
     <meta property="og:site_name" content="India Bobbles" />
     <meta property="og:title" content="India Bobbles - Hand-painted Bollywood & Indian bobbleheads" />
     <meta property="og:description" content="Shop the best range of Bollywood and Indian bobble heads each piece hand painted by master artists. Start collecting now, Free Shipping all over India." />
-    <meta property="og:image" content="https://www.indiabobbles.com/drive/theme/khichdi/img/Agni-poster.jpg" />
+    <meta property="og:image" content="https://www.indiabobbles.com/theme/khichdi/img/ib-logo.png" />
 End Section
 
 @section scripts

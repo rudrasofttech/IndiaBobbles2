@@ -14,6 +14,60 @@ Option Explicit On
 Partial Public Class Members
 
     '''<summary>
+    '''MessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MessageLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''TotalLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TotalLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''SubscribedLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SubscribedLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''BuyersLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents BuyersLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''NewLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents NewLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''FilterPanel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FilterPanel As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''FilterTextBox control.
     '''</summary>
     '''<remarks>
@@ -41,6 +95,15 @@ Partial Public Class Members
     Protected WithEvents SubscribeList As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''KindDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents KindDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''SubmitButton control.
     '''</summary>
     '''<remarks>
@@ -50,13 +113,31 @@ Partial Public Class Members
     Protected WithEvents SubmitButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''DeleteFilteredButton control.
+    '''ResetButton control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents DeleteFilteredButton As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents ResetButton As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''FilteredCountLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FilteredCountLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''UnsubscribeButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UnsubscribeButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''DeleteButton control.
@@ -68,13 +149,22 @@ Partial Public Class Members
     Protected WithEvents DeleteButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''message control.
+    '''DeleteFilteredButton control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents message As Global.IndiaBobbles.Message
+    Protected WithEvents DeleteFilteredButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ExportButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ExportButton As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''MemberGridView control.

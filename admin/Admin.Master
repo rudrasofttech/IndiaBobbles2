@@ -35,11 +35,11 @@
 
             <div class="grp">Customers</div>
             <a href="<%= ResolveUrl("~/admin/members.aspx") %>" data-match="member"><i class="fa fa-users"></i> Members</a>
-            <a href="<%= ResolveUrl("~/admin/communicate.aspx") %>" data-match="communicate"><i class="fa fa-comments"></i> Communicate</a>
+            <%--<a href="<%= ResolveUrl("~/admin/communicate.aspx") %>" data-match="communicate"><i class="fa fa-comments"></i> Communicate</a>--%>
 
             <div class="grp">Email</div>
             <a href="<%= ResolveUrl("~/admin/emails.aspx") %>" data-match="emails"><i class="fa fa-envelope"></i> Emails</a>
-            <a href="<%= ResolveUrl("~/admin/bulkemail.aspx") %>" data-match="bulkemail"><i class="fa fa-paper-plane"></i> Marketting</a>
+            <a href="<%= ResolveUrl("~/admin/markettingcampaigns.aspx") %>" data-match="marketting|bulkemail"><i class="fa fa-paper-plane"></i> Marketting</a>
 
             <div class="grp">Content</div>
             <a href="<%= ResolveUrl("~/admin/articles.aspx") %>" data-match="article"><i class="fa fa-pencil-square-o"></i> Articles</a>
@@ -69,14 +69,14 @@
                 </asp:ContentPlaceHolder>
 
                 <div class="modal fade" id="driveModal" tabindex="-1" aria-labelledby="driveModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="driveModalLabel">Drive</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content" style="overflow:hidden;">
+                            <div class="modal-header" style="background:#330B3F;color:#fff;">
+                                <h5 class="modal-title" id="driveModalLabel"><i class="fa fa-folder-open" style="color:#ffc107;"></i> Drive <small style="font-size:.75rem;opacity:.75;font-weight:400;">– double-click an image (or “Use this image”) to insert it</small></h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <iframe style="width: 100%; height: 500px; border: 0px" runat="server" src="~/admin/viewdrive.aspx"></iframe>
+                            <div class="modal-body p-0">
+                                <iframe title="Drive" style="width: 100%; height: 75vh; border: 0px; display: block;" runat="server" src="~/admin/viewdrive.aspx"></iframe>
                             </div>
                         </div>
                     </div>
@@ -90,13 +90,45 @@
             // Highlight the current section in the sidebar
             var path = location.pathname.toLowerCase();
             document.querySelectorAll('.adm-nav a[data-match]').forEach(function (a) {
-                if (path.indexOf(a.getAttribute('data-match')) > -1) a.classList.add('active');
+                var hit = a.getAttribute('data-match').split('|').some(function (m) { return path.indexOf(m) > -1; });
+                if (hit) a.classList.add('active');
             });
             // Mobile menu
             var side = document.getElementById('admSide'), bd = document.getElementById('admBackdrop');
             function toggle(open) { side.classList.toggle('open', open); bd.classList.toggle('show', open); }
             document.getElementById('admBurger').addEventListener('click', function () { toggle(true); });
             bd.addEventListener('click', function () { toggle(false); });
+
+            // ---------- Drive picker ----------
+            // Remember the last text field you were in, so "Use this image" in Drive can fill it.
+            var lastField = null;
+            document.addEventListener('focusin', function (e) {
+                var t = e.target;
+                if ((t.tagName === 'TEXTAREA' || (t.tagName === 'INPUT' && /^(text|url|search)$/i.test(t.type))) && !t.closest('#driveModal')) lastField = t;
+            });
+            window.addEventListener('message', function (e) {
+                if (e.origin !== location.origin || !e.data || e.data.type !== 'ib-drive-pick') return;
+                var url = e.data.url, f = lastField;
+                if (f) {
+                    if (f.tagName === 'TEXTAREA') {
+                        // In a text area (articles, emails) insert an image tag at the cursor
+                        var tag = '<img src="' + url + '" alt="" style="max-width:100%;height:auto;" />';
+                        var s = f.selectionStart || 0, en = f.selectionEnd || 0;
+                        f.value = f.value.substring(0, s) + tag + f.value.substring(en);
+                        f.selectionStart = f.selectionEnd = s + tag.length;
+                    } else {
+                        f.value = url;                     // image / path boxes get the link
+                    }
+                    f.dispatchEvent(new Event('input', { bubbles: true }));
+                    f.dispatchEvent(new Event('change', { bubbles: true }));
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(url);
+                    alert('Image link copied – paste it where you need it.');
+                }
+                var m = document.getElementById('driveModal');
+                if (m && window.bootstrap) bootstrap.Modal.getOrCreateInstance(m).hide();
+                if (f) setTimeout(function () { f.focus(); }, 300);
+            });
         })();
     </script>
 </body>

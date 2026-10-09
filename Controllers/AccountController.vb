@@ -23,6 +23,15 @@ Namespace Controllers
             CaptchaImage = _captchaManager.CaptchaImage
         End Sub
 
+        Private Sub LoadHighlights()
+            Dim hl = db.CategoryTags.FirstOrDefault(Function(m) m.UrlName = "highlight")
+            If hl IsNot Nothing Then
+                ViewBag.Highlights = db.ProductTags.Where(Function(m) m.TagID = hl.ID).Select(Function(m) m.Product).ToList()
+            Else
+                ViewBag.Highlights = New List(Of Product)()
+            End If
+        End Sub
+
         ' GET: Account/Login
         Function Login() As ActionResult
             Return RedirectPermanent("~/account/otplogin")
@@ -194,6 +203,52 @@ Namespace Controllers
         End Function
 
 
+        Function Unsubscribe(Optional ByVal email As String = "") As ActionResult
+            LoadHighlights()
+            Dim model As New UnsubscribeDTO With {
+                .email = If(email, String.Empty).Trim()
+            }
+            Return View(model)
+        End Function
+
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function Unsubscribe(ByVal dto As UnsubscribeDTO) As ActionResult
+            LoadHighlights()
+
+            If Not ModelState.IsValid Then
+                ViewBag.Error = "Please enter a valid email address."
+                Return View(dto)
+            End If
+
+            Try
+                Dim normalizedEmail = dto.Email.Trim().ToLowerInvariant()
+                Dim alreadyUnsubscribed = db.UnsubscribedEmails.Any(Function(t) t.Email.ToLower() = normalizedEmail)
+
+                If alreadyUnsubscribed Then
+                    ViewBag.Success = "This email is already unsubscribed."
+                    dto.Email = normalizedEmail
+                    Return View(dto)
+                End If
+
+                Dim item As New UnsubscribedEmail With {
+                    .ID = Guid.NewGuid(),
+                    .Email = normalizedEmail,
+                    .CreateDate = DateTime.UtcNow
+                }
+
+                db.UnsubscribedEmails.Add(item)
+                db.SaveChanges()
+
+                ViewBag.Success = "You have been unsubscribed successfully."
+                dto.Email = normalizedEmail
+                Return View(dto)
+            Catch ex As Exception
+                ViewBag.Error = ex.Message
+                Return View(dto)
+            End Try
+        End Function
+
         Function OtpLogin() As ActionResult
             Return View(New OtpLoginDTO())
         End Function
@@ -223,10 +278,11 @@ Namespace Controllers
                     user.Password = password
                     db.SaveChanges()
 
-                    Dim body As String = String.Format("Dear {0},<br/><br/>Your one time password is <strong>{1}</strong>.<br/><br/>", user.MemberName, password)
+                    Dim subject As String = password & " is your India Bobbles login code"
+                    Dim body As String = BuildOtpEmail(user.MemberName, password)
                     Dim eman As New EmailManager()
                     eman.SendMail(Utility.NewsletterEmail, user.Email, Utility.AdminName,
-                                  user.MemberName, body, "India Bobbles OTP",
+                                  user.MemberName, body, subject,
                                   EmailMessageType.Communication, "OTP")
 
                     ViewBag.Success = String.Format("OTP sent to {0}. Please check your mailbox.", user.Email)
@@ -265,6 +321,57 @@ Namespace Controllers
                 ViewBag.Error = ex.Message
                 Return View(dto)
             End Try
+        End Function
+
+        ''' <summary>Branded, mobile-friendly OTP login email (inline styles for email clients).</summary>
+        Public Shared Function BuildOtpEmail(memberName As String, otp As String, Optional validMinutes As Integer = 10) As String
+            Dim enc = Function(s As String) System.Net.WebUtility.HtmlEncode(If(s, ""))
+            Dim firstName As String = If(String.IsNullOrWhiteSpace(memberName), "there", memberName.Trim().Split(" "c)(0))
+            Dim code As String = enc(otp)
+            ' Spaced-out digits are easier to read: 4 8 2 9 1 7
+            Dim spaced As String = String.Join("&nbsp;", code.ToCharArray().Select(Function(c) c.ToString()))
+
+            Dim sb As New System.Text.StringBuilder()
+            sb.Append("<div style=""margin:0;padding:0;background:#f4f1f6;font-family:Arial,Helvetica,sans-serif;"">")
+            ' Preview text shown in the inbox list
+            sb.AppendFormat("<div style=""display:none;max-height:0;overflow:hidden;"">{0} is your India Bobbles login code. It expires in {1} minutes.</div>", code, validMinutes)
+            sb.Append("<table role=""presentation"" width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background:#f4f1f6;""><tr><td align=""center"" style=""padding:24px 12px;"">")
+            sb.Append("<table role=""presentation"" width=""480"" cellpadding=""0"" cellspacing=""0"" style=""width:100%;max-width:480px;background:#ffffff;border-radius:14px;overflow:hidden;"">")
+
+            ' Header
+            sb.Append("<tr><td align=""center"" style=""background:#ffc107;padding:16px 24px;"">")
+            sb.Append("<a href=""https://www.indiabobbles.com""><img src=""https://www.indiabobbles.com/theme/khichdi/img/ib-logo.png"" alt=""India Bobbles"" height=""40"" style=""display:block;border:0;height:40px;""></a>")
+            sb.Append("</td></tr>")
+
+            ' Body
+            sb.Append("<tr><td style=""padding:30px 28px 10px;color:#1f1724;font-size:15px;line-height:1.6;"">")
+            sb.AppendFormat("<div style=""font-size:20px;font-weight:bold;color:#330B3F;margin-bottom:8px;"">Hi {0},</div>", enc(firstName))
+            sb.Append("Use this code to log in to your India Bobbles account:")
+            sb.Append("</td></tr>")
+
+            ' Code box
+            sb.Append("<tr><td align=""center"" style=""padding:14px 28px 6px;"">")
+            sb.AppendFormat("<div style=""display:inline-block;background:#330B3F;color:#ffc107;font-size:32px;font-weight:bold;letter-spacing:4px;padding:16px 28px;border-radius:12px;font-family:'Courier New',Courier,monospace;"">{0}</div>", spaced)
+            sb.AppendFormat("<div style=""font-size:13px;color:#6b5f72;margin-top:10px;"">This code expires in <b>{0} minutes</b> and can be used only once.</div>", validMinutes)
+            sb.Append("</td></tr>")
+
+            ' Safety note
+            sb.Append("<tr><td style=""padding:20px 28px 26px;"">")
+            sb.Append("<table role=""presentation"" width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background:#fff4cc;border-radius:10px;""><tr><td style=""padding:12px 14px;font-size:13px;color:#3e3445;line-height:1.55;"">")
+            sb.Append("&#128274; <b>Never share this code.</b> India Bobbles will never ask for it by phone, WhatsApp or email. ")
+            sb.Append("If you didn't try to log in, you can ignore this email. Your account is safe.")
+            sb.Append("</td></tr></table>")
+            sb.Append("</td></tr>")
+
+            ' Footer
+            sb.Append("<tr><td align=""center"" style=""background:#330B3F;padding:16px 24px;color:#cbb8d4;font-size:12px;line-height:1.7;"">")
+            sb.Append("<b style=""color:#ffc107;"">India Bobbles</b> · Hand-painted Bollywood &amp; Indian bobbleheads<br>")
+            sb.Append("<a href=""https://www.indiabobbles.com"" style=""color:#ffc107;text-decoration:none;"">indiabobbles.com</a> · ")
+            sb.Append("<a href=""mailto:indiabobbles@rudrasofttech.com"" style=""color:#ffc107;text-decoration:none;"">indiabobbles@rudrasofttech.com</a>")
+            sb.Append("</td></tr>")
+
+            sb.Append("</table></td></tr></table></div>")
+            Return sb.ToString()
         End Function
     End Class
 End Namespace

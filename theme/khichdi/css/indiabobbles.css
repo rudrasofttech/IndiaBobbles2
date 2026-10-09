@@ -655,30 +655,47 @@
 
 /* =====================================================================
    6. FOOTER
+   Light top (so the purple logo stands out), purple trust strip and bottom bar.
    ===================================================================== */
 .ib-footer {
-    background: var(--ib-p);
-    color: #e9dcef;
+    background: #f6f1f8;
+    color: var(--ib-text2);
     font-size: .95rem;
+    border-top: 4px solid var(--ib-y);
 }
 
     .ib-footer a {
-        color: #e9dcef;
+        color: var(--ib-text2);
         text-decoration: none;
     }
 
         .ib-footer a:hover {
-            color: var(--ib-y);
+            color: var(--ib-p);
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
     .ib-footer h6 {
-        color: var(--ib-y);
-        font-weight: 700;
-        letter-spacing: .06em;
+        color: var(--ib-p);
+        font-weight: 800;
+        letter-spacing: .08em;
         text-transform: uppercase;
         font-size: .8rem;
         margin-bottom: 1rem;
+        padding-bottom: .5rem;
+        position: relative;
     }
+
+        .ib-footer h6::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 28px;
+            height: 3px;
+            border-radius: 3px;
+            background: var(--ib-y);
+        }
 
     .ib-footer ul {
         list-style: none;
@@ -691,10 +708,11 @@
     }
 
     .ib-footer .ib-tagline {
-        color: var(--ib-on-dark2);
+        color: var(--ib-mut);
         max-width: 300px;
     }
 
+    /* Social icons */
     .ib-footer .ib-social a {
         display: inline-flex;
         align-items: center;
@@ -702,9 +720,11 @@
         width: 38px;
         height: 38px;
         border-radius: 50%;
-        background: rgba(255,255,255,.1);
+        background: var(--ib-p);
+        color: #fff;
         margin-right: .5rem;
         font-size: 1.1rem;
+        text-decoration: none;
     }
 
         .ib-footer .ib-social a:hover {
@@ -712,9 +732,28 @@
             color: var(--ib-p);
         }
 
+    /* "Need help?" button */
+    .ib-footer .ib-help-btn {
+        background: var(--ib-p);
+        color: #fff;
+        font-weight: 700;
+        border-radius: var(--ib-r-sm);
+        padding: .5rem 1rem;
+        display: inline-block;
+    }
+
+        .ib-footer .ib-help-btn:hover {
+            background: var(--ib-y);
+            color: var(--ib-p);
+            text-decoration: none;
+        }
+
+    /* Purple trust strip */
     .ib-footer .ib-perks {
-        border-top: 1px solid rgba(255,255,255,.12);
-        border-bottom: 1px solid rgba(255,255,255,.12);
+        background: var(--ib-p);
+        color: #f3e8f7;
+        font-weight: 600;
+        font-size: .9rem;
     }
 
         .ib-footer .ib-perks span {
@@ -726,23 +765,25 @@
             margin-right: .4rem;
         }
 
+    /* Bottom bar – continues the purple band */
     .ib-footer .ib-bottom {
         color: #a891b3;
         font-size: .85rem;
     }
 
-    .ib-footer .ib-help-btn {
-        background: var(--ib-y);
-        color: var(--ib-p);
-        font-weight: 600;
-        border-radius: 6px;
-        padding: .45rem .9rem;
-        display: inline-block;
+    .ib-footer > .ib-bottom {
+        max-width: none;
+        background: #250830;
+        padding-left: max(12px, calc((100% - 1296px) / 2 + 12px)) !important;
+        padding-right: max(12px, calc((100% - 1296px) / 2 + 12px)) !important;
     }
 
-        .ib-footer .ib-help-btn:hover {
-            background: #fff;
-            color: var(--ib-p);
+    .ib-footer .ib-bottom a {
+        color: var(--ib-y);
+    }
+
+        .ib-footer .ib-bottom a:hover {
+            color: #fff;
         }
 
 
@@ -4209,5 +4250,278 @@
 @media print {
     .ib-topbar, .ib-header, .ib-footer, .ib-order .help, .ib-order .actions-box, .ib-order .no-print {
         display: none !important;
+    }
+}
+
+
+.ib-unsub {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+    .ib-unsub .u-card {
+        max-width: 560px;
+        margin: 8px auto 40px;
+        background: #fff;
+        border: 1px solid #ece6ef;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(51,11,63,.07);
+    }
+
+    .ib-unsub .u-top {
+        background: #330B3F;
+        color: #fff;
+        text-align: center;
+        padding: 30px 24px 26px;
+    }
+
+    .ib-unsub .u-ico {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #ffc107;
+        color: #330B3F;
+        font-size: 1.7rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+    .ib-unsub .u-top h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin: 0 0 6px;
+        color: #fff;
+    }
+
+    .ib-unsub .u-top p {
+        color: #e2d3ea;
+        margin: 0;
+    }
+
+    .ib-unsub .u-body {
+        padding: 26px 28px 28px;
+    }
+
+    .ib-unsub .form-label {
+        font-weight: 700;
+        color: #330B3F;
+    }
+
+    .ib-unsub .form-control {
+        border-radius: 10px;
+        border-color: #ddd5e2;
+        padding: .65rem .9rem;
+    }
+
+        .ib-unsub .form-control:focus {
+            border-color: #330B3F;
+            box-shadow: 0 0 0 .2rem rgba(51,11,63,.12);
+        }
+
+    .ib-unsub .u-btn {
+        width: 100%;
+        background: #330B3F;
+        color: #fff;
+        border: 0;
+        border-radius: 10px;
+        padding: .75rem;
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+        .ib-unsub .u-btn:hover {
+            background: #4d1460;
+            color: #fff;
+        }
+
+    .ib-unsub .u-ghost {
+        display: block;
+        text-align: center;
+        margin-top: 12px;
+        color: #6b5f72;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        .ib-unsub .u-ghost:hover {
+            color: #330B3F;
+        }
+
+    .ib-unsub .u-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px;
+        font-size: .92rem;
+        color: #3e3445;
+    }
+
+        .ib-unsub .u-list li {
+            display: flex;
+            gap: 10px;
+            padding: 6px 0;
+        }
+
+        .ib-unsub .u-list i {
+            width: 18px;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        .ib-unsub .u-list .no i {
+            color: #b4232f;
+        }
+
+        .ib-unsub .u-list .yes i {
+            color: #157a3c;
+        }
+
+    .ib-unsub .u-err {
+        background: #fdecee;
+        color: #b4232f;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+
+    .ib-unsub .u-email {
+        display: inline-block;
+        background: #fff4cc;
+        color: #330B3F;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 8px;
+        margin-top: 10px;
+        word-break: break-all;
+    }
+
+    .ib-unsub .u-note {
+        background: #f6f4f8;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: .9rem;
+        color: #3e3445;
+        margin-bottom: 18px;
+    }
+
+    .ib-unsub .u-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+        .ib-unsub .u-actions a {
+            flex: 1 1 160px;
+            text-align: center;
+            border-radius: 10px;
+            padding: .65rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .ib-unsub .u-actions .a1 {
+            background: #ffc107;
+            color: #330B3F;
+        }
+
+        .ib-unsub .u-actions .a2 {
+            border: 2px solid #330B3F;
+            color: #330B3F;
+        }
+
+            .ib-unsub .u-actions .a2:hover {
+                background: #330B3F;
+                color: #fff;
+            }
+
+    .ib-unsub .u-more h2 {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #330B3F;
+        margin: 0;
+    }
+
+    .ib-unsub .u-more .sub {
+        color: #6b5f72;
+        margin: 2px 0 16px;
+    }
+
+    .ib-unsub .u-prod {
+        display: block;
+        height: 100%;
+        background: #fff;
+        border: 1px solid #ece6ef;
+        border-radius: 14px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        transition: transform .15s, box-shadow .15s;
+    }
+
+        .ib-unsub .u-prod:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(51,11,63,.1);
+        }
+
+        .ib-unsub .u-prod .img {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            background: #f6f4f8;
+        }
+
+        .ib-unsub .u-prod img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .ib-unsub .u-prod .off {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e23744;
+            color: #fff;
+            font-size: .72rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .ib-unsub .u-prod .b {
+            padding: 12px 14px 14px;
+        }
+
+        .ib-unsub .u-prod .n {
+            font-weight: 700;
+            color: #1f1724;
+            font-size: .95rem;
+            line-height: 1.3;
+            min-height: 2.6em;
+        }
+
+        .ib-unsub .u-prod .p {
+            margin-top: 6px;
+            color: #330B3F;
+            font-weight: 800;
+        }
+
+            .ib-unsub .u-prod .p s {
+                color: #6b5f72;
+                font-weight: 400;
+                font-size: .85rem;
+                margin-left: 4px;
+            }
+
+@media (max-width: 575.98px) {
+    .ib-unsub .u-body {
+        padding: 22px 18px;
+    }
+
+    .ib-unsub .u-top h1 {
+        font-size: 1.35rem;
     }
 }

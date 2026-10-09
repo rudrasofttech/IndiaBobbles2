@@ -311,6 +311,14 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <Property Name="CreatedBy" Type="bigint" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="UnsubscribedEmail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserInRole">
           <Key>
             <PropertyRef Name="ID" />
@@ -640,6 +648,7 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <EntitySet Name="ProductPhoto" EntityType="Self.ProductPhoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTag" EntityType="Self.ProductTag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TopStory" EntityType="Self.TopStory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnsubscribedEmail" EntityType="Self.UnsubscribedEmail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInRole" EntityType="Self.UserInRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteSetting" EntityType="Self.WebsiteSetting" Schema="dbo" store:Type="Tables" />
@@ -1329,6 +1338,7 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
             <End Role="ProductTag" EntitySet="ProductTags" />
           </AssociationSet>
           <EntitySet Name="Captchas" EntityType="IBModel.Captcha" />
+          <EntitySet Name="UnsubscribedEmails" EntityType="IBModel.UnsubscribedEmail" />
         </EntityContainer>
         <EntityType Name="UserInRole">
           <Key>
@@ -1535,6 +1545,14 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Value" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="UnsubscribedEmail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
@@ -1885,6 +1903,15 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnsubscribedEmails">
+            <EntityTypeMapping TypeName="IBModel.UnsubscribedEmail">
+              <MappingFragment StoreEntitySet="UnsubscribedEmail">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

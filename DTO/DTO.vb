@@ -55,6 +55,13 @@ Public Class ProfileDTO
     Public Property Mobile As String = String.Empty
 End Class
 
+Public Class UnsubscribeDTO
+    <Required>
+    <EmailAddress>
+    <MaxLength(250)>
+    Public Property Email As String = String.Empty
+End Class
+
 Public Class OrderAddressDTO
     Private _email As String
     <Required>

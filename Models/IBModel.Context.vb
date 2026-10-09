@@ -44,5 +44,6 @@ Partial Public Class indiabobblesEntities
     Public Overridable Property ProductPhotoes() As DbSet(Of ProductPhoto)
     Public Overridable Property ProductTags() As DbSet(Of ProductTag)
     Public Overridable Property Captchas() As DbSet(Of Captcha)
+    Public Overridable Property UnsubscribedEmails() As DbSet(Of UnsubscribedEmail)
 
 End Class

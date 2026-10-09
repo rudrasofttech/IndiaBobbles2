@@ -14,40 +14,58 @@ Option Explicit On
 Partial Public Class Tags
 
     '''<summary>
-    '''SqlDataSource1 control.
+    '''MessageLabel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents SqlDataSource1 As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents MessageLabel As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''TagGridView control.
+    '''TagRepeater control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents TagGridView As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents TagRepeater As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''UrlNameTextBox control.
+    '''FormTitleLiteral control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents UrlNameTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents FormTitleLiteral As Global.System.Web.UI.WebControls.Literal
 
     '''<summary>
-    '''RequiredFieldValidator1 control.
+    '''EditIdHidden control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents EditIdHidden As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''UserIDHidden control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UserIDHidden As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''EditingNote control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents EditingNote As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''DisplayNameTextBox control.
@@ -68,6 +86,33 @@ Partial Public Class Tags
     Protected WithEvents RequiredFieldValidator3 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
+    '''UrlNameTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UrlNameTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''RequiredFieldValidator1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+
+    '''<summary>
+    '''UrlErrorLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UrlErrorLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''DescriptionTextBox control.
     '''</summary>
     '''<remarks>
@@ -86,15 +131,6 @@ Partial Public Class Tags
     Protected WithEvents StatusDropdown As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''UserIDHidden control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents UserIDHidden As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''SaveButton control.
     '''</summary>
     '''<remarks>
@@ -102,4 +138,13 @@ Partial Public Class Tags
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents SaveButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''CancelButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CancelButton As Global.System.Web.UI.WebControls.LinkButton
 End Class

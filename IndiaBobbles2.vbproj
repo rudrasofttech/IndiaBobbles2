@@ -301,11 +301,11 @@
       <DependentUpon>Articles.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="admin\BulkEmail.aspx.designer.vb">
-      <DependentUpon>BulkEmail.aspx</DependentUpon>
+    <Compile Include="admin\MarkettingCampaigns.aspx.designer.vb">
+      <DependentUpon>MarkettingCampaigns.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\BulkEmail.aspx.vb">
-      <DependentUpon>BulkEmail.aspx</DependentUpon>
+    <Compile Include="admin\MarkettingCampaigns.aspx.vb">
+      <DependentUpon>MarkettingCampaigns.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="admin\Communicate.aspx.designer.vb">
@@ -321,13 +321,6 @@
     <Compile Include="admin\controls\Message.ascx.vb">
       <DependentUpon>Message.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\CouponCodes.aspx.designer.vb">
-      <DependentUpon>CouponCodes.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="admin\CouponCodes.aspx.vb">
-      <DependentUpon>CouponCodes.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="admin\Emails.aspx.designer.vb">
       <DependentUpon>Emails.aspx</DependentUpon>
@@ -503,6 +496,9 @@
     <Compile Include="Models\PostStatus.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UnsubscribedEmail.vb">
+      <DependentUpon>IBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -571,10 +567,9 @@
       <LastGenOutput>IBModel.Designer.vb</LastGenOutput>
     </EntityDeploy>
     <Content Include="admin\Articles.aspx" />
-    <Content Include="admin\BulkEmail.aspx" />
+    <Content Include="admin\MarkettingCampaigns.aspx" />
     <Content Include="admin\Communicate.aspx" />
     <Content Include="admin\controls\Message.ascx" />
-    <Content Include="admin\CouponCodes.aspx" />
     <Content Include="admin\Emails.aspx" />
     <Content Include="admin\ManageArticle.aspx" />
     <Content Include="admin\ManageCoupons.aspx" />
@@ -963,6 +958,7 @@
     <Content Include="Views\Account\ManageProfile.vbhtml" />
     <Content Include="Views\Home\Tag.vbhtml" />
     <Content Include="Views\Account\OtpLogin.vbhtml" />
+    <Content Include="Views\Account\Unsubscribe.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

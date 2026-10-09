@@ -23,6 +23,78 @@ Partial Public Class Emails
     Protected WithEvents SqlDataSource1 As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
+    '''MessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MessageLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''TotalLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TotalLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''SentLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SentLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''OpenRateLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents OpenRateLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''OpenedLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents OpenedLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''PendingLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PendingLiteral As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''CampaignRepeater control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CampaignRepeater As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''FilterPanel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FilterPanel As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''KeywordTextBox control.
     '''</summary>
     '''<remarks>
@@ -32,15 +104,6 @@ Partial Public Class Emails
     Protected WithEvents KeywordTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''TypeDropDown control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents TypeDropDown As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''GroupDropDown control.
     '''</summary>
     '''<remarks>
@@ -48,6 +111,15 @@ Partial Public Class Emails
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents GroupDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''TypeDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TypeDropDown As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''SentDropDown control.
@@ -77,6 +149,15 @@ Partial Public Class Emails
     Protected WithEvents SubmitButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''ResetButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ResetButton As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''DeleteButton control.
     '''</summary>
     '''<remarks>
@@ -93,4 +174,13 @@ Partial Public Class Emails
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents EmailGrid As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''PageInfoLiteral control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PageInfoLiteral As Global.System.Web.UI.WebControls.Literal
 End Class

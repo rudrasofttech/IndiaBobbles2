@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class ManageOrder
 
     '''<summary>
-    '''SqlDataSource1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SqlDataSource1 As Global.System.Web.UI.WebControls.SqlDataSource
-
-    '''<summary>
     '''SqlDataSource2 control.
     '''</summary>
     '''<remarks>
@@ -32,22 +23,49 @@ Partial Public Class ManageOrder
     Protected WithEvents SqlDataSource2 As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
-    '''OrderDetailView control.
+    '''NotFoundPanel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents OrderDetailView As Global.System.Web.UI.WebControls.DetailsView
+    Protected WithEvents NotFoundPanel As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''OrderItemGrid control.
+    '''OrderPanel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents OrderItemGrid As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents OrderPanel As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
+    '''ReceiptLink control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ReceiptLink As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''MessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MessageLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ItemsRepeater control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ItemsRepeater As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''StatusDropDown control.
@@ -59,15 +77,6 @@ Partial Public Class ManageOrder
     Protected WithEvents StatusDropDown As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''TrackTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents TrackTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''ShippingServiceTextBox control.
     '''</summary>
     '''<remarks>
@@ -75,6 +84,15 @@ Partial Public Class ManageOrder
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ShippingServiceTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TrackTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TrackTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''ShippingNotesTextBox control.
@@ -104,15 +122,6 @@ Partial Public Class ManageOrder
     Protected WithEvents SubmitButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''ReceiptLink control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ReceiptLink As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''DeleteButton control.
     '''</summary>
     '''<remarks>
@@ -120,4 +129,13 @@ Partial Public Class ManageOrder
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents DeleteButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''SlipRepeater control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SlipRepeater As Global.System.Web.UI.WebControls.Repeater
 End Class

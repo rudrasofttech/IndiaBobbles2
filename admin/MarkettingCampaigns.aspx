@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Marketting Campaigns" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="BulkEmail.aspx.vb" Inherits="IndiaBobbles.BulkEmail" ValidateRequest="false" %>
+﻿<%@ Page Title="Marketting Campaigns" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="MarkettingCampaigns.aspx.vb" Inherits="IndiaBobbles.BulkEmail" ValidateRequest="false" %>
 <%@ Import Namespace="System.Web" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -37,20 +37,10 @@
                     </div>
                 </div>
 
-                <asp:TextBox ID="RecipientsTextBox" runat="server" CssClass="form-control be-rcpt" TextMode="MultiLine" Rows="5"
-                    placeholder="Pick from Members / Past buyers above, or paste addresses:&#10;priya@example.com, Rahul Mehta <rahul@example.com>"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="RecipientsReqVal" runat="server" ControlToValidate="RecipientsTextBox" ValidationGroup="BulkMailGrp" CssClass="val" ErrorMessage="Add at least one recipient." Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:TextBox ID="RecipientsTextBox" runat="server" CssClass="form-control be-rcpt" TextMode="MultiLine" Rows="8"
+                    placeholder='Use JSON lines, e.g.&#10;{"Email":"priya@example.com","Name":"Priya","OrderTotal":"1299","OrderDate":"09 Oct 2026"}'></asp:TextBox>
 
-                <div class="be-meter" id="rcptMeter">
-                    <span class="ok"><b id="mValid">0</b> recipients</span>
-                    <span class="bad d-none" id="mBadWrap"><i class="fa fa-exclamation-triangle"></i> <b id="mBad">0</b> invalid</span>
-                    <span class="dup d-none" id="mDupWrap"><b id="mDup">0</b> duplicates</span>
-                    <span class="sp"></span>
-                    <button type="button" class="be-lnk d-none" id="cleanBtn"><i class="fa fa-magic"></i> Clean up list</button>
-                    <button type="button" class="be-lnk" id="clearRcptBtn"><i class="fa fa-times"></i> Clear</button>
-                </div>
-                <div class="be-badlist d-none" id="badList"></div>
-                <div class="hint">Separate with comma, semicolon or a new line. Duplicates are removed automatically when you add from the lists.</div>
+                <div class="hint">One JSON object per line (or JSON array). Any property can be used in template tokens like {{Name}}, {{OrderTotal}}, {{DOB}}, etc.</div>
             </div>
 
             <!-- 2. Content -->
@@ -174,20 +164,41 @@
                         <button type="button" id="memberClearVisibleBtn" class="btn btn-sm btn-light">Clear shown</button>
                     </div>
                     <table class="table adm-table be-pick mb-0">
-                        <thead><tr><th style="width: 44px;"></th><th>Name</th><th>Email</th></tr></thead>
-                        <tbody id="memberTableBody">
-                            <asp:Repeater ID="MemberRepeater" runat="server">
-                                <ItemTemplate>
-                                    <tr class="member-row" data-search='<%# HttpUtility.HtmlAttributeEncode((Convert.ToString(Eval("MemberName")) & " " & Convert.ToString(Eval("Email"))).ToLower()) %>'>
-                                        <td><input type="checkbox" class="form-check-input member-email-check" aria-label="Select"
-                                                data-email="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Email"))) %>"
-                                                data-name="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("MemberName"))) %>" /></td>
-                                        <td class="fw-semibold"><%#: Eval("MemberName") %></td>
-                                        <td class="text-muted"><%#: Eval("Email") %></td>
-                                    </tr>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </tbody>
+                        <thead>
+    <tr>
+        <th style="width: 44px;"></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>DOB</th>
+        <th>Mobile</th>
+        <th>Country</th>
+        <th>Created</th>
+    </tr>
+</thead>
+<tbody id="memberTableBody">
+    <asp:Repeater ID="MemberRepeater" runat="server">
+        <ItemTemplate>
+            <tr class="member-row" data-search='<%# HttpUtility.HtmlAttributeEncode((Convert.ToString(Eval("MemberName")) & " " & Convert.ToString(Eval("Email")) & " " & Convert.ToString(Eval("Mobile")) & " " & Convert.ToString(Eval("Country"))).ToLower()) %>'>
+                <td>
+                    <input type="checkbox" class="form-check-input member-email-check" aria-label="Select"
+                        data-email="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Email"))) %>"
+                        data-name="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("MemberName"))) %>"
+                        data-membername="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("MemberName"))) %>"
+                        data-dob="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("DOB"))) %>"
+                        data-mobile="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Mobile"))) %>"
+                        data-country="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Country"))) %>"
+                        data-createdate="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Createdate"))) %>" />
+                </td>
+                <td class="fw-semibold"><%#: Eval("MemberName") %></td>
+                <td class="text-muted"><%#: Eval("Email") %></td>
+                <td><%#: Eval("DOB") %></td>
+                <td><%#: Eval("Mobile") %></td>
+                <td><%#: Eval("Country") %></td>
+                <td><%#: Eval("Createdate") %></td>
+            </tr>
+        </ItemTemplate>
+    </asp:Repeater>
+</tbody>
                     </table>
                     <div class="adm-empty d-none" data-none="member"><i class="fa fa-search"></i> No members match.</div>
                 </div>
@@ -225,17 +236,39 @@
                         <button type="button" id="orderClearVisibleBtn" class="btn btn-sm btn-light">Clear shown</button>
                     </div>
                     <table class="table adm-table be-pick mb-0">
-                        <thead><tr><th style="width: 44px;"></th><th>Name</th><th>Email</th><th>Products ordered</th></tr></thead>
+                        <thead>
+<tr>
+    <th style="width: 44px;"></th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Products</th>
+    <th>Order Count</th>
+    <th>Last Order Date</th>
+    <th>Last Order Total</th>
+    <th>Lifetime Total</th>
+</tr>
+                        </thead>
                         <tbody id="orderTableBody">
                             <asp:Repeater ID="OrderRepeater" runat="server">
                                 <ItemTemplate>
-                                    <tr class="order-row" data-search='<%# HttpUtility.HtmlAttributeEncode((Convert.ToString(Eval("Name")) & " " & Convert.ToString(Eval("Email")) & " " & Convert.ToString(Eval("Products"))).ToLower()) %>'>
-                                        <td><input type="checkbox" class="form-check-input order-email-check" aria-label="Select"
+                                    <tr class="order-row" data-search='<%# HttpUtility.HtmlAttributeEncode((Convert.ToString(Eval("Name")) & " " & Convert.ToString(Eval("Email")) & " " & Convert.ToString(Eval("Products")) & " " & Convert.ToString(Eval("OrderDate"))).toLower()) %>'>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input order-email-check" aria-label="Select"
                                                 data-email="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Email"))) %>"
-                                                data-name="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Name"))) %>" /></td>
+                                                data-name="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Name"))) %>"
+                                                data-products="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("Products"))) %>"
+data-ordercount="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("OrderCount"))) %>"
+data-orderdate="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("OrderDate"))) %>"
+data-ordertotal="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("OrderTotal"))) %>"
+data-lifetimeordertotal="<%# HttpUtility.HtmlAttributeEncode(Convert.ToString(Eval("LifetimeOrderTotal"))) %>" />
+                                        </td>
                                         <td class="fw-semibold"><%#: Eval("Name") %></td>
                                         <td class="text-muted"><%#: Eval("Email") %></td>
                                         <td class="be-prods"><%#: Eval("Products") %></td>
+                                        <td><%#: Eval("OrderCount") %></td>
+                                        <td><%#: Eval("OrderDate") %></td>
+                                        <td><%#: Eval("OrderTotal") %></td>
+                                        <td><%#: Eval("LifetimeOrderTotal") %></td>
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>
@@ -262,35 +295,102 @@
                 DRAFT = 'ibBulkDraft';
 
             /* ---------- Recipient parsing ---------- */
-            function splitRecipients(v) {
-                if (!v) return [];
-                return v.replace(/\r\n|\n|;/g, ',').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
-            }
-            function emailOf(t) { var m = t.match(/<([^>]+)>/); return (m ? m[1] : t).trim().toLowerCase(); }
-            function analyse() {
-                var list = splitRecipients($rcpt.val()), seen = {}, good = [], bad = [], dup = 0;
-                list.forEach(function (r) {
-                    var e = emailOf(r);
-                    if (!EMAIL.test(e)) { bad.push(r); return; }
-                    if (seen[e]) { dup++; return; }
-                    seen[e] = 1; good.push(r);
-                });
-                return { good: good, bad: bad, dup: dup };
-            }
-            function addRecipients(sel) {
-                var add = [];
-                $(sel + ':checked').each(function () {
-                    var e = ($(this).attr('data-email') || '').trim(), n = ($(this).attr('data-name') || '').trim().replace(/[<>,;]/g, ' ');
-                    if (e) add.push((n || e) + ' <' + e + '>');
-                });
-                var all = splitRecipients($rcpt.val()).concat(add), seen = {}, out = [];
-                all.forEach(function (r) { var k = emailOf(r); if (!seen[k]) { seen[k] = 1; out.push(r); } });
-                $rcpt.val(out.join(',\n'));
-                $(sel).prop('checked', false);
-                refresh();
-            }
+            function normalizeEmail(v) { return String(v || '').trim().toLowerCase(); }
 
-            /* ---------- Pickers ---------- */
+function parseRecipientObjects(v) {
+    if (!v) return [];
+    var t = String(v).trim();
+    if (!t) return [];
+
+    // JSON array mode
+    if (t[0] === '[' && t[t.length - 1] === ']') {
+        try {
+            var arr = JSON.parse(t);
+            return Array.isArray(arr) ? arr.filter(function (x) { return x && typeof x === 'object'; }) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    // JSON-lines mode (with legacy fallback)
+    var lines = t.split(/\r?\n/).map(function (x) { return x.trim(); }).filter(Boolean);
+    return lines.map(function (line) {
+        if (line[0] === '{' && line[line.length - 1] === '}') {
+            try { return JSON.parse(line); } catch (e) { return { __invalid: line }; }
+        }
+        // legacy "Name <email>"
+        var m = line.match(/^(.*)<([^>]+)>$/);
+        if (m) return { Name: String(m[1] || '').trim(), Email: String(m[2] || '').trim() };
+        return { Email: line };
+    });
+}
+
+function analyse() {
+    var list = parseRecipientObjects($rcpt.val()), seen = {}, good = [], bad = [], dup = 0;
+
+    list.forEach(function (r) {
+        if (!r || typeof r !== 'object' || r.__invalid) { bad.push(JSON.stringify(r)); return; }
+        var e = normalizeEmail(r.Email || r.email);
+        if (!EMAIL.test(e)) { bad.push(JSON.stringify(r)); return; }
+        if (seen[e]) { dup++; return; }
+
+        seen[e] = 1;
+        if (!r.Email) r.Email = e;
+        if (!r.Name && r.MemberName) r.Name = r.MemberName;
+        good.push(r);
+    });
+
+    return { good: good, bad: bad, dup: dup };
+}
+
+function addRecipients(sel) {
+    var add = [];
+    $(sel + ':checked').each(function () {
+        var e = ($(this).attr('data-email') || '').trim();
+        if (!e) return;
+
+        var obj = {
+            Email: e,
+            Name: ($(this).attr('data-name') || '').trim()
+        };
+
+        // member fields
+        if ($(this).attr('data-membername') !== undefined) obj.MemberName = ($(this).attr('data-membername') || '').trim();
+        if ($(this).attr('data-dob') !== undefined) obj.DOB = ($(this).attr('data-dob') || '').trim();
+        if ($(this).attr('data-mobile') !== undefined) obj.Mobile = ($(this).attr('data-mobile') || '').trim();
+        if ($(this).attr('data-country') !== undefined) obj.Country = ($(this).attr('data-country') || '').trim();
+        if ($(this).attr('data-createdate') !== undefined) obj.Createdate = ($(this).attr('data-createdate') || '').trim();
+
+        // order fields
+        if ($(this).attr('data-products') !== undefined) obj.Products = ($(this).attr('data-products') || '').trim();
+        if ($(this).attr('data-ordercount') !== undefined) obj.OrderCount = ($(this).attr('data-ordercount') || '').trim();
+        if ($(this).attr('data-orderdate') !== undefined) obj.OrderDate = ($(this).attr('data-orderdate') || '').trim();
+        if ($(this).attr('data-ordertotal') !== undefined) obj.OrderTotal = ($(this).attr('data-ordertotal') || '').trim();
+        if ($(this).attr('data-lifetimeordertotal') !== undefined) obj.LifetimeOrderTotal = ($(this).attr('data-lifetimeordertotal') || '').trim();
+
+        add.push(obj);
+    });
+
+    var all = parseRecipientObjects($rcpt.val()).concat(add);
+    var seen = {}, out = [];
+
+    all.forEach(function (r) {
+        if (!r || typeof r !== 'object') return;
+        var e = normalizeEmail(r.Email || r.email);
+        if (!e) return;
+        r.Email = e;
+        if (!seen[e]) {
+            seen[e] = 1;
+            out.push(r);
+        }
+    });
+
+    $rcpt.val(out.map(function (x) { return JSON.stringify(x); }).join('\n'));
+    $(sel).prop('checked', false);
+    refresh();
+}
+
+/* ---------- Pickers ---------- */
             function wirePicker(kind, searchId, rowSel, allBtn, clearBtn, addBtn, chk) {
                 function count() { $('[data-sel="' + kind + '"]').text($(chk + ':checked').length); }
                 $(searchId).on('input', function () {
@@ -387,7 +487,7 @@
 
                 try { localStorage.setItem(DRAFT, JSON.stringify({ s: $subj.val(), m: $msg.val(), g: $grp.val() })); } catch (e) { }
             }
-            $('#cleanBtn').on('click', function () { $rcpt.val(analyse().good.join(',\n')); refresh(); });
+            $('#cleanBtn').on('click', function () { $rcpt.val(analyse().good.map(function (x) { return JSON.stringify(x); }).join('\n')); refresh(); });
             $('#clearRcptBtn').on('click', function () { if (!$rcpt.val() || confirm('Clear all recipients?')) { $rcpt.val(''); refresh(); } });
             $rcpt.add($subj).add($msg).add($grp).on('input', refresh);
 
