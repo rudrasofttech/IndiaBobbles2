@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <title>@ViewData("Title") - IndiaBobbles</title>
     @RenderSection("meta", required:=False)
     @If Not String.IsNullOrEmpty(ViewBag.CanonicalUrl) Then
         @<link rel="canonical" href="@ViewBag.CanonicalUrl" />
@@ -10,9 +11,9 @@
     <meta name="google-site-verification" content="rtXgIUyaLbBtd_tsln3F6ZB9ZboSPHZe7K_zB6uRgv8" />
     <link rel="shortcut icon" href="~/theme/khichdi/favicon.jpg" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-    <link href="~/theme/khichdi/css/indiabobbles.css" rel="stylesheet" />
+    <link href="~/theme/khichdi/css/indiabobbles.min.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
-    @Scripts.Render("~/bundles/modernizr")
+    
     @RenderSection("head", required:=False)
 </head>
 <body>
@@ -131,7 +132,7 @@
 
                 <!-- Brand -->
                 <div class="col-12 col-lg-4">
-                    <a href="~/"><img src="~/theme/khichdi/img/ib-logo.png" alt="India Bobbles" style="max-height:56px;" /></a>
+                    <a href="~/"><img src="~/theme/khichdi/img/ib-logo.png" alt="India Bobbles Logo" style="max-height:56px;" /></a>
                     <p class="ib-tagline mt-3 mb-3">Bollywood and Indian bobbleheads, each piece hand-painted by master artists.</p>
                     <div class="ib-social">
                         <a href="https://www.facebook.com/IndiaBobbles" target="_blank" rel="noopener" title="India Bobbles on Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>

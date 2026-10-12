@@ -1,6 +1,6 @@
 ﻿@Imports IndiaBobbles
 @Code
-    ViewData("Title") = "Buy Bobble Heads & Figurines Online in India – India Bobbles"
+    ViewData("Title") = "Buy Bobble Heads & Figurines Online in India"
 
     Dim inr = New System.Globalization.CultureInfo("en-IN")
 
@@ -80,7 +80,7 @@ End Section
             <div class="row align-items-center g-4">
                 <div class="col-lg-6">
                     <div class="kick">Hand-painted · Made in India</div>
-                    <h1>Bollywood on <em>your desk.</em></h1>
+                    <h1>IndiaBobbles – Custom & Collectible Bobbleheads</h1>
                     <p class="mb-4">Iconic heroes, legendary villains and national icons, each bobblehead hand-painted by master artists. Free shipping across India.</p>
                     <div class="d-flex flex-wrap gap-2">
                         <a class="btn btn-iby" href="~/tag/collectibles">Shop Bobbleheads <i class="fa fa-arrow-right" aria-hidden="true"></i></a>

@@ -1,6 +1,6 @@
 ﻿@ModelType IEnumerable(Of IndiaBobbles.Product)
 @Code
-    ViewData("Title") = ViewBag.Tag
+    ViewData("Title") = "Buy " & ViewBag.Tag & " Bobble Heads & Figurines Online in India"
 
     Dim inr = New System.Globalization.CultureInfo("en-IN")
     Dim inv = System.Globalization.CultureInfo.InvariantCulture

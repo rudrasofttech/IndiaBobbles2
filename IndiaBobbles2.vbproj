@@ -434,6 +434,7 @@
     <Compile Include="Article.vb" />
     <Compile Include="CacheManager.vb" />
     <Compile Include="CaptchaManager.vb" />
+    <Compile Include="Controllers\ErrorController.vb" />
     <Compile Include="DriveManager.vb" />
     <Compile Include="EmailManager.vb" />
     <Compile Include="Models\Captcha.vb">
@@ -662,6 +663,7 @@
     <Content Include="MeteorTreasure2\images\Popup.psd" />
     <Content Include="MeteorTreasure\images\Popup.psd" />
     <Content Include="admin\Admin.Master" />
+    <None Include="bundleconfig.json" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -888,6 +890,9 @@
     <Content Include="sitedata\CustomPage\cpagexml-7.txt" />
     <Content Include="sitedata\CustomPage\cpagexml-8.txt" />
     <Content Include="sitedata\CustomPage\cpagexml-9.txt" />
+    <Content Include="theme\khichdi\css\indiabobbles.min.css">
+      <DependentUpon>indiabobbles.css</DependentUpon>
+    </Content>
     <Content Include="theme\khichdi\FAVICON.jpg" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.eot" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.ttf" />
@@ -959,6 +964,7 @@
     <Content Include="Views\Home\Tag.vbhtml" />
     <Content Include="Views\Account\OtpLogin.vbhtml" />
     <Content Include="Views\Account\Unsubscribe.vbhtml" />
+    <Content Include="Views\Error\NotFound.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

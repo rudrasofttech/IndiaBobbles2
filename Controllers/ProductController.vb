@@ -17,6 +17,7 @@ Namespace Controllers
                 ViewBag.CanonicalUrl = String.Format("{0}/product/{1}/{2}", Utility.SiteURL, product.ID, correctSlug)
             Else
                 Response.StatusCode = 404
+                Return HttpNotFound()
             End If
             Return View(product)
         End Function
