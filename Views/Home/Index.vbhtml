@@ -80,11 +80,11 @@ End Section
             <div class="row align-items-center g-4">
                 <div class="col-lg-6">
                     <div class="kick">Hand-painted · Made in India</div>
-                    <h1>IndiaBobbles – Custom & Collectible Bobbleheads</h1>
+                    <h1>IndiaBobbles – Collectible Figurines and Bobbleheads</h1>
                     <p class="mb-4">Iconic heroes, legendary villains and national icons, each bobblehead hand-painted by master artists. Free shipping across India.</p>
                     <div class="d-flex flex-wrap gap-2">
                         <a class="btn btn-iby" href="~/tag/collectibles">Shop Bobbleheads <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                        <a class="btn btn-ibw" href="~/order-custom-bobbleheads">Make a Custom One</a>
+                        @*<a class="btn btn-ibw" href="~/order-custom-bobbleheads">Make a Custom One</a>*@
                     </div>
                 </div>
                 @If heroPics.Count > 0 Then

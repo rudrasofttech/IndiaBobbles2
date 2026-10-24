@@ -65,7 +65,7 @@ Public Class ManageArticle
         ViewLink.Visible = True
     End Sub
 
-    ''' <summary>Used by both "Save" (back to the list) and "Save & keep editing".</summary>
+    ''' <summary>Used by both "Save" (back to the list) and "Save and keep editing".</summary>
     Protected Sub SubmitButton_Click(ByVal sender As Object, ByVal e As EventArgs)
         ' Clean the web address before validating it (the duplicate check uses it)
         URLTextBox.Text = Utility.Slugify(If(String.IsNullOrWhiteSpace(URLTextBox.Text), TitleTextBox.Text, URLTextBox.Text).Trim())

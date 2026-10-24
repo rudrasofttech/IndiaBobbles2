@@ -1,7 +1,30 @@
 ﻿<%@ Page Title="Coupon Codes" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="ManageCoupons.aspx.vb" Inherits="IndiaBobbles.ManageCoupons" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    
+    <style>
+        /* ---- Coupon rules (page-specific) ---- */
+        .cp-table .rc { display: inline-block; font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: #f3ecf6; color: #330B3F; margin: 1px 0; white-space: nowrap; }
+        .cp-table .rc.on { background: #fff4cc; }
+        .cp-table .rc.who { background: #e8f0fe; color: #1d4ed8; }
+        .cp-table .rc.dt { background: #eef0f3; color: #4b5563; }
+        .cp-table .rc.dt.old { background: #fdecee; color: #b4232f; }
+        .cs.cs-x { background: #fdecee; color: #b4232f; }
+        .cs.cs-s { background: #e8f0fe; color: #1d4ed8; }
+
+        .cp-form .sec { margin: 18px 0 10px; padding-top: 14px; border-top: 1px dashed #e4dbe9; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6b5f72; }
+        .cp-form .seg3 { display: grid; grid-template-columns: repeat(3, 1fr); background: #f3eef6; border-radius: 12px; padding: 4px; gap: 4px; }
+        .cp-form .seg3 input { position: absolute; opacity: 0; pointer-events: none; }
+        .cp-form .seg3 label { margin: 0; text-align: center; padding: 8px 4px; border-radius: 9px; font-weight: 700; font-size: .85rem; color: #6b5f72; cursor: pointer; line-height: 1.2; }
+        .cp-form .seg3 input:checked + label { background: #fff; color: #330B3F; box-shadow: 0 1px 4px rgba(51,11,63,.12); }
+        .cp-form .seg3 input:focus-visible + label { outline: 2px solid #330B3F; }
+        .cp-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .cp-form .two .form-label { font-size: .85rem; }
+        .cp-form .sw { display: flex; align-items: flex-start; gap: 10px; background: #fff8e1; border: 1px solid #ffe29a; border-radius: 12px; padding: 10px 12px; }
+        .cp-form .sw input { width: 18px; height: 18px; margin-top: 2px; accent-color: #330B3F; flex: none; }
+        .cp-form .sw label { margin: 0; font-weight: 700; color: #330B3F; cursor: pointer; }
+        .cp-form .sw small { display: block; font-weight: 400; color: #6b5f72; }
+        .cp-ticket .t4 { margin-top: 6px; font-size: .75rem; color: #e2d3ea; line-height: 1.4; }
+    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
@@ -43,7 +66,7 @@
             <div class="adm-card table-responsive">
                 <table class="table adm-table cp-table mb-0">
                     <thead>
-                        <tr><th>Code</th><th>Discount</th><th>Status</th><th>Used</th><th>Created</th><th class="text-end"></th></tr>
+                        <tr><th>Code</th><th>Discount</th><th>Rules</th><th>Status</th><th>Used</th><th>Created</th><th class="text-end"></th></tr>
                     </thead>
                     <tbody id="cpBody">
                         <asp:Repeater ID="CouponRepeater" runat="server">
@@ -58,7 +81,8 @@
                                         <div class="cp-off"><%# OffText(Eval("IsPercent"), Eval("Value")) %></div>
                                         <div class="cp-type"><%# If(Convert.ToBoolean(Eval("IsPercent")), "Percent", "Flat amount") %></div>
                                     </td>
-                                    <td><span class='<%# "cs cs-" & Eval("Status") %>'><%# StatusText(Eval("Status")) %></span></td>
+                                    <td style="max-width:220px;"><%# RulesHtml(Container.DataItem) %></td>
+                                    <td><%# StatusHtml(Container.DataItem) %></td>
                                     <td class="cp-use"><%# UsageHtml(Eval("Id"), Eval("Name")) %></td>
                                     <td class="sm"><%# Convert.ToDateTime(Eval("DateCreated")).ToString("d MMM yyyy") %></td>
                                     <td class="text-end text-nowrap">
@@ -80,7 +104,7 @@
                 </table>
                 <div class="adm-empty d-none" id="cpNone"><i class="fa fa-ticket"></i> No coupons here.</div>
             </div>
-            <div class="hint mt-2" style="font-size:.8rem;color:#6b5f72;">"Used" counts paid, shipped and completed orders where the coupon was applied.</div>
+            <div class="hint mt-2" style="font-size:.8rem;color:#6b5f72;">"Used" counts paid, shipped and completed orders where the coupon was applied. "First order" and "Past buyers" are checked by the customer's phone or email.</div>
         </div>
 
         <!-- ============ Add / edit form ============ -->
@@ -136,10 +160,70 @@
                         </asp:DropDownList>
                     </div>
 
+                    <!-- ---------- Rules ---------- -->
+                    <div class="sec">Rules</div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Who can use it</label>
+                        <div class="seg3">
+                            <input type="radio" name="cpWho" id="wAll" value="0" <%= If(WhoDropDown.SelectedValue = "0", "checked", "") %> /><label for="wAll">Everyone</label>
+                            <input type="radio" name="cpWho" id="wFirst" value="1" <%= If(WhoDropDown.SelectedValue = "1", "checked", "") %> /><label for="wFirst">First order</label>
+                            <input type="radio" name="cpWho" id="wBack" value="2" <%= If(WhoDropDown.SelectedValue = "2", "checked", "") %> /><label for="wBack">Past buyers</label>
+                        </div>
+                        <asp:DropDownList ID="WhoDropDown" runat="server" ClientIDMode="Static" CssClass="d-none">
+                            <asp:ListItem Text="Everyone" Value="0" />
+                            <asp:ListItem Text="First order only" Value="1" />
+                            <asp:ListItem Text="Past buyers only" Value="2" />
+                        </asp:DropDownList>
+                        <div class="hint" id="whoHint">Anyone can use this code.</div>
+                    </div>
+
+                    <div class="mb-3 two">
+                        <div>
+                            <label for="MinItemsTextBox" class="form-label">Min. bobbleheads</label>
+                            <asp:TextBox ID="MinItemsTextBox" runat="server" ClientIDMode="Static" MaxLength="2" CssClass="form-control" inputmode="numeric" placeholder="Any"></asp:TextBox>
+                        </div>
+                        <div>
+                            <label for="MinAmountTextBox" class="form-label">Min. cart value</label>
+                            <div class="in-grp">
+                                <span class="pre">₹</span>
+                                <asp:TextBox ID="MinAmountTextBox" runat="server" ClientIDMode="Static" MaxLength="9" CssClass="form-control" inputmode="decimal" placeholder="Any"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 two">
+                        <div>
+                            <label for="ValidFromTextBox" class="form-label">Starts</label>
+                            <asp:TextBox ID="ValidFromTextBox" runat="server" ClientIDMode="Static" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                        </div>
+                        <div>
+                            <label for="ValidToTextBox" class="form-label">Ends (incl.)</label>
+                            <asp:TextBox ID="ValidToTextBox" runat="server" ClientIDMode="Static" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="hint mb-3" style="margin-top:-8px;">Leave dates empty for no limit.</div>
+
+                    <div class="mb-3">
+                        <div class="sw">
+                            <asp:CheckBox ID="ShowOnCartCheckBox" runat="server" ClientIDMode="Static" />
+                            <label for="ShowOnCartCheckBox">Offer it on the cart page
+                                <small>Shown as a one-tap offer when the cart qualifies. Best saving wins.</small>
+                            </label>
+                        </div>
+                        <div class="mt-2" id="pitchRow">
+                            <label for="PitchTextBox" class="form-label">Offer line</label>
+                            <asp:TextBox ID="PitchTextBox" runat="server" ClientIDMode="Static" MaxLength="150" CssClass="form-control" placeholder="e.g. on your first bobblehead"></asp:TextBox>
+                            <div class="hint">Shown after the amount: "₹100 off <i>on your first bobblehead</i>".</div>
+                        </div>
+                    </div>
+                    <asp:Label ID="RulesErrorLabel" runat="server" CssClass="val d-block mb-2" Visible="false" EnableViewState="false" />
+
                     <div class="cp-ticket" aria-hidden="true">
                         <div class="t1">Preview</div>
                         <div class="t2" id="pvCode">YOURCODE</div>
                         <div class="t3" id="pvOff">₹0 off your order</div>
+                        <div class="t4" id="pvRules"></div>
                     </div>
 
                     <asp:Button ID="SaveButton" runat="server" CssClass="btn btn-ib w-100" Text="Create coupon" ValidationGroup="CouponGrp" />
@@ -151,18 +235,44 @@
 
     <script>
         (function () {
-            var code = $('#CouponCodeTextBox'), val = $('#ValueTextBox'), type = $('#TypeDropDown');
+            var code = $('#CouponCodeTextBox'), val = $('#ValueTextBox'), type = $('#TypeDropDown'), who = $('#WhoDropDown');
+            var whoHints = {
+                '0': 'Anyone can use this code.',
+                '1': 'Only for someone with no earlier paid order (checked by phone or email).',
+                '2': 'Only for someone who has ordered before (checked by phone or email).'
+            };
 
             // ---------- Live preview ----------
+            function inr(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
             function preview() {
                 var pct = type.val() === '1', v = parseFloat(val.val()) || 0;
+                var pitch = ($('#PitchTextBox').val() || '').trim();
                 $('#valPre').text(pct ? '%' : '₹');
                 $('#pvCode').text((code.val() || 'YOURCODE').toUpperCase());
-                $('#pvOff').text(pct ? (v + '% off your order') : ('₹' + v.toLocaleString('en-IN') + ' off your order'));
+                $('#pvOff').text((pct ? (v + '% off') : (inr(v) + ' off')) + ' ' + (pitch || 'your order'));
+
+                var r = [];
+                var w = who.val();
+                if (w === '1') r.push('First order only');
+                if (w === '2') r.push('Past buyers only');
+                var mi = parseInt($('#MinItemsTextBox').val(), 10);
+                if (mi > 1) r.push(mi + '+ bobbleheads');
+                var ma = parseFloat($('#MinAmountTextBox').val());
+                if (ma > 0) r.push('cart ' + inr(ma) + '+');
+                var to = $('#ValidToTextBox').val();
+                if (to) r.push('till ' + new Date(to + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }));
+                if ($('#ShowOnCartCheckBox').is(':checked')) r.push('shown on cart');
+                $('#pvRules').text(r.join(' · '));
+
+                $('#whoHint').text(whoHints[w] || whoHints['0']);
+                $('#pitchRow').toggle($('#ShowOnCartCheckBox').is(':checked'));
             }
             $('input[name=cpType]').on('change', function () { type.val(this.value); preview(); });
+            $('input[name=cpWho]').on('change', function () { who.val(this.value); preview(); });
             code.on('input', function () { var p = this.selectionStart; this.value = this.value.toUpperCase(); this.setSelectionRange(p, p); preview(); });
-            val.on('input', preview);
+            $('#ValueTextBox, #MinItemsTextBox, #MinAmountTextBox, #PitchTextBox, #ValidToTextBox').on('input change', preview);
+            $('#ShowOnCartCheckBox').on('change', preview);
+            $('#MinItemsTextBox').on('input', function () { this.value = this.value.replace(/\D/g, ''); });
             preview();
 
             // ---------- Random code ----------

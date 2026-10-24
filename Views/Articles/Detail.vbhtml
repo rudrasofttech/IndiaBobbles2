@@ -9,6 +9,16 @@
     Dim updated As DateTime? = Nothing
     Dim RX = System.Text.RegularExpressions.RegexOptions.IgnoreCase
 
+    Dim metaPublishedTime As String = ""
+    Dim metaModifiedTime As String = ""
+    Dim metaKeywords As String = ""
+
+    If Model IsNot Nothing Then
+        metaPublishedTime = Model.DateCreated.ToString("yyyy-MM-ddTHH:mm:ss")
+        metaModifiedTime = If(updated.HasValue, updated.Value, Model.DateCreated).ToString("yyyy-MM-ddTHH:mm:ss")
+        metaKeywords = String.Join(", ", tags)
+    End If
+
     If Model IsNot Nothing Then
         ViewData("Title") = Model.Title
         ViewBag.CanonicalUrl = siteUrl & "/blog/" & Model.URL.ToLower()
@@ -84,6 +94,27 @@
     Dim titleEnc As String = If(Model IsNot Nothing, Uri.EscapeDataString(Model.Title), "")
     Dim imgAbs As String = If(Model IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(Model.OGImage), If(Model.OGImage.StartsWith("//"), "https:" & Model.OGImage, Model.OGImage), "")
     Dim writer As String = If(Model Is Nothing OrElse String.IsNullOrWhiteSpace(Model.WriterName), "Team India Bobbles", Model.WriterName)
+
+    Dim metaDescription As String = "Read the latest stories and comics from India Bobbles."
+    Dim metaImage As String = siteUrl.TrimEnd("/"c) & "/theme/khichdi/img/ib-logo.png"
+
+    If Model IsNot Nothing Then
+        Dim rawDesc As String = If(Model.Description, "").Trim()
+        If String.IsNullOrWhiteSpace(rawDesc) Then
+            rawDesc = System.Text.RegularExpressions.Regex.Replace(If(bodyHtml, ""), "<[^>]+>", " ").Trim()
+        End If
+        rawDesc = System.Text.RegularExpressions.Regex.Replace(rawDesc, "\s+", " ").Trim()
+        If rawDesc.Length > 160 Then rawDesc = rawDesc.Substring(0, 157) & "..."
+        metaDescription = rawDesc
+
+        If Not String.IsNullOrWhiteSpace(imgAbs) Then
+            If imgAbs.StartsWith("http://", StringComparison.OrdinalIgnoreCase) OrElse imgAbs.StartsWith("https://", StringComparison.OrdinalIgnoreCase) Then
+                metaImage = imgAbs
+            Else
+                metaImage = siteUrl.TrimEnd("/"c) & If(imgAbs.StartsWith("/"), imgAbs, "/" & imgAbs)
+            End If
+        End If
+    End If
 
     ' ---------- Structured data (BlogPosting + breadcrumbs) ----------
     Dim ldJson As String = ""
@@ -489,6 +520,36 @@ End Code
     </script>
 End Section
 
+@section meta
+    @If Model IsNot Nothing Then
+        @<meta name="description" content="@metaDescription" />
+        @<meta name="keywords" content="@metaKeywords" />
+        @<meta name="robots" content="index,follow,max-image-preview:large" />
+
+        @<meta property="og:locale" content="en_IN" />
+        @<meta property="og:type" content="article" />
+        @<meta property="og:site_name" content="India Bobbles" />
+        @<meta property="og:title" content="@Model.Title" />
+        @<meta property="og:description" content="@metaDescription" />
+        @<meta property="og:url" content="@shareLink" />
+        @<meta property="og:image" content="@metaImage" />
+        @<meta property="og:image:alt" content="@Model.Title" />
+
+        @<meta property="article:published_time" content="@metaPublishedTime" />
+        @<meta property="article:modified_time" content="@metaModifiedTime" />
+        @For Each t In tags
+            @<meta property="article:tag" content="@t" />
+        Next
+
+        @<meta name="twitter:card" content="summary_large_image" />
+        @<meta name="twitter:title" content="@Model.Title" />
+        @<meta name="twitter:description" content="@metaDescription" />
+        @<meta name="twitter:image" content="@metaImage" />
+    Else
+        @<meta name="robots" content="noindex,follow" />
+    End If
+End Section
+
 @If ldJson <> "" Then
     @<script type="application/ld+json">@Html.Raw(ldJson)</script>
 End If
@@ -515,7 +576,9 @@ End If
                             @If updated.HasValue Then
                                 @<span class="upd">Updated @updated.Value.ToString("MMM yyyy")</span>
                             End If
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i> @readMins min read</span>
+                            <span>
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>  @readMins min read
+                            </span>
                         </div>
                         <div class="share">
                             <a class="wa" href="https://wa.me/?text=@titleEnc%20@shareEnc" target="_blank" rel="noopener" title="Share on WhatsApp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>

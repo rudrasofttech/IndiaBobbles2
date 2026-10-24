@@ -16,14 +16,26 @@ Public Class Emails
         End If
 
         If Not Page.IsPostBack AndAlso Not Page.IsCallback Then
-            ' Allow links like emails.aspx?group=Diwali2026
             Dim g As String = Request.QueryString("group")
             If Not String.IsNullOrEmpty(g) Then
                 GroupDropDown.DataBind()
                 If GroupDropDown.Items.FindByValue(g) IsNot Nothing Then GroupDropDown.SelectedValue = g
             End If
+
+            If PageSizeDropDown.Items.FindByValue(EmailGrid.PageSize.ToString()) IsNot Nothing Then
+                PageSizeDropDown.SelectedValue = EmailGrid.PageSize.ToString()
+            End If
+            ApplyPageSizeFromDropDown()
+
             Bind(0)
             BindCampaigns()
+        End If
+    End Sub
+
+    Private Sub ApplyPageSizeFromDropDown()
+        Dim size As Integer
+        If Integer.TryParse(PageSizeDropDown.SelectedValue, size) AndAlso size > 0 Then
+            EmailGrid.PageSize = size
         End If
     End Sub
 
@@ -57,12 +69,16 @@ Public Class Emails
     ''' <summary>Loads only one page from the database (the old version loaded every email into memory).</summary>
     Private Sub Bind(ByVal pageIndex As Integer)
         Try
+            ApplyPageSizeFromDropDown()
+
             Dim query = FilteredQuery()
             Dim total As Integer = query.Count()
             Dim sent As Integer = query.Count(Function(m) m.IsSent)
             Dim opened As Integer = query.Count(Function(m) m.IsRead)
 
             Dim pageSize As Integer = EmailGrid.PageSize
+            If pageSize <= 0 Then pageSize = 50
+
             Dim lastPage As Integer = Math.Max(0, CInt(Math.Ceiling(total / pageSize)) - 1)
             pageIndex = Math.Min(Math.Max(pageIndex, 0), lastPage)
 
@@ -181,8 +197,77 @@ Public Class Emails
         BindCampaigns()
     End Sub
 
+    Protected Sub PageSizeDropDown_SelectedIndexChanged(sender As Object, e As EventArgs)
+        ApplyPageSizeFromDropDown()
+        Bind(0)
+        BindCampaigns()
+    End Sub
+
     Protected Sub EmailGrid_PageIndexChanging(ByVal sender As Object, ByVal e As GridViewPageEventArgs)
         Bind(e.NewPageIndex)
+        BindCampaigns()
+    End Sub
+
+    Protected Sub ResendButton_Click(ByVal sender As Object, ByVal e As EventArgs)
+        Dim selectedIds As New List(Of Guid)
+
+        For Each row As GridViewRow In EmailGrid.Rows
+            If row.RowIndex < 0 Then Continue For
+            Dim ck As CheckBox = TryCast(row.FindControl("cbSelect"), CheckBox)
+            If ck Is Nothing OrElse Not ck.Checked Then Continue For
+
+            Dim lt As Literal = TryCast(row.FindControl("EmailIDLt"), Literal)
+            If lt Is Nothing Then Continue For
+
+            Dim id As Guid
+            If Guid.TryParse(lt.Text, id) Then selectedIds.Add(id)
+        Next
+
+        If selectedIds.Count = 0 Then
+            MessageLabel.Text = "<i class=""fa fa-info-circle""></i> Select at least one email."
+            MessageLabel.Visible = True
+            Return
+        End If
+
+        Dim manager As New EmailManager()
+        Dim tried As Integer = 0
+        Dim sent As Integer = 0
+        Dim failed As Integer = 0
+        Dim skipped As Integer = 0
+
+        Dim selected = dc.EmailMessages.Where(Function(m) selectedIds.Contains(m.ID)).ToList()
+
+        For Each em In selected
+            If em.IsSent Then
+                skipped += 1
+                Continue For
+            End If
+
+            If String.IsNullOrWhiteSpace(em.ToAddress) Then
+                skipped += 1
+                Continue For
+            End If
+
+            tried += 1
+
+            If em.CCAdress Is Nothing Then em.CCAdress = String.Empty
+            If em.ToName Is Nothing Then em.ToName = String.Empty
+            If em.FromName Is Nothing Then em.FromName = String.Empty
+
+            If manager.SendMail(em) Then
+                sent += 1
+            Else
+                failed += 1
+            End If
+        Next
+
+        dc.Dispose()
+        dc = New indiabobblesEntities()
+
+        MessageLabel.Text = "<i class=""fa fa-paper-plane""></i> Tried " & tried & ", sent " & sent & ", failed " & failed & ", skipped " & skipped & "."
+        MessageLabel.Visible = True
+
+        Bind(EmailGrid.PageIndex)
         BindCampaigns()
     End Sub
 

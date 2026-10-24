@@ -1,4 +1,5 @@
 ﻿@ModelType IndiaBobbles.Product
+
 @Code
     ViewData("Title") = Model.Name
 
@@ -18,6 +19,26 @@
     Dim teaser As String = If(plainDesc.Length > 170, plainDesc.Substring(0, 170).TrimEnd() & "…", plainDesc)
 
     Dim waUrl As String = Url.Action("WhatsAppRedirect", "Home", New With {.message = "Hi, I have a question about " & Model.Name})
+
+    ' SEO + social
+    Dim siteUrl As String = IndiaBobbles.Utility.SiteURL.TrimEnd("/"c)
+    Dim productPath As String = Url.Content("~/product/" & Model.ID & "/" & IndiaBobbles.Utility.Slugify(Model.Name))
+    Dim productUrl As String = siteUrl & productPath
+    ViewBag.CanonicalUrl = productUrl
+
+    Dim metaTitle As String = Model.Name & " | India Bobbles"
+    Dim metaDescription As String = If(String.IsNullOrWhiteSpace(teaser), "Buy hand-painted bobbleheads from India Bobbles.", teaser)
+    Dim metaImage As String = siteUrl & "/theme/khichdi/img/ib-logo.png"
+
+    If Not String.IsNullOrWhiteSpace(mainPhoto) Then
+        If mainPhoto.StartsWith("//") Then
+            metaImage = "https:" & mainPhoto
+        ElseIf mainPhoto.StartsWith("http://", StringComparison.OrdinalIgnoreCase) OrElse mainPhoto.StartsWith("https://", StringComparison.OrdinalIgnoreCase) Then
+            metaImage = mainPhoto
+        Else
+            metaImage = siteUrl & If(mainPhoto.StartsWith("/"), mainPhoto, "/" & mainPhoto)
+        End If
+    End If
 End Code
 
 @Functions
@@ -119,6 +140,30 @@ End Section
             });
         }
     </script>
+End Section
+
+@section meta
+    <meta name="description" content="@metaDescription" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="keywords" content="@Model.Name, bobblehead, collectible, India Bobbles" />
+
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:type" content="product" />
+    <meta property="og:site_name" content="India Bobbles" />
+    <meta property="og:title" content="@metaTitle" />
+    <meta property="og:description" content="@metaDescription" />
+    <meta property="og:url" content="@productUrl" />
+    <meta property="og:image" content="@metaImage" />
+    <meta property="og:image:alt" content="@Model.Name" />
+
+    <meta property="product:price:amount" content="@Model.SalePrice.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)" />
+    <meta property="product:price:currency" content="INR" />
+    <meta property="product:availability" content="@(If(Model.OutofStock, "out of stock", "in stock"))" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@metaTitle" />
+    <meta name="twitter:description" content="@metaDescription" />
+    <meta name="twitter:image" content="@metaImage" />
 End Section
 
 <div class="ib-pdp container bg-white py-4 px-3 px-md-4">

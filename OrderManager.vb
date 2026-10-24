@@ -1,11 +1,90 @@
-﻿Public Class OrderManager
+﻿''' <summary>Messages from <see cref="OrderManager.RefreshCart"/> for the cart page.</summary>
+Public Class CartNotice
+    ''' <summary>Set when the applied coupon no longer fits and was removed.</summary>
+    Public Property Removed As String
+    ''' <summary>Set when a better cart offer was applied automatically.</summary>
+    Public Property Upgraded As String
+End Class
+
+Public Class OrderManager
     Public ShippingPriceConstant As Decimal = 0
     Public FreeShippingAmount As Decimal = 500
-    Public CODFee As Decimal = 50
+    Public CODFee As Decimal = 40
     Private ReadOnly dc As New indiabobblesEntities
+    Private Shared ReadOnly Inr As New System.Globalization.CultureInfo("en-IN")
 
     Public Sub New()
     End Sub
+
+    ' =====================================================================
+    '  Totals – ONE place that works out amount, discount, shipping, COD and total.
+    '  Every method that changes the cart calls Recalculate, so the discount
+    '  (including % coupons) and the total are always up to date.
+    ' =====================================================================
+
+    Private Function CartItems(orderId As Integer) As List(Of OrderItem)
+        Return dc.OrderItems.Where(Function(i) i.OrderID = orderId).ToList()
+    End Function
+
+    ''' <summary>Finds a coupon by code (any case, spaces ignored). Deleted coupons are not returned.</summary>
+    Private Function FindCoupon(code As String) As CouponCode
+        Dim c As String = If(code, "").Trim().ToUpper()
+        If c = "" Then Return Nothing
+        Return dc.CouponCodes.Where(Function(x) x.Status <> 2 AndAlso x.Name.Trim().ToUpper() = c) _
+                             .OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Id) _
+                             .FirstOrDefault()
+    End Function
+
+    Private Shared Function ShippingFor(o As Order, quantity As Integer) As Decimal
+        Dim state As String = If(o.ShippingState, "").Trim().ToLowerInvariant()
+        If state = "jammu and kashmir" OrElse state = "andaman and nicobar islands" OrElse state = "lakshadweep" Then
+            Return quantity * 200D
+        End If
+        Return 0D
+    End Function
+
+    ''' <summary>Recalculates the order from its items. Does not save.</summary>
+    Private Sub Recalculate(o As Order, items As List(Of OrderItem))
+        o.Amount = items.Sum(Function(i) i.Amount)
+        Dim quantity As Integer = items.Sum(Function(i) i.Quantity)
+
+        If o.Amount <= 0 Then
+            o.Coupon = ""
+            o.Discount = 0
+            o.ShippingPrice = 0
+            o.COD = 0
+            o.PaymentMode = ""
+        Else
+            If String.IsNullOrWhiteSpace(o.Coupon) Then
+                ' No coupon: keep any manual discount set from admin, but never more than the subtotal
+                o.Discount = Math.Min(Math.Max(o.Discount, 0D), o.Amount)
+            Else
+                Dim cc As CouponCode = FindCoupon(o.Coupon)
+                If cc Is Nothing Then
+                    o.Coupon = ""
+                    o.Discount = 0
+                Else
+                    o.Discount = cc.DiscountOn(o.Amount)      ' % coupons follow the cart; never more than the subtotal
+                End If
+            End If
+            o.ShippingPrice = ShippingFor(o, quantity)
+            o.COD = If(String.Equals(o.PaymentMode, "COD", StringComparison.OrdinalIgnoreCase), CODFee, 0D)
+        End If
+
+        o.Total = o.Amount + o.ShippingPrice + o.COD + o.Tax - o.Discount
+        o.DateModified = DateTime.UtcNow
+    End Sub
+
+    Private Sub RecalculateAndSave(orderId As Integer)
+        Dim o As Order = dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)
+        If o Is Nothing Then Return
+        Recalculate(o, CartItems(orderId))
+        dc.SaveChanges()
+    End Sub
+
+    ' =====================================================================
+    '  Cart
+    ' =====================================================================
 
     Public Function GetCart() As Order
         Dim o As Order = Nothing
@@ -15,8 +94,6 @@
             o = New [Order] With {
                 .OrderItems = New List(Of OrderItem)
             }
-            'o = Create(String.Empty, String.Empty, Nothing, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, OrderStatusType.[New], String.Empty, String.Empty, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, CODFee, "", "", "", "", "")
-            'CookieWorker.SetCookie(CookieWorker.OrderIdKey, "cartid", o.ID.ToString(), DateTime.UtcNow.AddHours(50))
         Else
             o = dc.Orders.SingleOrDefault(Function(item) item.ID = cartid)
         End If
@@ -31,6 +108,96 @@
     Public Function GetCartItemCount() As Integer
         Return GetCart().OrderItems.Count
     End Function
+
+    ' =====================================================================
+    '  Coupons
+    ' =====================================================================
+
+    ''' <summary>
+    ''' Applies a coupon to the cart after checking its rules (minimum items/amount, dates, first order only).
+    ''' Returns Nothing on success, otherwise a message for the customer. The current coupon is kept if the new one fails.
+    ''' </summary>
+    Public Function ApplyCoupon(orderId As Integer, code As String) As String
+        Dim o As Order = dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)
+        Dim items = If(o Is Nothing, New List(Of OrderItem)(), CartItems(orderId))
+        If o Is Nothing OrElse items.Count = 0 Then Return "Your cart is empty."
+
+        Dim cc As CouponCode = FindCoupon(code)
+        If cc Is Nothing Then Return String.Format("Sorry, ""{0}"" isn't a valid code.", If(code, "").Trim())
+
+        Dim why As String = cc.CheckFor(items.Sum(Function(i) i.Quantity), items.Sum(Function(i) i.Amount), o.Phone, o.Email)
+        If why IsNot Nothing Then Return why
+
+        o.Coupon = cc.Name.Trim()
+        Recalculate(o, items)
+        dc.SaveChanges()
+        Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' Sets a coupon WITHOUT checking its rules (used by admin and to remove a coupon with "").
+    ''' The customer-facing cart uses ApplyCoupon instead.
+    ''' </summary>
+    Public Sub UpdateCouponCode(ByVal orderId As Integer, ByVal coupon As String)
+        Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
+        Dim cc As CouponCode = FindCoupon(coupon)
+        o.Coupon = If(cc IsNot Nothing AndAlso cc.Status = CByte(GeneralStatusType.Active), cc.Name.Trim(), "")
+        If o.Coupon = "" Then o.Discount = 0
+        Recalculate(o, CartItems(orderId))
+        dc.SaveChanges()
+    End Sub
+
+    ''' <summary>
+    ''' Call when the cart page loads and before payment.
+    ''' 1) Removes the applied coupon if it no longer fits (e.g. PAIR200 after going back to 1 item, expired, paused).
+    ''' 2) If allowUpgrade and a cart offer is applied, switches to a bigger cart offer that now fits (FIRST100 → PAIR200).
+    ''' 3) Recalculates the totals.
+    ''' </summary>
+    Public Function RefreshCart(orderId As Integer, Optional allowUpgrade As Boolean = True) As CartNotice
+        Dim notice As New CartNotice()
+        Dim o As Order = dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)
+        If o Is Nothing Then Return notice
+
+        Dim items = CartItems(orderId)
+        Dim qty As Integer = items.Sum(Function(i) i.Quantity)
+        Dim amount As Decimal = items.Sum(Function(i) i.Amount)
+
+        ' 1) Still valid?
+        If Not String.IsNullOrWhiteSpace(o.Coupon) AndAlso qty > 0 Then
+            Dim cc As CouponCode = FindCoupon(o.Coupon)
+            Dim why As String = If(cc Is Nothing, String.Format("""{0}"" isn't available any more.", o.Coupon.Trim()), cc.CheckFor(qty, amount, o.Phone, o.Email))
+            If why IsNot Nothing Then
+                o.Coupon = ""
+                o.Discount = 0
+                notice.Removed = why
+            End If
+        End If
+
+        ' 2) Better cart offer?
+        If allowUpgrade AndAlso notice.Removed Is Nothing AndAlso Not String.IsNullOrWhiteSpace(o.Coupon) AndAlso qty > 0 Then
+            Dim offers = CouponCode.CartOffers()
+            Dim applied As String = o.Coupon.Trim().ToUpperInvariant()
+            Dim current = offers.FirstOrDefault(Function(x) x.Code = applied)
+            If current IsNot Nothing Then                ' never replace a code the customer typed themselves
+                Dim best = CouponCode.Best(offers, qty, amount, o.Phone, o.Email)
+                If best IsNot Nothing AndAlso best.Code <> current.Code AndAlso
+                   best.DiscountOn(amount) > current.DiscountOn(amount) AndAlso
+                   best.CheckFor(qty, amount, o.Phone, o.Email) Is Nothing Then
+                    o.Coupon = best.Name.Trim()
+                    notice.Upgraded = String.Format(Inr, "Nice! {0} applied, you now save ₹{1:#,##0}.", best.Code, best.DiscountOn(amount))
+                End If
+            End If
+        End If
+
+        ' 3) Totals
+        Recalculate(o, items)
+        dc.SaveChanges()
+        Return notice
+    End Function
+
+    ' =====================================================================
+    '  Create / items
+    ' =====================================================================
 
     Public Function Create(ByVal name As String, ByVal email As String, ByVal memberid As Long?, ByVal phone As String, ByVal billingAddress As String, ByVal billingCity As String, ByVal billingState As String, ByVal billingCountry As String, ByVal billingZip As String, ByVal shippingAddress As String, ByVal shippingCity As String, ByVal shippingState As String, ByVal shippingCountry As String, ByVal shippinZip As String, ByVal coupon As String, ByVal status As OrderStatusType, ByVal trackCode As String, ByVal shippingNotes As String, ByVal modified As DateTime, ByVal amount As Decimal, ByVal tax As Decimal, ByVal taxPercentage As Decimal, ByVal discount As Decimal, ByVal total As Decimal, ByVal shippingPrice As Decimal, ByVal cod As Decimal, ByVal paymentMode As String, ByVal shippingService As String, ByVal shippingFirstName As String, ByVal shippingLastName As String, ByVal shippingPhone As String) As Order
         Dim o As New Order() With {
@@ -100,108 +267,39 @@
         End If
 
         dc.SaveChanges()
-        Dim list = From item In dc.OrderItems Where item.OrderID = orderId Select item
-        Dim amount As Decimal = 0
-
-        For Each item In list
-            amount += item.Amount
-        Next
-
-        Dim o As Order = dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)
-        o.Amount = amount
-
-        If o.Amount < FreeShippingAmount Then
-            o.ShippingPrice = ShippingPriceConstant
-        Else
-            o.ShippingPrice = 0
-        End If
-
-        o.Total = o.Amount + o.ShippingPrice - o.Discount
-        dc.SaveChanges()
+        RecalculateAndSave(orderId)
     End Sub
 
     Public Sub RemoveItem(ByVal itemId As Integer, ByVal orderId As Integer)
 
         Dim oi As OrderItem = dc.OrderItems.SingleOrDefault(Function(item) item.ID = itemId AndAlso item.OrderID = orderId)
-        dc.OrderItems.Remove(oi)
-        dc.SaveChanges()
-        Dim list = From item In dc.OrderItems Where item.OrderID = orderId Select item
-        Dim amount As Decimal = 0
-
-        For Each item In list
-            amount += item.Amount
-        Next
-
-        Dim o As Order = dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)
-        o.Amount = amount
-
-        If o.Amount = 0 Then
-            o.Coupon = ""
-            o.Discount = 0
-            o.ShippingPrice = 0
-            o.COD = 0
-            o.PaymentMode = ""
+        If oi IsNot Nothing Then
+            dc.OrderItems.Remove(oi)
+            dc.SaveChanges()
         End If
-
-        o.Total = o.Amount + o.ShippingPrice - o.Discount
-        dc.SaveChanges()
+        RecalculateAndSave(orderId)
     End Sub
 
     Public Sub AddItemQuantity(ByVal itemId As Integer, ByVal orderId As Integer)
 
         Dim oi As OrderItem = dc.OrderItems.SingleOrDefault(Function(item) item.ID = itemId AndAlso item.OrderID = orderId)
-        oi.Quantity += 1
-        oi.Amount = oi.Quantity * oi.Price
-        dc.SaveChanges()
-        Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-        Dim amount As Decimal = 0
-
-        For Each i As OrderItem In o.OrderItems
-            amount += i.Amount
-        Next
-
-        o.Amount = amount
-
-        If o.Amount = 0 Then
-            o.Coupon = ""
-            o.Discount = 0
-            o.ShippingPrice = 0
-            o.COD = 0
-            o.PaymentMode = ""
+        If oi IsNot Nothing Then
+            oi.Quantity += 1
+            oi.Amount = oi.Quantity * oi.Price
+            dc.SaveChanges()
         End If
-
-        dc.SaveChanges()
+        RecalculateAndSave(orderId)
     End Sub
 
     Public Sub ReduceItemQuantity(ByVal itemId As Integer, ByVal orderId As Integer)
         Dim oi As OrderItem = dc.OrderItems.SingleOrDefault(Function(item) item.ID = itemId AndAlso item.OrderID = orderId)
-        oi.Quantity -= 1
-        oi.Amount = oi.Quantity * oi.Price
-        dc.SaveChanges()
-
-        If oi.Quantity = 0 Then
-            dc.OrderItems.Remove(oi)
+        If oi IsNot Nothing Then
+            oi.Quantity -= 1
+            oi.Amount = oi.Quantity * oi.Price
+            If oi.Quantity <= 0 Then dc.OrderItems.Remove(oi)
             dc.SaveChanges()
         End If
-
-        Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-        Dim amount As Decimal = 0
-
-        For Each i As OrderItem In o.OrderItems
-            amount += i.Amount
-        Next
-
-        o.Amount = amount
-
-        If o.Amount = 0 Then
-            o.Coupon = ""
-            o.Discount = 0
-            o.ShippingPrice = 0
-            o.COD = 0
-            o.PaymentMode = ""
-        End If
-
-        dc.SaveChanges()
+        RecalculateAndSave(orderId)
     End Sub
 
     Public Sub UpdateItem(ByVal itemId As Integer, ByVal quantity As Integer, ByVal orderId As Integer, ByVal productImg As String, ByVal productName As String, ByVal productCode As String, ByVal price As Decimal)
@@ -302,18 +400,7 @@
     Public Sub UpdateCOD(ByVal orderId As Integer)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-
-        If o.PaymentMode = "COD" Then
-            o.COD = 0
-            'If (o.Amount + o.ShippingPrice + o.Tax - o.Discount) > 2000 Then
-            '    o.COD = ((o.Amount + o.ShippingPrice + o.Tax - o.Discount) / 100) * 2
-            'Else
-            '    o.COD = 40
-            'End If
-        Else
-            o.COD = 0
-        End If
-
+        o.COD = If(String.Equals(o.PaymentMode, "COD", StringComparison.OrdinalIgnoreCase), CODFee, 0D)
         o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
@@ -322,35 +409,15 @@
     Public Sub UpdateShippingPrice(ByVal orderId As Integer)
 
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-        Dim quantity As Integer = 0
-
-        For Each item As OrderItem In o.OrderItems
-            quantity += item.Quantity
-        Next
-
-        If o.ShippingState.ToLower() = "jammu and kashmir" OrElse o.ShippingState.ToLower() = "andaman and nicobar islands" OrElse o.ShippingState.ToLower() = "lakshadweep" Then
-            o.ShippingPrice = quantity * 200
-        ElseIf o.ShippingState.ToLower() = "national capital territory of delhi" Then
-            o.ShippingPrice = quantity * 0
-        Else
-            o.ShippingPrice = 0
-        End If
-
+        o.ShippingPrice = ShippingFor(o, CartItems(orderId).Sum(Function(i) i.Quantity))
         o.DateModified = DateTime.UtcNow
         dc.SaveChanges()
 
     End Sub
 
+    ''' <summary>Recalculates discount, shipping, COD fee and total from the items.</summary>
     Public Sub UpdateTotal(ByVal orderId As Integer)
-        UpdateShippingPrice(orderId)
-        UpdateCOD(orderId)
-
-
-        Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-        o.Total = o.Amount + o.ShippingPrice + o.COD + o.Tax - o.Discount
-        o.DateModified = DateTime.UtcNow
-        dc.SaveChanges()
-
+        RecalculateAndSave(orderId)
     End Sub
 
     Public Sub UpdateOrderShippingService(ByVal orderId As Integer, ByVal shippingservice As String)
@@ -367,32 +434,6 @@
         Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
         o.ShippingTrackCode = trackingCode
         o.DateModified = DateTime.UtcNow
-        dc.SaveChanges()
-
-    End Sub
-
-    Public Sub UpdateCouponCode(ByVal orderId As Integer, ByVal coupon As String)
-
-        Dim o As Order = dc.Orders.Single(Function(item) item.ID = orderId)
-        o.Coupon = String.Empty
-        o.Discount = 0
-        o.DateModified = DateTime.UtcNow
-        Dim coupons As List(Of CouponCode) = dc.CouponCodes.Where(Function(t) t.Status = CByte(GeneralStatusType.Active)).ToList()
-
-        For Each cc As CouponCode In coupons
-
-            If coupon.ToLower() = cc.Name.ToLower().Trim() Then
-                If cc.IsPercent Then
-                    o.Discount = (o.Amount * cc.Value) / 100
-                Else
-                    o.Discount = cc.Value
-                End If
-                o.Coupon = cc.Name
-                o.DateModified = DateTime.UtcNow
-                Exit For
-            End If
-        Next
-
         dc.SaveChanges()
 
     End Sub
@@ -468,10 +509,7 @@
     End Function
 
     ' =====================================================================
-    '  GenerateReceipt – branded, mobile-friendly HTML email receipt
-    '  • Email-safe: tables + inline styles only (works in Gmail, Outlook, Apple Mail)
-    '  • All customer-entered text is HTML-encoded
-    '  • Same signature as before: Public Function GenerateReceipt(orderId) As String
+    '  GenerateReceipt – branded, mobile-friendly HTML email receipt (unchanged)
     ' =====================================================================
     Public Function GenerateReceipt(ByVal orderId As Integer) As String
         Dim o As Order = dc.Orders.SingleOrDefault(Function(item) item.ID = orderId)

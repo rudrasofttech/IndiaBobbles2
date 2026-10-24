@@ -75,6 +75,15 @@
             <asp:ListItem Value="1">Opened</asp:ListItem>
             <asp:ListItem Value="0">Not opened</asp:ListItem>
         </asp:DropDownList>
+
+        <asp:DropDownList ID="PageSizeDropDown" runat="server" CssClass="form-select form-select-sm" AutoPostBack="true"
+            OnSelectedIndexChanged="PageSizeDropDown_SelectedIndexChanged" aria-label="Items per page">
+            <asp:ListItem Value="25">25 / page</asp:ListItem>
+            <asp:ListItem Value="50" Selected="True">50 / page</asp:ListItem>
+            <asp:ListItem Value="100">100 / page</asp:ListItem>
+            <asp:ListItem Value="200">200 / page</asp:ListItem>
+        </asp:DropDownList>
+
         <asp:Button ID="SubmitButton" CssClass="btn btn-ib btn-sm" runat="server" Text="Apply" OnClick="SubmitButton_Click" />
         <asp:LinkButton ID="ResetButton" runat="server" CssClass="btn btn-light btn-sm" CausesValidation="false"><i class="fa fa-times"></i> Reset</asp:LinkButton>
     </asp:Panel>
@@ -82,6 +91,8 @@
     <!-- ============ Selection bar ============ -->
     <div class="em-sel idle" id="selBar">
         <span class="cnt"><b id="selCount">0</b> selected</span>
+        <asp:Button ID="ResendButton" runat="server" Text="Try send not sent" CssClass="btn btn-light btn-sm" CausesValidation="false"
+            OnClientClick="return confirm('Try sending all selected emails that are not sent yet?');" OnClick="ResendButton_Click" />
         <asp:Button ID="DeleteButton" runat="server" Text="Remove selected" CssClass="btn btn-danger btn-sm" CausesValidation="false"
             OnClientClick="return confirm('Remove the selected emails from the log? This cannot be undone.')" OnClick="DeleteButton_Click" />
     </div>

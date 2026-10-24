@@ -456,6 +456,7 @@
     <Compile Include="Models\CouponCode.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CouponCode.Rules.vb" />
     <Compile Include="Models\CustomDataSource.vb">
       <DependentUpon>IBModel.tt</DependentUpon>
     </Compile>

@@ -179,9 +179,9 @@ End Section
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-ibp"><i class="fa fa-print" aria-hidden="true"></i> Print receipt</button>
                     </form>
-                    @If Not String.IsNullOrEmpty(Model.Email) Then
+                    @*@If Not String.IsNullOrEmpty(Model.Email) Then
                         @<a href="@Url.Content("~/orders/email/" & Model.ID)" class="btn btn-apply"><i class="fa fa-envelope-o" aria-hidden="true"></i> Email receipt</a>
-                    End If
+                    End If*@
                 </div>
             </div>
 

@@ -140,6 +140,15 @@ Partial Public Class Emails
     Protected WithEvents ReadDropDown As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''PageSizeDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PageSizeDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''SubmitButton control.
     '''</summary>
     '''<remarks>
@@ -156,6 +165,15 @@ Partial Public Class Emails
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ResetButton As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''ResendButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ResendButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''DeleteButton control.

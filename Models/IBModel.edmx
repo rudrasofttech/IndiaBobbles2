@@ -48,6 +48,14 @@
           <Property Name="IsPercent" Type="bit" Nullable="false" />
           <Property Name="Value" Type="money" Nullable="false" />
           <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="MinItems" Type="int" Nullable="false" />
+          <Property Name="MinAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FirstOrderOnly" Type="bit" Nullable="false" />
+          <Property Name="ShowOnCart" Type="bit" Nullable="false" />
+          <Property Name="Pitch" Type="nvarchar" MaxLength="150" />
+          <Property Name="ValidFrom" Type="datetime" />
+          <Property Name="ValidTo" Type="datetime" />
+          <Property Name="ReturningOnly" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomDataSource">
           <Key>
@@ -788,6 +796,14 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <Property Name="IsPercent" Type="Boolean" Nullable="false" />
           <Property Name="Value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="MinItems" Type="Int32" Nullable="false" />
+          <Property Name="MinAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FirstOrderOnly" Type="Boolean" Nullable="false" />
+          <Property Name="ShowOnCart" Type="Boolean" Nullable="false" />
+          <Property Name="Pitch" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ValidFrom" Type="DateTime" Precision="3" />
+          <Property Name="ValidTo" Type="DateTime" Precision="3" />
+          <Property Name="ReturningOnly" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomDataSource">
           <Key>
@@ -1575,6 +1591,14 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <EntitySetMapping Name="CouponCodes">
             <EntityTypeMapping TypeName="IBModel.CouponCode">
               <MappingFragment StoreEntitySet="CouponCode">
+                <ScalarProperty Name="ReturningOnly" ColumnName="ReturningOnly" />
+                <ScalarProperty Name="ValidTo" ColumnName="ValidTo" />
+                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+                <ScalarProperty Name="Pitch" ColumnName="Pitch" />
+                <ScalarProperty Name="ShowOnCart" ColumnName="ShowOnCart" />
+                <ScalarProperty Name="FirstOrderOnly" ColumnName="FirstOrderOnly" />
+                <ScalarProperty Name="MinAmount" ColumnName="MinAmount" />
+                <ScalarProperty Name="MinItems" ColumnName="MinItems" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

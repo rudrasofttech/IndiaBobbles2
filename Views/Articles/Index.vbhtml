@@ -6,7 +6,50 @@
     Dim posts = If(Model, New List(Of IndiaBobbles.Article)())
     Dim featured = If(posts.Count > 0, posts(0), Nothing)
     Dim pageSize As Integer = 12
+
+    Dim siteUrl As String = IndiaBobbles.Utility.SiteURL.TrimEnd("/"c)
+    Dim metaTitle As String = "Blog – Comics, Stories & Bobblehead News | India Bobbles"
+    Dim metaDescription As String = "Read comics, filmy stories, and bobblehead updates from India Bobbles. Explore the latest posts featuring Daku Sambhar Singh and friends."
+    Dim metaUrl As String = siteUrl & "/blog"
+    Dim metaImage As String = siteUrl & "/theme/khichdi/img/ib-logo.png"
+    Dim metaKeywords As String = "india bobbles blog, comics, bobbleheads, bollywood collectibles, indian pop culture"
+
+    If featured IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(featured.OGImage) Then
+        Dim fi As String = featured.OGImage.Trim()
+        If fi.StartsWith("//") Then
+            metaImage = "https:" & fi
+        ElseIf fi.StartsWith("http://", StringComparison.OrdinalIgnoreCase) OrElse fi.StartsWith("https://", StringComparison.OrdinalIgnoreCase) Then
+            metaImage = fi
+        Else
+            metaImage = siteUrl & If(fi.StartsWith("/"), fi, "/" & fi)
+        End If
+    End If
 End Code
+
+@section meta
+    @If posts.Count > 0 Then
+
+        @<meta name="description" content="@metaDescription" />
+        @<meta name="keywords" content="@metaKeywords" />
+        @<meta name="robots" content="index,follow,max-image-preview:large" />
+
+        @<meta Property="og:locale" content="en_IN" />
+        @<meta Property="og:type" content="website" />
+        @<meta Property="og:site_name" content="India Bobbles" />
+        @<meta Property="og:title" content="@metaTitle" />
+        @<meta Property="og:description" content="@metaDescription" />
+        @<meta Property="og:url" content="@metaUrl" />
+        @<meta Property="og:image" content="@metaImage" />
+        @<meta Property="og:image:alt" content="India Bobbles Blog" />
+
+        @<meta name="twitter:card" content="summary_large_image" />
+        @<meta name="twitter:title" content="@metaTitle" />
+        @<meta name="twitter:description" content="@metaDescription" />
+        @<meta name="twitter:image" content="@metaImage" />
+    Else
+        @<meta name="robots" content="noindex,follow" />
+    End If
+End Section
 
 
 @section scripts
@@ -152,18 +195,18 @@ End Section
 
     <!-- Newsletter -->
     @*<div class="news d-flex justify-content-between align-items-center flex-wrap gap-3 mb-5" id="ibNews">
-        <div>
-            <h3>Never miss a comic</h3>
-            <p>New stories, launches and members-only offers, straight to your inbox.</p>
-        </div>
-        <div>
-            @Html.AntiForgeryToken()
-            <div class="d-flex flex-wrap gap-2">
-                <input type="email" id="subEmail" placeholder="Your email address" maxlength="250" aria-label="Email address" />
-                <input type="text" id="subPhone" style="display:none;" tabindex="-1" autocomplete="off" />
-                <button type="button" id="subBtn" class="btn btn-iby" onclick="ibSubscribe()">Subscribe</button>
+            <div>
+                <h3>Never miss a comic</h3>
+                <p>New stories, launches and members-only offers, straight to your inbox.</p>
             </div>
-            <div id="subMsg" class="small mt-2"></div>
-        </div>
-    </div>*@
+            <div>
+                @Html.AntiForgeryToken()
+                <div class="d-flex flex-wrap gap-2">
+                    <input type="email" id="subEmail" placeholder="Your email address" maxlength="250" aria-label="Email address" />
+                    <input type="text" id="subPhone" style="display:none;" tabindex="-1" autocomplete="off" />
+                    <button type="button" id="subBtn" class="btn btn-iby" onclick="ibSubscribe()">Subscribe</button>
+                </div>
+                <div id="subMsg" class="small mt-2"></div>
+            </div>
+        </div>*@
 </div>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Manage Product" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="ManageProduct.aspx.vb" Inherits="IndiaBobbles.ManageProduct" %>
+﻿<%@ Page Title="Manage Product" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="ManageProduct.aspx.vb" Inherits="IndiaBobbles.ManageProduct" ValidateRequest="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

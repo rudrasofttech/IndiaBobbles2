@@ -31,12 +31,12 @@
             js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=490407121012387";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-    <!-- Announcement bar -->
-    <div class="ib-topbar text-center py-2 px-2">
-        <i class="fa fa-truck" aria-hidden="true"></i>Free shipping across India
-        <span class="d-none d-md-inline">&nbsp;·&nbsp;<i class="fa fa-paint-brush" aria-hidden="true"></i>Every piece hand-painted by artists</span>
-        &nbsp;·&nbsp;<a href="https://indiabobbles.tawk.help" target="_blank" rel="noopener">Need help?</a>
-    </div>
+    @*<!-- Announcement bar -->
+        <div class="ib-topbar text-center py-2 px-2">
+            <i class="fa fa-truck" aria-hidden="true"></i>Free shipping across India
+            <span class="d-none d-md-inline">&nbsp;·&nbsp;<i class="fa fa-paint-brush" aria-hidden="true"></i>Every piece hand-painted by artists</span>
+            &nbsp;·&nbsp;<a href="https://indiabobbles.tawk.help" target="_blank" rel="noopener">Need help?</a>
+        </div>*@
 
     <!-- Main header -->
     <header class="ib-header sticky-top">
@@ -199,18 +199,14 @@
         </div>
     </footer>
 
-    <script type="text/javascript">
-        //Google analytics code
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QST294VT8C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-        ga('create', 'UA-421743-7', 'indiabobbles.com');
-        ga('send', 'pageview');
-
+        gtag('config', 'G-QST294VT8C');
     </script>
     <script type="text/javascript">
         var vt_root = "//www.webstats.co.in/";

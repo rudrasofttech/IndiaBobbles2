@@ -7,9 +7,39 @@ Namespace Controllers
 
         ReadOnly om As New OrderManager()
         ReadOnly db As New indiabobblesEntities
+
+        ' ---------------- Helpers ----------------
+
+        ''' <summary>In-stock products not already in the cart, biggest discount first.</summary>
+        Private Function Suggestions(o As Order, count As Integer) As List(Of Product)
+            Try
+                If o Is Nothing OrElse o.OrderItems Is Nothing OrElse o.OrderItems.Count = 0 Then Return New List(Of Product)()
+                Dim inCart As New HashSet(Of String)(o.OrderItems.Select(Function(i) If(i.ProductName, "").Trim().ToLowerInvariant()))
+                Return db.Products.Where(Function(p) p.Status = 0 AndAlso Not p.OutofStock) _
+                    .OrderByDescending(Function(p) p.MRP - p.SalePrice) _
+                    .ThenByDescending(Function(p) p.CreateDate) _
+                    .Take(count + 10).ToList() _
+                    .Where(Function(p) Not inCart.Contains(If(p.Name, "").Trim().ToLowerInvariant())) _
+                    .Take(count).ToList()
+            Catch
+                Return New List(Of Product)()
+            End Try
+        End Function
+
         ' GET: Cart
         Function Index() As ActionResult
-            Return View(om.GetCart())
+            Dim o As Order = om.GetCart()
+
+            If o.ID > 0 Then
+                ' Re-check the coupon, switch to a bigger offer if one now fits, refresh totals
+                Dim notice As CartNotice = om.RefreshCart(o.ID)
+                If notice.Removed IsNot Nothing Then TempData("CouponMsg") = notice.Removed & " We've removed it for now."
+                If notice.Upgraded IsNot Nothing Then TempData("CouponOk") = notice.Upgraded
+                o = om.GetCart()
+            End If
+
+            ViewBag.Suggestions = Suggestions(o, 3)
+            Return View(o)
         End Function
 
         Function Add(ByVal id As Integer) As ActionResult
@@ -55,11 +85,20 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function ApplyCoupon(ByVal coupon As String, ByVal returnto As String) As ActionResult
-
+            Dim back As String = If(String.IsNullOrWhiteSpace(returnto), "Index", returnto)
+            Dim code As String = If(coupon, "").Trim()
             Dim o As Order = om.GetCart()
-            om.UpdateCouponCode(o.ID, coupon)
-            om.UpdateTotal(o.ID)
-            Return RedirectToAction(returnto)
+            If o.ID = 0 OrElse code = "" Then Return RedirectToAction(back)
+
+            ' Checks the coupon's rules (min items/amount, dates, first order) and applies it
+            Dim why As String = om.ApplyCoupon(o.ID, code)
+            If why IsNot Nothing Then
+                TempData("CouponMsg") = why
+            Else
+                o = om.GetCart()
+                TempData("CouponOk") = String.Format(New System.Globalization.CultureInfo("en-IN"), "{0} applied, you save ₹{1:#,##0.##}.", o.Coupon, o.Discount)
+            End If
+            Return RedirectToAction(back)
         End Function
 
         <HttpPost()>
@@ -69,7 +108,7 @@ Namespace Controllers
             Dim o As Order = om.GetCart()
             om.UpdateCouponCode(o.ID, "")
             om.UpdateTotal(o.ID)
-            Return RedirectToAction(returnto)
+            Return RedirectToAction(If(String.IsNullOrWhiteSpace(returnto), "Index", returnto))
         End Function
 
         Function AddQuantity(ByVal id As Integer) As ActionResult
@@ -142,14 +181,13 @@ Namespace Controllers
                         merc_hash_string &= (If(Request.Form(merc_hash_var), ""))
                     Next
 
-                    Response.Write(merc_hash_string)
+                    ' SECURITY: removed Response.Write(merc_hash_string) – it printed your PayU SALT on the page.
                     merc_hash = Generatehash512(merc_hash_string).ToLower()
 
                     If merc_hash <> Request.Form("hash") Then
                         Response.Write("Hash value did not matched")
                     Else
                         order_id = Request.Form("txnid")
-                        Response.Write("value matched")
 
                         If Request.Form("mihpayid") IsNot Nothing Then
                             Dim payumoneytransid As String = Request.Form("mihpayid")
@@ -202,6 +240,13 @@ Namespace Controllers
                 Dim o As Order = om.GetCart()
 
                 If o IsNot Nothing Then
+                    ' Offer check right before the order is placed
+                    Dim why As String = If(o.ID > 0, om.RefreshCart(o.ID, allowUpgrade:=False).Removed, Nothing)
+                    If why IsNot Nothing Then
+                        TempData("CouponMsg") = why & " We've removed it, please check your total."
+                        Return RedirectToAction("Checkout")
+                    End If
+
                     om.UpdatePaymentMode(o.ID, "COD")
                     om.UpdateTotal(o.ID)
                     om.UpdateOrderPayment(o.ID, "COD", Date.Now, "COD")
@@ -234,6 +279,14 @@ Namespace Controllers
             If o.ID = 0 Then
                 Return RedirectToAction("Index")
             End If
+
+            ' Offer check before the PayU amount is fixed (phone may have changed on the address step)
+            ' Re-check the coupon before the PayU amount is fixed (phone/email may have changed on the address step).
+            ' Stay on this page so the customer sees the new total before paying.
+            Dim why As String = om.RefreshCart(o.ID, allowUpgrade:=False).Removed
+            If why IsNot Nothing Then TempData("CouponMsg") = why & " We've removed it, please check your total."
+            o = om.GetCart()
+
             Dim hashVarsSeq() As String = ConfigurationManager.AppSettings("hashSequence").Split("|".ToCharArray())
             Dim hash_string As New StringBuilder()
             For Each hash_var In hashVarsSeq

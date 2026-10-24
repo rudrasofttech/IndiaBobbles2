@@ -17,5 +17,13 @@ Partial Public Class CouponCode
     Public Property IsPercent As Boolean
     Public Property Value As Decimal
     Public Property Status As Byte
+    Public Property MinItems As Integer
+    Public Property MinAmount As Decimal
+    Public Property FirstOrderOnly As Boolean
+    Public Property ShowOnCart As Boolean
+    Public Property Pitch As String
+    Public Property ValidFrom As Nullable(Of Date)
+    Public Property ValidTo As Nullable(Of Date)
+    Public Property ReturningOnly As Boolean
 
 End Class

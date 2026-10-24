@@ -176,6 +176,78 @@ Partial Public Class ManageCoupons
     Protected WithEvents StatusDropDown As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''WhoDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents WhoDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''MinItemsTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MinItemsTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''MinAmountTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MinAmountTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''ValidFromTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ValidFromTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''ValidToTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ValidToTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''ShowOnCartCheckBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ShowOnCartCheckBox As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''PitchTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PitchTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''RulesErrorLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RulesErrorLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''SaveButton control.
     '''</summary>
     '''<remarks>
