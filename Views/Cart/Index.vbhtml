@@ -1,5 +1,4 @@
-﻿
-@ModelType IndiaBobbles.Order
+﻿@ModelType IndiaBobbles.Order
 @Code
     ViewData("Title") = "Your Cart – India Bobbles"
     Dim inr = New System.Globalization.CultureInfo("en-IN")
@@ -27,6 +26,18 @@
     ' A better offer than the coupon already applied?
     Dim upgrade = If(hasCoupon AndAlso best IsNot Nothing AndAlso Not String.Equals(best.Code, Model.Coupon.Trim(), StringComparison.OrdinalIgnoreCase) AndAlso bestSave > currentSave, best, Nothing)
     Dim showOffer As Boolean = Not hasCoupon AndAlso best IsNot Nothing
+
+    ' All offers this customer can see, best first, then locked ones (e.g. "add 1 more to unlock")
+    Dim needsBuyerCheck As Boolean = offers.Any(Function(x) x.FirstOrderOnly OrElse x.ReturningOnly)
+    Dim buyer As Boolean? = If(needsBuyerCheck, IndiaBobbles.CouponCode.IsPastBuyer(cPhone, cEmail), CType(Nothing, Boolean?))
+    Dim isBuyer As Boolean = buyer.HasValue AndAlso buyer.Value
+    Dim appliedCode As String = If(hasCoupon, Model.Coupon.Trim().ToUpperInvariant(), "")
+    Dim listOffers = offers.Where(Function(x) Not (x.FirstOrderOnly AndAlso isBuyer) AndAlso Not (x.ReturningOnly AndAlso Not isBuyer)) _
+                           .OrderByDescending(Function(x) x.Code = appliedCode) _
+                           .ThenByDescending(Function(x) x.FitsCart(itemCount, subtotal)) _
+                           .ThenByDescending(Function(x) If(x.FitsCart(itemCount, subtotal), x.DiscountOn(subtotal), 0D)) _
+                           .ThenBy(Function(x) x.MinItems) _
+                           .ToList()
     Dim couponMsg As String = TryCast(TempData("CouponMsg"), String)
     Dim couponOk As String = TryCast(TempData("CouponOk"), String)
 
@@ -204,6 +215,220 @@ End Code
         font-size: .7em;
         margin-right: 6px;
     }
+    /* ---- Layout: phones = items → summary → suggestions; desktop = two columns ---- */
+    .ib-cart .ib-cart-grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "items" "summary" "extras";
+    }
+
+    .ib-cart .g-items {
+        grid-area: items;
+        min-width: 0;
+    }
+
+    .ib-cart .g-extras {
+        grid-area: extras;
+        min-width: 0;
+    }
+
+        .ib-cart .g-extras .pair {
+            margin-top: 0;
+        }
+
+    .ib-cart .g-summary {
+        grid-area: summary;
+        min-width: 0;
+    }
+
+    @@media (min-width: 992px) {
+        .ib-cart .ib-cart-grid {
+            gap: 24px;
+            grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+            grid-template-rows: auto 1fr;
+            grid-template-areas: "items summary" "extras summary";
+            align-items: start;
+        }
+    }
+
+    /* ---- Phones: sticky total + checkout bar (hidden while the real button is on screen) ---- */
+    .ib-cobar {
+        display: none;
+    }
+
+    @@media (max-width: 991.98px) {
+        .ib-cobar {
+            display: flex;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1030;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+            background: #fff;
+            border-top: 1px solid #ece6ef;
+            box-shadow: 0 -6px 18px rgba(51,11,63,.10);
+            transition: transform .2s ease;
+        }
+
+            .ib-cobar.hide {
+                transform: translateY(110%);
+            }
+
+            .ib-cobar .t {
+                flex: 1;
+                min-width: 0;
+                line-height: 1.15;
+            }
+
+                .ib-cobar .t b {
+                    display: block;
+                    font-size: 20px;
+                    color: #330B3F;
+                }
+
+                .ib-cobar .t s {
+                    color: #8a7f90;
+                    font-size: 13px;
+                    margin-left: 4px;
+                    font-weight: 400;
+                }
+
+                .ib-cobar .t small {
+                    color: #157a3c;
+                    font-weight: 700;
+                    font-size: 12px;
+                }
+
+            .ib-cobar .btn {
+                background: #330B3F;
+                color: #fff;
+                font-weight: 800;
+                border-radius: 10px;
+                padding: 12px 18px;
+                white-space: nowrap;
+            }
+
+        .ib-cart {
+            padding-bottom: 90px !important;
+        }
+    }
+    /* ---- Offers list ---- */
+    .ib-cart .ofl {
+        margin: 16px 0 4px;
+        border: 1px solid #ece6ef;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+        .ib-cart .ofl .hd {
+            padding: 10px 14px;
+            font-weight: 800;
+            color: #330B3F;
+            background: #faf7fb;
+            border-bottom: 1px solid #ece6ef;
+            font-size: 15px;
+        }
+
+            .ib-cart .ofl .hd i {
+                color: #e23744;
+                margin-right: 4px;
+            }
+
+        .ib-cart .ofl .of {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-top: 1px dashed #e4dbe9;
+        }
+
+        .ib-cart .ofl .hd + .of {
+            border-top: 0;
+        }
+
+        .ib-cart .ofl .of.best {
+            background: #fffaeb;
+        }
+
+        .ib-cart .ofl .of.on {
+            background: #e9f7ee;
+        }
+
+        .ib-cart .ofl .cd {
+            flex: none;
+            font-family: Consolas, Menlo, monospace;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #330B3F;
+            background: #fff4cc;
+            border: 1px dashed #e0b400;
+            border-radius: 8px;
+            padding: 4px 8px;
+        }
+
+        .ib-cart .ofl .tx {
+            flex: 1;
+            min-width: 0;
+            font-size: 14px;
+            color: #3e3445;
+            line-height: 1.35;
+        }
+
+            .ib-cart .ofl .tx b {
+                color: #1f1724;
+            }
+
+            .ib-cart .ofl .tx small {
+                display: block;
+                color: #157a3c;
+                font-weight: 600;
+                font-size: 12.5px;
+                margin-top: 1px;
+            }
+
+            .ib-cart .ofl .tx .tag {
+                display: inline-block;
+                margin-left: 4px;
+                font-size: 10.5px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: .05em;
+                background: #330B3F;
+                color: #ffc107;
+                border-radius: 6px;
+                padding: 1px 6px;
+                vertical-align: 1px;
+            }
+
+        .ib-cart .ofl .of.locked .cd {
+            opacity: .6;
+        }
+
+        .ib-cart .ofl .of.locked .tx small {
+            color: #6b5f72;
+        }
+
+        .ib-cart .ofl .btn-offer {
+            padding: 7px 14px;
+        }
+
+        .ib-cart .ofl .lock, .ib-cart .ofl .done {
+            flex: none;
+            width: 34px;
+            text-align: center;
+            color: #b3a7ba;
+            font-size: 16px;
+        }
+
+        .ib-cart .ofl .done {
+            color: #157a3c;
+        }
 
     .ib-cart .contact.pulse {
         animation: ibPulse 1s ease 2;
@@ -436,6 +661,14 @@ End Code
                 $('#ibCodeForm').removeClass('d-none').find('input[name=coupon]').focus();
             });
 
+            // Phones: sticky bar → same checkout logic; hide the bar while the summary is on screen
+            $('#ibCoBarBtn').on('click', function () { $('#ibCheckout').trigger('click'); });
+            (function () {
+                var bar = document.getElementById('ibCoBar'), target = document.getElementById('ibSummary');
+                if (!bar || !target || !('IntersectionObserver' in window)) return;
+                new IntersectionObserver(function (en) { bar.classList.toggle('hide', en[0].isIntersecting); }, { threshold: 0.15 }).observe(target);
+            })();
+
             // Checkout: phone needed for delivery updates
             $('#ibCheckout').on('click', function (e) {
                 var link = this.href;
@@ -466,10 +699,10 @@ End Section
             <a class="btn btn-ibp" href="~/tag/collectibles">Shop bobbleheads</a>
         </div>
     Else
-        @<div class="row g-4">
+        @<div class="ib-cart-grid">
 
             <!-- ============ Items ============ -->
-            <div class="col-lg-7">
+            <div class="g-items">
                 @For Each o In items
                     @<div class="item">
                         <img src="@o.ProductImg" alt="@o.ProductName" />
@@ -492,19 +725,16 @@ End Section
                         <div class="amt">₹@(o.Amount.ToString("#,##0.##", inr))</div>
                     </div>
                 Next
-
-                <div class="perks">
-                    <span><i class="fa fa-truck" aria-hidden="true"></i> Free shipping across India</span>
-                    <span><i class="fa fa-paint-brush" aria-hidden="true"></i> Hand-painted</span>
-                    <span><i class="fa fa-undo" aria-hidden="true"></i> 7-day returns</span>
-                </div>
-
                 <!-- Delivery estimate -->
                 <div class="eta">
                     <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                     <span>Order today, arrives by <b>@deliveryText</b></span>
                 </div>
 
+            </div>
+
+            <!-- ============ Extras (below the summary on phones) ============ -->
+            <div class="g-extras">
                 <!-- Make it a pair / suggestions -->
                 @If suggestions.Count > 0 Then
                     @<div class="pair">
@@ -540,7 +770,7 @@ End Section
             </div>
 
             <!-- ============ Summary ============ -->
-            <div class="col-lg-5">
+            <div class="g-summary" id="ibSummary">
                 <div class="summary">
 
                     <!-- Contact capture -->
@@ -571,13 +801,13 @@ End Section
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <span class="privacy"><i class="fa fa-lock" aria-hidden="true"></i> Only for your order. No spam. <a href="~/privacy-policy">Privacy</a></span>
+                        <div class="d-flex justify-content-between align-items-start gap-2 mt-2">
+                            <span class="privacy"><i class="fa fa-lock" aria-hidden="true"></i> Your number is used only for order and delivery updates. Your email gets your receipt and the occasional offer (unsubscribe anytime). Never shared. <a href="~/privacy-policy">Privacy</a></span>
                             <span id="ibSaveStatus" class="save-status"></span>
                         </div>
                     </div>
 
-                    <!-- Coupon / offer -->
+                    <!-- Coupon / offers -->
                     @If hasCoupon Then
                         @<div class="coupon applied">
                             <span><i class="fa fa-tag" aria-hidden="true"></i> <b>@Model.Coupon</b> applied · you save ₹@(currentSave.ToString("#,##0.##", inr))</span>
@@ -587,55 +817,65 @@ End Section
                                 <button type="submit" class="link">Remove</button>
                             </form>
                         </div>
-                        If upgrade IsNot Nothing Then
-                            @<div class="upgrade">
-                                <span><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Save ₹@((bestSave - currentSave).ToString("#,##0", inr)) more with @upgrade.Code</span>
-                                <form method="post" action="@Url.Content("~/cart/applycoupon")" class="m-0 ib-offer-form">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="returnto" value="Index" />
-                                    <input type="hidden" name="coupon" value="@upgrade.Code" />
-                                    <button type="submit" class="btn btn-offer">Switch</button>
-                                </form>
-                            </div>
-                        End If
-                    ElseIf showOffer Then
-                        @<div class="offer">
-                            <div class="tkt">
-                                <div class="l">
-                                    <span class="v">@best.Label().ToUpperInvariant()</span>
-                                    <span class="c">@best.Code</span>
-                                </div>
-                                <div class="r">
-                                    <div class="t">
-                                        <b>@best.Label() @(If(String.IsNullOrWhiteSpace(best.Pitch), "on your order", best.Pitch))</b>
-                                        <small>You pay ₹@((subtotal - bestSave).ToString("#,##0", inr)) with free shipping</small>
+                    End If
+
+                    @If listOffers.Count > 0 Then
+                        @<div class="ofl">
+                            <div class="hd"><i class="fa fa-ticket" aria-hidden="true"></i> @(If(hasCoupon, "Available coupons", listOffers.Count & " " & If(listOffers.Count = 1, "coupon", "coupons") & " for you"))</div>
+                            @For Each o In listOffers
+                                Dim ok As Boolean = o.FitsCart(itemCount, subtotal)
+                                Dim isApplied As Boolean = (o.Code = appliedCode)
+                                Dim isBest As Boolean = (Not hasCoupon AndAlso best IsNot Nothing AndAlso o.Code = best.Code)
+                                Dim needQty As Integer = Math.Max(o.MinItems, 1) - itemCount
+                                Dim avgPrice As Decimal = If(itemCount > 0, subtotal / itemCount, 0D)
+                                Dim save As Decimal = If(ok, o.DiscountOn(subtotal), o.DiscountOn(avgPrice * Math.Max(o.MinItems, 1)))
+                                Dim pitchText As String = If(String.IsNullOrWhiteSpace(o.Pitch), "on your order", o.Pitch)
+                                Dim note As String
+                                If isApplied Then
+                                    note = "Applied · you save ₹" & currentSave.ToString("#,##0", inr)
+                                ElseIf ok Then
+                                    note = "You save ₹" & save.ToString("#,##0", inr) & " · pay ₹" & (subtotal - save + shipping).ToString("#,##0", inr)
+                                ElseIf needQty > 0 Then
+                                    note = "Add " & needQty & " more " & If(needQty = 1, "bobblehead", "bobbleheads") & " to unlock · save ₹" & save.ToString("#,##0", inr)
+                                Else
+                                    note = "Add ₹" & (o.MinAmount - subtotal).ToString("#,##0", inr) & " more to unlock"
+                                End If
+                                If o.ValidTo.HasValue Then note &= " · till " & o.ValidTo.Value.ToString("d MMM", inr)
+
+                                @<div class="@("of" & If(ok, "", " locked") & If(isBest, " best", "") & If(isApplied, " on", ""))">
+                                    <span class="cd">@o.Code</span>
+                                    <div class="tx">
+                                        <b>@o.Label()</b> @pitchText
+                                        @If isBest Then
+                                            @<span class="tag">Best</span>
+                                        End If
+                                        <small>@note</small>
                                     </div>
-                                    <form method="post" action="@Url.Content("~/cart/applycoupon")" class="m-0 ib-offer-form">
-                                        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="returnto" value="Index" />
-                                        <input type="hidden" name="coupon" value="@best.Code" />
-                                        <button type="submit" class="btn btn-offer">Apply</button>
-                                    </form>
+                                    @If isApplied Then
+                                        @<span class="done"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                    ElseIf ok Then
+                                        @<form method="post" action="@Url.Content("~/cart/applycoupon")" class="m-0 ib-offer-form">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="returnto" value="Index" />
+                                            <input type="hidden" name="coupon" value="@o.Code" />
+                                            <button type="submit" class="btn btn-offer">@(If(hasCoupon, "Switch", "Apply"))</button>
+                                        </form>
+                                    Else
+                                        @<span class="lock"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                                    End If
                                 </div>
-                            </div>
-
-                            @If nextOffer IsNot Nothing Then
-                                @<div class="nudge"><i class="fa fa-gift" aria-hidden="true"></i> Or add @nextNeed more and save <b>₹@(nextSave.ToString("#,##0", inr))</b> with @nextOffer.Code.</div>
-                            End If
-
-                            <button type="button" class="other" id="ibOtherCode">Have a different code?</button>
-                            <form method="post" action="@Url.Content("~/cart/applycoupon")" class="coupon d-none" id="ibCodeForm">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="returnto" value="Index" />
-                                <input type="text" name="coupon" maxlength="100" class="form-control" placeholder="Enter coupon code" aria-label="Coupon code" />
-                                <button type="submit" class="btn btn-apply">Apply</button>
-                            </form>
+                            Next
                         </div>
-                    Else
-                        @<form method="post" action="@Url.Content("~/cart/applycoupon")" class="coupon">
+                    End If
+
+                    @If Not hasCoupon Then
+                        If listOffers.Count > 0 Then
+                            @<button type="button" class="other" id="ibOtherCode">Have a different code?</button>
+                        End If
+                        @<form method="post" action="@Url.Content("~/cart/applycoupon")" class="@("coupon" & If(listOffers.Count > 0, " d-none mt-2", ""))" id="ibCodeForm">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="returnto" value="Index" />
-                            <input type="text" name="coupon" maxlength="100" class="form-control" placeholder="Have a coupon code?" aria-label="Coupon code" />
+                            <input type="text" name="coupon" maxlength="100" class="form-control" placeholder="@(If(listOffers.Count > 0, "Enter coupon code", "Have a coupon code?"))" aria-label="Coupon code" />
                             <button type="submit" class="btn btn-apply">Apply</button>
                         </form>
                     End If
@@ -680,6 +920,21 @@ End Section
                     <p class="secure"><i class="fa fa-lock" aria-hidden="true"></i> Secure payments: UPI, cards, net banking</p>
                 </div>
             </div>
+        </div>
+
+        ' Phones: sticky total + checkout
+        @<div class="ib-cobar" id="ibCoBar" role="region" aria-label="Order total">
+            <div class="t">
+                <b>₹@(total.ToString("#,##0", inr)) @Html.Raw(If(hasCoupon AndAlso Model.Discount > 0, "<s>₹" & subtotal.ToString("#,##0", inr) & "</s>", ""))</b>
+                @If hasCoupon AndAlso Model.Discount > 0 Then
+                    @<small>@Model.Coupon applied · you save ₹@(Model.Discount.ToString("#,##0", inr))</small>
+                ElseIf showOffer Then
+                    @<small>@best.Label() available below</small>
+                Else
+                    @<small>Free shipping</small>
+                End If
+            </div>
+            <button type="button" class="btn" id="ibCoBarBtn">Checkout <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
         </div>
     End If
 </div>

@@ -19,6 +19,10 @@ Namespace Controllers
                 Response.StatusCode = 404
                 Return HttpNotFound()
             End If
+
+            ' Live coupons marked "Offer it on the cart page" in admin (cached 5 min, cleared when a coupon is saved)
+            ViewBag.Offers = CouponCode.CartOffers()
+
             Return View(product)
         End Function
 

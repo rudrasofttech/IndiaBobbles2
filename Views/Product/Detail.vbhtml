@@ -20,6 +20,22 @@
 
     Dim waUrl As String = Url.Action("WhatsAppRedirect", "Home", New With {.message = "Hi, I have a question about " & Model.Name})
 
+    ' ---- Coupon offers (coupons marked "Offer it on the cart page" in admin) ----
+    Dim offers As List(Of IndiaBobbles.CouponCode) = If(TryCast(ViewBag.Offers, List(Of IndiaBobbles.CouponCode)), New List(Of IndiaBobbles.CouponCode)())
+    If Model.OutofStock Then offers = New List(Of IndiaBobbles.CouponCode)()
+    offers = offers.Where(Function(o) Not o.ReturningOnly) _
+                   .OrderBy(Function(o) Math.Max(o.MinItems, 1)) _
+                   .ThenByDescending(Function(o) o.DiscountOn(Model.SalePrice * Math.Max(o.MinItems, 1))) _
+                   .ToList()
+    Dim offerCount As Integer = offers.Count
+    ' Best price for ONE piece (e.g. FIRST100 → ₹900)
+    Dim bestOne = offers.Where(Function(o) o.FitsCart(1, Model.SalePrice)) _
+                        .OrderByDescending(Function(o) o.DiscountOn(Model.SalePrice)) _
+                        .FirstOrDefault()
+    Dim bestOnePrice As Decimal = If(bestOne Is Nothing, Model.SalePrice, Model.SalePrice - bestOne.DiscountOn(Model.SalePrice))
+    ' Biggest saving any offer gives (each at its own minimum quantity), for "Up to ₹400 off"
+    Dim maxSave As Decimal = If(offerCount = 0, 0D, offers.Max(Function(x) x.DiscountOn(Model.SalePrice * Math.Max(x.MinItems, 1))))
+
     ' SEO + social
     Dim siteUrl As String = IndiaBobbles.Utility.SiteURL.TrimEnd("/"c)
     Dim productPath As String = Url.Content("~/product/" & Model.ID & "/" & IndiaBobbles.Utility.Slugify(Model.Name))
@@ -67,6 +83,173 @@ End Functions
       }
     }
     </script>
+
+    <style>
+        /* ---- Offers box ---- */
+        .ib-pdp .lowest {
+            margin: 2px 0 4px;
+            font-size: 15px;
+            color: #157a3c;
+            font-weight: 700;
+        }
+
+            .ib-pdp .lowest b {
+                font-size: 17px;
+            }
+
+        .ib-pdp .offers {
+            border: 1px solid #ece6ef;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin: 0 0 18px;
+            background: #fff;
+            scroll-margin-top: 90px;
+            transition: box-shadow .3s;
+        }
+
+            .ib-pdp .offers.flash {
+                box-shadow: 0 0 0 4px rgba(255,193,7,.55);
+            }
+
+            .ib-pdp .offers .oh {
+                font-weight: 800;
+                color: #330B3F;
+                font-size: 15px;
+                margin-bottom: 8px;
+            }
+
+                .ib-pdp .offers .oh i {
+                    color: #e23744;
+                    margin-right: 4px;
+                }
+
+            .ib-pdp .offers .of {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 9px 0;
+                border-top: 1px dashed #e4dbe9;
+            }
+
+                .ib-pdp .offers .of:first-of-type {
+                    border-top: 0;
+                    padding-top: 2px;
+                }
+
+            .ib-pdp .offers .cd {
+                flex: none;
+                font-family: Consolas, Menlo, monospace;
+                font-weight: 700;
+                font-size: 12px;
+                letter-spacing: 1px;
+                color: #330B3F;
+                background: #fff4cc;
+                border: 1px dashed #e0b400;
+                border-radius: 8px;
+                padding: 4px 8px;
+            }
+
+            .ib-pdp .offers .tx {
+                flex: 1;
+                min-width: 0;
+                font-size: 14px;
+                color: #3e3445;
+                line-height: 1.35;
+            }
+
+                .ib-pdp .offers .tx b {
+                    color: #1f1724;
+                }
+
+                .ib-pdp .offers .tx small {
+                    display: block;
+                    color: #157a3c;
+                    font-weight: 600;
+                    font-size: 12.5px;
+                    margin-top: 1px;
+                }
+
+            .ib-pdp .offers .ft {
+                font-size: 12px;
+                color: #6b5f72;
+                margin-top: 6px;
+            }
+
+        /* ---- Mobile sticky bar: price + coupon count ---- */
+        .ib-mbar .pb {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+            min-width: 0;
+        }
+
+            .ib-mbar .pb .price {
+                font-size: 20px;
+                font-weight: 800;
+                color: #330B3F;
+            }
+
+            .ib-mbar .pb .mcoup {
+                font-size: 12px;
+                font-weight: 700;
+                color: #157a3c;
+                text-decoration: none;
+                margin-top: 2px;
+                line-height: 1.25;
+            }
+
+                .ib-mbar .pb .mcoup i {
+                    margin-right: 3px;
+                }
+
+                .ib-mbar .pb .mcoup u {
+                    text-decoration-style: dotted;
+                }
+
+        /* ---- Phones only: smaller photo + one scrolling row of thumbnails, so name & price show sooner ---- */
+        @@media (max-width: 767.98px) {
+            .ib-pdp .main-img img {
+                max-height: 40vh;
+                width: auto;
+                max-width: 100%;
+                object-fit: contain;
+            }
+
+            .ib-pdp .thumbs {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto;
+                gap: 8px;
+                justify-content: flex-start !important;
+                padding-bottom: 4px;
+                scroll-snap-type: x proximity;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+                .ib-pdp .thumbs::-webkit-scrollbar {
+                    display: none;
+                }
+
+                .ib-pdp .thumbs button {
+                    flex: 0 0 58px !important;
+                    width: 58px !important;
+                    height: 58px !important;
+                    scroll-snap-align: start;
+                    padding: 2px;
+                }
+
+                    .ib-pdp .thumbs button img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+
+            .ib-pdp .offers .of {
+                gap: 10px;
+            }
+        }
+    </style>
 End Section
 
 @section scripts
@@ -90,6 +273,16 @@ End Section
             e.preventDefault();
             bootstrap.Tab.getOrCreateInstance(document.getElementById('tab-story-btn')).show();
             document.getElementById('ibTabs').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // "{n} coupon codes" (mobile bar / price line): scroll to the offers box and highlight it
+        $(document).on('click', '.js-offers', function (e) {
+            var box = document.getElementById('ibOffers');
+            if (!box) return;
+            e.preventDefault();
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            box.classList.add('flash');
+            setTimeout(function () { box.classList.remove('flash'); }, 1600);
         });
 
         function notifyMe(productId) {
@@ -226,7 +419,36 @@ End Section
                     @<span class="off">@discountPct% off</span>
                 End If
             </div>
+            @If bestOne IsNot Nothing AndAlso bestOnePrice < Model.SalePrice Then
+                @<div class="lowest"><i class="fa fa-tag" aria-hidden="true"></i> Get it for <b>₹@(bestOnePrice.ToString("#,##0", inr))</b> with @bestOne.Code</div>
+            End If
             <div class="tax mb-3">Inclusive of all taxes · Free shipping across India</div>
+
+            <!-- Offers -->
+            @If offerCount > 0 Then
+                @<div class="offers" id="ibOffers">
+                    <div class="oh"><i class="fa fa-ticket" aria-hidden="true"></i> @offerCount @(If(offerCount = 1, "offer", "offers")) for you</div>
+                    @For Each o In offers
+                        Dim qty As Integer = Math.Max(o.MinItems, 1)
+                        Dim cartValue As Decimal = Model.SalePrice * qty
+                        Dim save As Decimal = o.DiscountOn(cartValue)
+                        Dim pitchText As String = If(String.IsNullOrWhiteSpace(o.Pitch), If(qty > 1, "when you buy " & qty & " or more", "on your order"), o.Pitch)
+                        Dim note As String
+                        If qty = 1 Then
+                            note = "You pay ₹" & (Model.SalePrice - save).ToString("#,##0", inr)
+                        Else
+                            note = "Save ₹" & save.ToString("#,##0", inr) & " on " & qty & " bobbleheads"
+                        End If
+                        If o.MinAmount > 0 AndAlso cartValue < o.MinAmount Then note = "On orders of ₹" & o.MinAmount.ToString("#,##0", inr) & " or more"
+                        If o.ValidTo.HasValue Then note &= " · till " & o.ValidTo.Value.ToString("d MMM", inr)
+                        @<div class="of">
+                            <span class="cd">@o.Code</span>
+                            <div class="tx"><b>@o.Label()</b> @pitchText<small>@note</small></div>
+                        </div>
+                    Next
+                    <div class="ft"><i class="fa fa-info-circle" aria-hidden="true"></i> Apply in one tap on the cart page. One coupon per order.</div>
+                </div>
+            End If
 
             <div class="trust mb-4">
                 <div><i class="fa fa-truck" aria-hidden="true"></i>Free delivery across India</div>
@@ -254,7 +476,7 @@ End Section
             End If
 
             <a target="_blank" rel="noopener" class="btn btn-wa w-100 mb-3" href="@waUrl">
-                <i class="fa fa-whatsapp" aria-hidden="true"></i> Questions or coupon codes? Chat on WhatsApp
+                <i class="fa fa-whatsapp" aria-hidden="true"></i> Questions? Chat with us on WhatsApp
             </a>
 
             <p class="small-links mb-0">
@@ -357,9 +579,14 @@ End Section
     </div>
 </div>
 
-<!-- Mobile sticky Add to Cart -->
+<!-- Mobile sticky Add to Cart (price + coupon count) -->
 <div class="ib-mbar">
-    <span class="price">₹@(salePrice)</span>
+    <div class="pb">
+        <span class="price">₹@(salePrice)</span>
+        @If offerCount > 0 Then
+            @<a href="#ibOffers" class="mcoup js-offers"><i class="fa fa-ticket" aria-hidden="true"></i><u>Up to ₹@(maxSave.ToString("#,##0", inr)) off via @offerCount coupon @(If(offerCount = 1, "code", "codes"))</u></a>
+        End If
+    </div>
     @If Not Model.OutofStock Then
         @<form method="get" action="@Url.Content("~/cart/add/" & Model.ID)" class="m-0">
             <button class="btn btn-ib" style="background:#330B3F;color:#fff;font-weight:700;border-radius:8px;padding:.6rem 1.4rem;">Add to Cart</button>

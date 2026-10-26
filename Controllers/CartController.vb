@@ -63,8 +63,9 @@ Namespace Controllers
                     om.UpdateOrderContact(o.ID, member.MemberName, o.Email, member.ID, o.Phone)
                 End If
 
-                Dim imgpath = String.Empty
-                If p.ProductPhotoes.Count > 0 Then
+                ' Same picture as the product page / listings (falls back to the first photo)
+                Dim imgpath As String = p.ThumbPath
+                If String.IsNullOrWhiteSpace(imgpath) AndAlso p.ProductPhotoes.Count > 0 Then
                     imgpath = p.ProductPhotoes.First().ImagePath
                 End If
 
