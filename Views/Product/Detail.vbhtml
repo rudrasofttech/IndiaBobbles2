@@ -419,9 +419,9 @@ End Section
                     @<span class="off">@discountPct% off</span>
                 End If
             </div>
-            @If bestOne IsNot Nothing AndAlso bestOnePrice < Model.SalePrice Then
+            @*@If bestOne IsNot Nothing AndAlso bestOnePrice < Model.SalePrice Then
                 @<div class="lowest"><i class="fa fa-tag" aria-hidden="true"></i> Get it for <b>₹@(bestOnePrice.ToString("#,##0", inr))</b> with @bestOne.Code</div>
-            End If
+            End If*@
             <div class="tax mb-3">Inclusive of all taxes · Free shipping across India</div>
 
             <!-- Offers -->

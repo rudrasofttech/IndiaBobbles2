@@ -1,30 +1,7 @@
 ﻿<%@ Page Title="Coupon Codes" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="ManageCoupons.aspx.vb" Inherits="IndiaBobbles.ManageCoupons" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        /* ---- Coupon rules (page-specific) ---- */
-        .cp-table .rc { display: inline-block; font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: #f3ecf6; color: #330B3F; margin: 1px 0; white-space: nowrap; }
-        .cp-table .rc.on { background: #fff4cc; }
-        .cp-table .rc.who { background: #e8f0fe; color: #1d4ed8; }
-        .cp-table .rc.dt { background: #eef0f3; color: #4b5563; }
-        .cp-table .rc.dt.old { background: #fdecee; color: #b4232f; }
-        .cs.cs-x { background: #fdecee; color: #b4232f; }
-        .cs.cs-s { background: #e8f0fe; color: #1d4ed8; }
-
-        .cp-form .sec { margin: 18px 0 10px; padding-top: 14px; border-top: 1px dashed #e4dbe9; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6b5f72; }
-        .cp-form .seg3 { display: grid; grid-template-columns: repeat(3, 1fr); background: #f3eef6; border-radius: 12px; padding: 4px; gap: 4px; }
-        .cp-form .seg3 input { position: absolute; opacity: 0; pointer-events: none; }
-        .cp-form .seg3 label { margin: 0; text-align: center; padding: 8px 4px; border-radius: 9px; font-weight: 700; font-size: .85rem; color: #6b5f72; cursor: pointer; line-height: 1.2; }
-        .cp-form .seg3 input:checked + label { background: #fff; color: #330B3F; box-shadow: 0 1px 4px rgba(51,11,63,.12); }
-        .cp-form .seg3 input:focus-visible + label { outline: 2px solid #330B3F; }
-        .cp-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .cp-form .two .form-label { font-size: .85rem; }
-        .cp-form .sw { display: flex; align-items: flex-start; gap: 10px; background: #fff8e1; border: 1px solid #ffe29a; border-radius: 12px; padding: 10px 12px; }
-        .cp-form .sw input { width: 18px; height: 18px; margin-top: 2px; accent-color: #330B3F; flex: none; }
-        .cp-form .sw label { margin: 0; font-weight: 700; color: #330B3F; cursor: pointer; }
-        .cp-form .sw small { display: block; font-weight: 400; color: #6b5f72; }
-        .cp-ticket .t4 { margin-top: 6px; font-size: .75rem; color: #e2d3ea; line-height: 1.4; }
-    </style>
+   
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">

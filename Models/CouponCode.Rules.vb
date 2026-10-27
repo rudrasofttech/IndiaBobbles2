@@ -124,7 +124,7 @@ Partial Public Class CouponCode
             Catch
                 ' Never break the cart because of offers
             End Try
-            HttpRuntime.Cache.Insert(CacheKey, cached, Nothing, DateTime.UtcNow.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration)
+            'HttpRuntime.Cache.Insert(CacheKey, cached, Nothing, DateTime.UtcNow.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration)
         End If
         Return cached.Where(Function(x) x.IsLive).ToList()     ' dates are checked every time, not cached
     End Function
