@@ -83,6 +83,12 @@ End Code
             syncGift();
         })();
     </script>
+
+        
+    <script>
+        gtag('event', 'begin_checkout');
+    </script>
+    
 End Section
 
 <div class="ib-addr container fullbody py-4">

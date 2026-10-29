@@ -290,11 +290,12 @@ End Code
             }
 
             .ib-feat .pc .btn {
-                color: #fff;
+                color: var(--ib-p2);
                 font-weight: 700;
                 border-radius: 8px;
                 padding: .4rem .9rem;
                 font-size: .88rem;
+                border: solid 2px var(--ib-p2);
             }
 
                 .ib-feat .pc .btn:hover {

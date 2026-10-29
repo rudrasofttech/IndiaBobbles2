@@ -28,6 +28,8 @@
     Dim waUrl As String = Url.Action("WhatsAppRedirect", "Home", New With {.message = "Hi, I have a question about my order #" & Model.ID})
     Dim steps() As String = {"Order placed", "Confirmed", "Shipped", "Delivered"}
     Dim stepIcons() As String = {"fa-shopping-cart", "fa-check", "fa-truck", "fa-home"}
+
+    Dim conversionKey As String = "ga_conv_" & Model.ID
 End Code
 
 @section scripts
@@ -42,9 +44,22 @@ End Code
             }
         }
     </script>
+    @If isConfirmed AndAlso Session(conversionKey) Is Nothing Then
+        Session(conversionKey) = True
+        @<script>
+            gtag('event', 'conversion', { 'send_to': 'AW-1050939950/PuSqCO2-lFsQrqSQ9QM' });
+            gtag('event', 'purchase', {
+    transaction_id: '@Model.ID',
+    value: @Model.Total.ToString(System.Globalization.CultureInfo.InvariantCulture),
+    currency: 'INR',
+    coupon: '@Model.Coupon'
+});
+</script>
+    End If
 End Section
 
 <div class="ib-cart ib-co ib-order container fullbody py-4">
+
 
     @If isConfirmed Then
         @<div class="thanks">
@@ -180,8 +195,8 @@ End Section
                         <button type="submit" class="btn btn-ibp"><i class="fa fa-print" aria-hidden="true"></i> Print receipt</button>
                     </form>
                     @*@If Not String.IsNullOrEmpty(Model.Email) Then
-                        @<a href="@Url.Content("~/orders/email/" & Model.ID)" class="btn btn-apply"><i class="fa fa-envelope-o" aria-hidden="true"></i> Email receipt</a>
-                    End If*@
+                            @<a href="@Url.Content("~/orders/email/" & Model.ID)" class="btn btn-apply"><i class="fa fa-envelope-o" aria-hidden="true"></i> Email receipt</a>
+                        End If*@
                 </div>
             </div>
 

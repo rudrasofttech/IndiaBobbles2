@@ -83,173 +83,6 @@ End Functions
       }
     }
     </script>
-
-    <style>
-        /* ---- Offers box ---- */
-        .ib-pdp .lowest {
-            margin: 2px 0 4px;
-            font-size: 15px;
-            color: #157a3c;
-            font-weight: 700;
-        }
-
-            .ib-pdp .lowest b {
-                font-size: 17px;
-            }
-
-        .ib-pdp .offers {
-            border: 1px solid #ece6ef;
-            border-radius: 14px;
-            padding: 12px 14px;
-            margin: 0 0 18px;
-            background: #fff;
-            scroll-margin-top: 90px;
-            transition: box-shadow .3s;
-        }
-
-            .ib-pdp .offers.flash {
-                box-shadow: 0 0 0 4px rgba(255,193,7,.55);
-            }
-
-            .ib-pdp .offers .oh {
-                font-weight: 800;
-                color: #330B3F;
-                font-size: 15px;
-                margin-bottom: 8px;
-            }
-
-                .ib-pdp .offers .oh i {
-                    color: #e23744;
-                    margin-right: 4px;
-                }
-
-            .ib-pdp .offers .of {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 9px 0;
-                border-top: 1px dashed #e4dbe9;
-            }
-
-                .ib-pdp .offers .of:first-of-type {
-                    border-top: 0;
-                    padding-top: 2px;
-                }
-
-            .ib-pdp .offers .cd {
-                flex: none;
-                font-family: Consolas, Menlo, monospace;
-                font-weight: 700;
-                font-size: 12px;
-                letter-spacing: 1px;
-                color: #330B3F;
-                background: #fff4cc;
-                border: 1px dashed #e0b400;
-                border-radius: 8px;
-                padding: 4px 8px;
-            }
-
-            .ib-pdp .offers .tx {
-                flex: 1;
-                min-width: 0;
-                font-size: 14px;
-                color: #3e3445;
-                line-height: 1.35;
-            }
-
-                .ib-pdp .offers .tx b {
-                    color: #1f1724;
-                }
-
-                .ib-pdp .offers .tx small {
-                    display: block;
-                    color: #157a3c;
-                    font-weight: 600;
-                    font-size: 12.5px;
-                    margin-top: 1px;
-                }
-
-            .ib-pdp .offers .ft {
-                font-size: 12px;
-                color: #6b5f72;
-                margin-top: 6px;
-            }
-
-        /* ---- Mobile sticky bar: price + coupon count ---- */
-        .ib-mbar .pb {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.15;
-            min-width: 0;
-        }
-
-            .ib-mbar .pb .price {
-                font-size: 20px;
-                font-weight: 800;
-                color: #330B3F;
-            }
-
-            .ib-mbar .pb .mcoup {
-                font-size: 12px;
-                font-weight: 700;
-                color: #157a3c;
-                text-decoration: none;
-                margin-top: 2px;
-                line-height: 1.25;
-            }
-
-                .ib-mbar .pb .mcoup i {
-                    margin-right: 3px;
-                }
-
-                .ib-mbar .pb .mcoup u {
-                    text-decoration-style: dotted;
-                }
-
-        /* ---- Phones only: smaller photo + one scrolling row of thumbnails, so name & price show sooner ---- */
-        @@media (max-width: 767.98px) {
-            .ib-pdp .main-img img {
-                max-height: 40vh;
-                width: auto;
-                max-width: 100%;
-                object-fit: contain;
-            }
-
-            .ib-pdp .thumbs {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto;
-                gap: 8px;
-                justify-content: flex-start !important;
-                padding-bottom: 4px;
-                scroll-snap-type: x proximity;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-            }
-
-                .ib-pdp .thumbs::-webkit-scrollbar {
-                    display: none;
-                }
-
-                .ib-pdp .thumbs button {
-                    flex: 0 0 58px !important;
-                    width: 58px !important;
-                    height: 58px !important;
-                    scroll-snap-align: start;
-                    padding: 2px;
-                }
-
-                    .ib-pdp .thumbs button img {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                    }
-
-            .ib-pdp .offers .of {
-                gap: 10px;
-            }
-        }
-    </style>
 End Section
 
 @section scripts
@@ -332,6 +165,12 @@ End Section
                 }
             });
         }
+    </script>
+    <script>
+        gtag('event', 'view_item', {
+    item_id: '@Model.ID',
+    item_name: '@Model.Name'
+});
     </script>
 End Section
 

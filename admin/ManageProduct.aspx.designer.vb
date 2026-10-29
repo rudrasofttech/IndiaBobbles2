@@ -122,6 +122,15 @@ Partial Public Class ManageProduct
     Protected WithEvents RequiredFieldValidator4 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
+    '''ProductCodeTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ProductCodeTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''DimensionTextBox control.
     '''</summary>
     '''<remarks>

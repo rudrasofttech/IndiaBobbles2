@@ -54,7 +54,7 @@ Public Class ManageProduct
                 ShippingTimeTextBox.Text = product.ShippingTime
                 StatusDropDown.SelectedValue = product.Status
                 ThumbPathTextBox.Text = product.ThumbPath
-
+                ProductCodeTextBox.Text = product.ProductCode
                 ' Gallery photos, in display order (one path per line)
                 PhotosHidden.Value = String.Join(vbLf, product.ProductPhotoes.OrderBy(Function(p) p.Sequence).Select(Function(p) p.ImagePath))
             End If
@@ -127,14 +127,10 @@ Public Class ManageProduct
         product.ShippingTime = ShippingTimeTextBox.Text.Trim()
         product.Status = Byte.Parse(StatusDropDown.SelectedValue)
         product.ThumbPath = ThumbPathTextBox.Text.Trim()
-
+        product.ProductCode = ProductCodeTextBox.Text.Trim()
         ' Required legacy fields often missed in this page:
         If String.IsNullOrWhiteSpace(product.URL) Then
             product.URL = IndiaBobbles.Utility.Slugify(product.Name)
-        End If
-
-        If String.IsNullOrWhiteSpace(product.ProductCode) Then
-            product.ProductCode = "PRD-" & DateTime.Now.ToString("yyyyMMddHHmmssfff")
         End If
 
         ' ---------- 3. Gallery: final ordered list = kept/reordered + new uploads ----------

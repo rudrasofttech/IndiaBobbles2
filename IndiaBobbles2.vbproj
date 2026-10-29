@@ -891,9 +891,6 @@
     <Content Include="sitedata\CustomPage\cpagexml-7.txt" />
     <Content Include="sitedata\CustomPage\cpagexml-8.txt" />
     <Content Include="sitedata\CustomPage\cpagexml-9.txt" />
-    <Content Include="theme\khichdi\css\indiabobbles.min.css">
-      <DependentUpon>indiabobbles.css</DependentUpon>
-    </Content>
     <Content Include="theme\khichdi\FAVICON.jpg" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.eot" />
     <Content Include="theme\khichdi\font-awesome-4.6.3\fonts\fontawesome-webfont.ttf" />

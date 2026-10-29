@@ -1,37 +1,4 @@
-﻿/* =====================================================================
-   India Bobbles – site.css
-   ---------------------------------------------------------------------
-   1.  Fonts
-   2.  Design tokens (colours, radius, shadows)
-   3.  Base & utilities
-   4.  Shared components (buttons, heroes, cards, forms, messages …)
-   5.  Header & top bar
-   6.  Footer
-   7.  Home            (.ib-home)
-   8.  Product list    (.ib-list)
-   9.  Product detail  (.ib-pdp, .ib-mbar)
-   10. Custom orders   (.ib-cust)
-   11. Blog list       (.ib-blog)
-   12. Blog post       (.ib-post)
-   13. Login/Register  (.ib-auth)
-   14. My account      (.ib-acc)
-   15. Legal pages     (.ib-legal)
-   16. Our story       (.ib-story)
-   17. Accessibility & motion
-   18. Shipping & returns (.ib-ship)
-   19. Payment options (.ib-pay)
-   20. Cart (.ib-cart)
-   21. Checkout address (.ib-addr)
-   22. Checkout review & pay (.ib-co)
-   23. Order detail (.ib-order)
-   All class names are unchanged, so no view needs editing.
-   ===================================================================== */
-
-
-/* =====================================================================
-   1. FONTS
-   ===================================================================== */
-@font-face {
+﻿@font-face {
     font-family: "Harabara Mais Demo";
     src: url('../fonts/Harabara Mais Demo.otf') format('opentype');
     font-display: swap;
@@ -4844,5 +4811,883 @@
 
         .ib-cart .tkt .l .v {
             font-size: 17px;
+        }
+}
+
+/* ---- Offers box ---- */
+.ib-pdp .lowest {
+    margin: 2px 0 4px;
+    font-size: 15px;
+    color: #157a3c;
+    font-weight: 700;
+}
+
+    .ib-pdp .lowest b {
+        font-size: 17px;
+    }
+
+.ib-pdp .offers {
+    border: 1px solid #ece6ef;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin: 0 0 18px;
+    background: #fff;
+    scroll-margin-top: 90px;
+    transition: box-shadow .3s;
+}
+
+    .ib-pdp .offers.flash {
+        box-shadow: 0 0 0 4px rgba(255,193,7,.55);
+    }
+
+    .ib-pdp .offers .oh {
+        font-weight: 800;
+        color: #330B3F;
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+        .ib-pdp .offers .oh i {
+            color: #e23744;
+            margin-right: 4px;
+        }
+
+    .ib-pdp .offers .of {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 9px 0;
+        border-top: 1px dashed #e4dbe9;
+    }
+
+        .ib-pdp .offers .of:first-of-type {
+            border-top: 0;
+            padding-top: 2px;
+        }
+
+    .ib-pdp .offers .cd {
+        flex: none;
+        font-family: Consolas, Menlo, monospace;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: #330B3F;
+        background: #fff4cc;
+        border: 1px dashed #e0b400;
+        border-radius: 8px;
+        padding: 4px 8px;
+    }
+
+    .ib-pdp .offers .tx {
+        flex: 1;
+        min-width: 0;
+        font-size: 14px;
+        color: #3e3445;
+        line-height: 1.35;
+    }
+
+        .ib-pdp .offers .tx b {
+            color: #1f1724;
+        }
+
+        .ib-pdp .offers .tx small {
+            display: block;
+            color: #157a3c;
+            font-weight: 600;
+            font-size: 12.5px;
+            margin-top: 1px;
+        }
+
+    .ib-pdp .offers .ft {
+        font-size: 12px;
+        color: #6b5f72;
+        margin-top: 6px;
+    }
+
+/* ---- Mobile sticky bar: price + coupon count ---- */
+.ib-mbar .pb {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    min-width: 0;
+}
+
+    .ib-mbar .pb .price {
+        font-size: 20px;
+        font-weight: 800;
+        color: #330B3F;
+    }
+
+    .ib-mbar .pb .mcoup {
+        font-size: 12px;
+        font-weight: 700;
+        color: #157a3c;
+        text-decoration: none;
+        margin-top: 2px;
+        line-height: 1.25;
+    }
+
+        .ib-mbar .pb .mcoup i {
+            margin-right: 3px;
+        }
+
+        .ib-mbar .pb .mcoup u {
+            text-decoration-style: dotted;
+        }
+
+/* ---- Phones only: smaller photo + one scrolling row of thumbnails, so name & price show sooner ---- */
+@media (max-width: 767.98px) {
+    .ib-pdp .main-img img {
+        max-height: 40vh;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .ib-pdp .thumbs {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        gap: 8px;
+        justify-content: flex-start !important;
+        padding-bottom: 4px;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+        .ib-pdp .thumbs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ib-pdp .thumbs button {
+            flex: 0 0 58px !important;
+            width: 58px !important;
+            height: 58px !important;
+            scroll-snap-align: start;
+            padding: 2px;
+        }
+
+            .ib-pdp .thumbs button img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+    .ib-pdp .offers .of {
+        gap: 10px;
+    }
+}
+
+.ib-cart .offer {
+    margin: 18px 0 4px;
+}
+
+.ib-cart .tkt {
+    display: flex;
+    align-items: stretch;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px dashed #330B3F;
+    background: #fff;
+}
+
+    .ib-cart .tkt .l {
+        background: #330B3F;
+        color: #fff;
+        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-width: 108px;
+        text-align: center;
+    }
+
+        .ib-cart .tkt .l .v {
+            color: #ffc107;
+            font-weight: 800;
+            font-size: 20px;
+            line-height: 1.1;
+        }
+
+        .ib-cart .tkt .l .c {
+            font-family: Consolas, Menlo, monospace;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            opacity: .9;
+        }
+
+    .ib-cart .tkt .r {
+        flex: 1;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .ib-cart .tkt .r .t {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ib-cart .tkt .r b {
+            display: block;
+            color: #1f1724;
+            font-size: 15px;
+            line-height: 1.3;
+        }
+
+        .ib-cart .tkt .r small {
+            display: block;
+            color: #157a3c;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+.ib-cart .btn-offer {
+    background: #ffc107;
+    color: #330B3F;
+    font-weight: 800;
+    border: 0;
+    border-radius: 10px;
+    padding: 9px 18px;
+    white-space: nowrap;
+}
+
+    .ib-cart .btn-offer:hover {
+        background: #ffb300;
+        color: #330B3F;
+    }
+
+.ib-cart .nudge {
+    margin-top: 10px;
+    background: #f3ecf6;
+    color: #330B3F;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+}
+
+    .ib-cart .nudge i {
+        color: #e23744;
+        margin-right: 4px;
+    }
+
+.ib-cart .other {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin-top: 10px;
+    color: #6b5f72;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ib-cart .coupon-ok {
+    margin-top: 10px;
+    background: #e9f7ee;
+    border: 1px solid #b7e4c7;
+    color: #157a3c;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.ib-cart .coupon-msg {
+    margin-top: 10px;
+    background: #fff4e5;
+    border: 1px solid #ffd59a;
+    color: #7a4b00;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+}
+
+.ib-cart .upgrade {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: #e9f7ee;
+    color: #157a3c;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+    .ib-cart .upgrade .btn-offer {
+        padding: 6px 14px;
+    }
+
+.ib-cart .totals .grand s {
+    color: #8a7f90;
+    font-weight: 400;
+    font-size: .7em;
+    margin-right: 6px;
+}
+/* ---- Layout: phones = items → summary → suggestions; desktop = two columns ---- */
+.ib-cart .ib-cart-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "items" "summary" "extras";
+}
+
+.ib-cart .g-items {
+    grid-area: items;
+    min-width: 0;
+}
+
+.ib-cart .g-extras {
+    grid-area: extras;
+    min-width: 0;
+}
+
+    .ib-cart .g-extras .pair {
+        margin-top: 0;
+    }
+
+.ib-cart .g-summary {
+    grid-area: summary;
+    min-width: 0;
+}
+
+@media (min-width: 992px) {
+    .ib-cart .ib-cart-grid {
+        gap: 24px;
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        grid-template-rows: auto 1fr;
+        grid-template-areas: "items summary" "extras summary";
+        align-items: start;
+    }
+}
+
+/* ---- Phones: sticky total + checkout bar (hidden while the real button is on screen) ---- */
+.ib-cobar {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .ib-cobar {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1030;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+        background: #fff;
+        border-top: 1px solid #ece6ef;
+        box-shadow: 0 -6px 18px rgba(51,11,63,.10);
+        transition: transform .2s ease;
+    }
+
+        .ib-cobar.hide {
+            transform: translateY(110%);
+        }
+
+        .ib-cobar .t {
+            flex: 1;
+            min-width: 0;
+            line-height: 1.15;
+        }
+
+            .ib-cobar .t b {
+                display: block;
+                font-size: 20px;
+                color: #330B3F;
+            }
+
+            .ib-cobar .t s {
+                color: #8a7f90;
+                font-size: 13px;
+                margin-left: 4px;
+                font-weight: 400;
+            }
+
+            .ib-cobar .t small {
+                color: #157a3c;
+                font-weight: 700;
+                font-size: 12px;
+            }
+
+        .ib-cobar .btn {
+            background: #330B3F;
+            color: #fff;
+            font-weight: 800;
+            border-radius: 10px;
+            padding: 12px 18px;
+            white-space: nowrap;
+        }
+
+    .ib-cart {
+        padding-bottom: 90px !important;
+    }
+}
+/* ---- Offers list ---- */
+.ib-cart .ofl {
+    margin: 16px 0 4px;
+    border: 1px solid #ece6ef;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+
+    .ib-cart .ofl .hd {
+        padding: 10px 14px;
+        font-weight: 800;
+        color: #330B3F;
+        background: #faf7fb;
+        border-bottom: 1px solid #ece6ef;
+        font-size: 15px;
+    }
+
+        .ib-cart .ofl .hd i {
+            color: #e23744;
+            margin-right: 4px;
+        }
+
+    .ib-cart .ofl .of {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-top: 1px dashed #e4dbe9;
+    }
+
+    .ib-cart .ofl .hd + .of {
+        border-top: 0;
+    }
+
+    .ib-cart .ofl .of.best {
+        background: #fffaeb;
+    }
+
+    .ib-cart .ofl .of.on {
+        background: #e9f7ee;
+    }
+
+    .ib-cart .ofl .cd {
+        flex: none;
+        font-family: Consolas, Menlo, monospace;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: #330B3F;
+        background: #fff4cc;
+        border: 1px dashed #e0b400;
+        border-radius: 8px;
+        padding: 4px 8px;
+    }
+
+    .ib-cart .ofl .tx {
+        flex: 1;
+        min-width: 0;
+        font-size: 14px;
+        color: #3e3445;
+        line-height: 1.35;
+    }
+
+        .ib-cart .ofl .tx b {
+            color: #1f1724;
+        }
+
+        .ib-cart .ofl .tx small {
+            display: block;
+            color: #157a3c;
+            font-weight: 600;
+            font-size: 12.5px;
+            margin-top: 1px;
+        }
+
+        .ib-cart .ofl .tx .tag {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 10.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            background: #330B3F;
+            color: #ffc107;
+            border-radius: 6px;
+            padding: 1px 6px;
+            vertical-align: 1px;
+        }
+
+    .ib-cart .ofl .of.locked .cd {
+        opacity: .6;
+    }
+
+    .ib-cart .ofl .of.locked .tx small {
+        color: #6b5f72;
+    }
+
+    .ib-cart .ofl .btn-offer {
+        padding: 7px 14px;
+    }
+
+    .ib-cart .ofl .lock, .ib-cart .ofl .done {
+        flex: none;
+        width: 34px;
+        text-align: center;
+        color: #b3a7ba;
+        font-size: 16px;
+    }
+
+    .ib-cart .ofl .done {
+        color: #157a3c;
+    }
+
+.ib-cart .contact.pulse {
+    animation: ibPulse 1s ease 2;
+}
+
+@keyframes ibPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255,193,7,0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(255,193,7,.55);
+    }
+}
+
+/* delivery estimate */
+.ib-cart .eta {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f6f1f8;
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: #330B3F;
+    font-size: 15px;
+}
+
+    .ib-cart .eta i {
+        font-size: 20px;
+    }
+
+/* make it a pair */
+.ib-cart .pair {
+    margin-top: 22px;
+    border: 1px solid #ece6ef;
+    border-radius: 16px;
+    padding: 18px;
+    background: #fff;
+}
+
+    .ib-cart .pair h3 {
+        font-size: 20px;
+        font-weight: 800;
+        color: #330B3F;
+        margin: 0;
+    }
+
+    .ib-cart .pair .sub {
+        color: #6b5f72;
+        margin: 4px 0 14px;
+        font-size: 14px;
+    }
+
+        .ib-cart .pair .sub b {
+            color: #157a3c;
+        }
+
+    .ib-cart .pair .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .ib-cart .pair .p {
+        border: 1px solid #ece6ef;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform .15s, box-shadow .15s;
+    }
+
+        .ib-cart .pair .p:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(51,11,63,.12);
+        }
+
+        .ib-cart .pair .p a {
+            text-decoration: none;
+        }
+
+    .ib-cart .pair .img {
+        display: block;
+    }
+
+    .ib-cart .pair .img {
+        aspect-ratio: 1 / 1;
+        background: #f6f1f8;
+    }
+
+        .ib-cart .pair .img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+    .ib-cart .pair .b {
+        padding: 10px;
+    }
+
+    .ib-cart .pair .n {
+        font-weight: 700;
+        font-size: 14px;
+        color: #1f1724;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 2.6em;
+    }
+
+    .ib-cart .pair .pr {
+        margin-top: 4px;
+        font-weight: 800;
+        color: #330B3F;
+    }
+
+        .ib-cart .pair .pr s {
+            color: #8a7f90;
+            font-weight: 400;
+            font-size: 13px;
+            margin-left: 4px;
+        }
+
+    .ib-cart .pair .go:hover {
+        background: #4a1a5a;
+        color: #fff;
+    }
+
+    .ib-cart .pair .go {
+        display: block;
+        margin-top: 8px;
+        text-align: center;
+        background: #330B3F;
+        color: #fff;
+        border-radius: 8px;
+        padding: 7px 0;
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+@media (max-width: 575px) {
+    .ib-cart .pair {
+        padding: 14px;
+    }
+
+        .ib-cart .pair .grid {
+            gap: 8px;
+        }
+
+        .ib-cart .pair .b {
+            padding: 8px;
+        }
+
+        .ib-cart .pair .n {
+            font-size: 13px;
+        }
+
+    .ib-cart .tkt .l {
+        min-width: 88px;
+        padding: 10px;
+    }
+
+        .ib-cart .tkt .l .v {
+            font-size: 17px;
+        }
+}
+
+/* ---- Coupon / offer (same look as the cart page) ---- */
+.ib-co .offer {
+    margin: 4px 0 6px;
+}
+
+.ib-co .tkt {
+    display: flex;
+    align-items: stretch;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px dashed #330B3F;
+    background: #fff;
+}
+
+    .ib-co .tkt .l {
+        background: #330B3F;
+        color: #fff;
+        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-width: 104px;
+        text-align: center;
+    }
+
+        .ib-co .tkt .l .v {
+            color: #ffc107;
+            font-weight: 800;
+            font-size: 19px;
+            line-height: 1.1;
+        }
+
+        .ib-co .tkt .l .c {
+            font-family: Consolas, Menlo, monospace;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            opacity: .9;
+        }
+
+    .ib-co .tkt .r {
+        flex: 1;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .ib-co .tkt .r .t {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ib-co .tkt .r b {
+            display: block;
+            color: #1f1724;
+            font-size: 15px;
+            line-height: 1.3;
+        }
+
+        .ib-co .tkt .r small {
+            display: block;
+            color: #157a3c;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+.ib-co .btn-offer {
+    background: #ffc107;
+    color: #330B3F;
+    font-weight: 800;
+    border: 0;
+    border-radius: 10px;
+    padding: 9px 18px;
+    white-space: nowrap;
+}
+
+    .ib-co .btn-offer:hover {
+        background: #ffb300;
+        color: #330B3F;
+    }
+
+.ib-co .nudge {
+    margin-top: 10px;
+    background: #f3ecf6;
+    color: #330B3F;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+}
+
+    .ib-co .nudge i {
+        color: #e23744;
+        margin-right: 4px;
+    }
+
+    .ib-co .nudge a {
+        color: #330B3F;
+        font-weight: 700;
+    }
+
+.ib-co .other {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin-top: 10px;
+    color: #6b5f72;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ib-co .coupon-ok {
+    margin: 10px 0 0;
+    background: #e9f7ee;
+    border: 1px solid #b7e4c7;
+    color: #157a3c;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.ib-co .coupon-msg {
+    margin: 10px 0 0;
+    background: #fff4e5;
+    border: 1px solid #ffd59a;
+    color: #7a4b00;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+}
+
+.ib-co .upgrade {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: #e9f7ee;
+    color: #157a3c;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+    .ib-co .upgrade .btn-offer {
+        padding: 6px 14px;
+    }
+
+.ib-co .totals .grand s {
+    color: #8a7f90;
+    font-weight: 400;
+    font-size: .7em;
+    margin-right: 6px;
+}
+
+.ib-co .saved {
+    margin: 6px 0 0;
+    text-align: right;
+    color: #157a3c;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+@media (max-width: 575px) {
+    .ib-co .tkt .l {
+        min-width: 86px;
+        padding: 10px;
+    }
+
+        .ib-co .tkt .l .v {
+            font-size: 16px;
         }
 }

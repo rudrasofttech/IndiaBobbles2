@@ -11,7 +11,7 @@
     <meta name="google-site-verification" content="rtXgIUyaLbBtd_tsln3F6ZB9ZboSPHZe7K_zB6uRgv8" />
     <link rel="shortcut icon" href="~/theme/khichdi/favicon.jpg" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-    <link href="~/theme/khichdi/css/indiabobbles.min.css" rel="stylesheet" />
+    <link href="~/theme/khichdi/css/indiabobbles.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
     
     @RenderSection("head", required:=False)
@@ -207,6 +207,8 @@
         gtag('js', new Date());
 
         gtag('config', 'G-QST294VT8C');
+        gtag('config', 'AW-1050939950');
+
     </script>
     <script type="text/javascript">
         var vt_root = "//www.webstats.co.in/";

@@ -108,6 +108,12 @@
                 <p class="hint mb-3">Shown in the "Details" tab on the product page. Leave a field empty to hide it.</p>
                 <div class="row g-3">
                     <div class="col-md-6">
+                        <label for="ProductCodeTextBox" class="form-label">Product Code</label>
+                        <asp:TextBox ID="ProductCodeTextBox" ClientIDMode="Static" MaxLength="10" CssClass="form-control" runat="server"></asp:TextBox>
+                        <div class="hint">Unique Product Code</div>
+
+                    </div>
+                    <div class="col-md-6">
                         <label for="DimensionTextBox" class="form-label">Dimensions</label>
                         <asp:TextBox ID="DimensionTextBox" ClientIDMode="Static" MaxLength="50" CssClass="form-control" runat="server" placeholder='1.5" x 1.5" x 6"'></asp:TextBox>
                         <div class="hint">Length × Width × Height</div>
