@@ -46,7 +46,7 @@
 
             <!-- Cart + menu button (mobile) -->
             <div class="d-flex align-items-center d-lg-none ms-auto">
-                <a href="@Url.Content("~/cart")" class="ib-cart me-2" title="Cart">
+                <a href="@Url.Content("~/cart")" class="ib-cart-link me-2" title="Cart">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     @If o.OrderItems.Count > 0 Then
                         @<span class="ib-cart-badge">@o.OrderItems.Count</span>
@@ -68,7 +68,7 @@
 
                 <div class="ib-account d-flex align-items-center gap-2">
                     <!-- Cart (desktop) -->
-                    <a href="@Url.Content("~/cart")" class="ib-cart me-2 d-none d-lg-inline-block" title="Cart">
+                    <a href="@Url.Content("~/cart")" class="ib-cart-link me-2 d-none d-lg-inline-block" title="Cart">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         @If o.OrderItems.Count > 0 Then
                             @<span class="ib-cart-badge">@o.OrderItems.Count</span>

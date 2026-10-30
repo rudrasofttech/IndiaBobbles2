@@ -11,6 +11,8 @@ Public Class ManageProduct
     Private Const PhotoFolder As String = "~/drive/Product-Photos/"
     Private Const MaxPhotoBytes As Integer = 5 * 1024 * 1024
     Private Shared ReadOnly AllowedExt As String() = {".jpg", ".jpeg", ".png", ".webp"}
+    ' Must not be longer than the ProductPhoto.AltText column (also ALT_MAX in ManageProduct.aspx)
+    Private Const AltMaxLength As Integer = 250
 
     Private Shared ReadOnly AllowedTags As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase) From {
         "p", "br", "b", "strong", "i", "em", "u", "ul", "ol", "li", "blockquote", "h2", "h3", "h4", "a", "img"
@@ -55,8 +57,9 @@ Public Class ManageProduct
                 StatusDropDown.SelectedValue = product.Status
                 ThumbPathTextBox.Text = product.ThumbPath
                 ProductCodeTextBox.Text = product.ProductCode
-                ' Gallery photos, in display order (one path per line)
-                PhotosHidden.Value = String.Join(vbLf, product.ProductPhotoes.OrderBy(Function(p) p.Sequence).Select(Function(p) p.ImagePath))
+                ' Gallery photos, in display order: one per line, "path<TAB>alt text"
+                PhotosHidden.Value = String.Join(vbLf, product.ProductPhotoes.OrderBy(Function(p) p.Sequence) _
+                                                       .Select(Function(p) p.ImagePath & vbTab & CleanAlt(p.AltText)))
             End If
         End If
     End Sub
@@ -68,13 +71,17 @@ Public Class ManageProduct
         End If
 
         ' ---------- 1. Save any newly uploaded photo files ----------
-        Dim uploadedPaths As New List(Of String)
+        ' Each entry: Key = image path, Value = alt text
+        Dim uploaded As New List(Of KeyValuePair(Of String, String))
         Dim photoErrors As New List(Of String)
+        ' Alt text typed for the new files: one line per file, same order as PostedFiles
+        Dim pendingAlts As String() = NormalizeLines(PendingAltHidden.Value).Split({vbLf}, StringSplitOptions.None)
         If PhotoUpload.HasFiles Then
             Dim folder As String = Server.MapPath(PhotoFolder)
             If Not Directory.Exists(folder) Then Directory.CreateDirectory(folder)
 
-            For Each f As HttpPostedFile In PhotoUpload.PostedFiles
+            For idx As Integer = 0 To PhotoUpload.PostedFiles.Count - 1
+                Dim f As HttpPostedFile = PhotoUpload.PostedFiles(idx)
                 If f Is Nothing OrElse f.ContentLength = 0 Then Continue For
                 Dim ext As String = Path.GetExtension(f.FileName).ToLowerInvariant()
                 If Not AllowedExt.Contains(ext) OrElse Not f.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase) Then
@@ -92,7 +99,8 @@ Public Class ManageProduct
                 If slug.Length > 40 Then slug = slug.Substring(0, 40)
                 Dim fileName As String = slug & "-" & Guid.NewGuid().ToString("N").Substring(0, 8) & ext
                 f.SaveAs(Path.Combine(folder, fileName))
-                uploadedPaths.Add(VirtualPathUtility.ToAbsolute(PhotoFolder) & fileName)
+                Dim alt As String = If(idx < pendingAlts.Length, CleanAlt(pendingAlts(idx)), "")
+                uploaded.Add(New KeyValuePair(Of String, String)(VirtualPathUtility.ToAbsolute(PhotoFolder) & fileName, alt))
             Next
         End If
 
@@ -134,23 +142,30 @@ Public Class ManageProduct
         End If
 
         ' ---------- 3. Gallery: final ordered list = kept/reordered + new uploads ----------
-        Dim paths As List(Of String) = PhotosHidden.Value.Split({vbLf, vbCr}, StringSplitOptions.RemoveEmptyEntries) _
-                                                         .Select(Function(x) x.Trim()) _
-                                                         .Where(Function(x) x <> "") _
-                                                         .ToList()
-        paths.AddRange(uploadedPaths)
+        ' Hidden field: one photo per line, "path<TAB>alt text" (lines without a TAB are path only)
+        Dim items As New List(Of KeyValuePair(Of String, String))
+        For Each line As String In NormalizeLines(PhotosHidden.Value).Split({vbLf}, StringSplitOptions.RemoveEmptyEntries)
+            Dim t As Integer = line.IndexOf(vbTab)
+            Dim photoPath As String = If(t < 0, line, line.Substring(0, t)).Trim()
+            Dim photoAlt As String = If(t < 0, "", line.Substring(t + 1))
+            If photoPath <> "" Then items.Add(New KeyValuePair(Of String, String)(photoPath, CleanAlt(photoAlt)))
+        Next
+        items.AddRange(uploaded)
+        Dim paths As List(Of String) = items.Select(Function(x) x.Key).ToList()
 
         Dim existing As List(Of ProductPhoto) = product.ProductPhotoes.ToList()
         Dim used As New HashSet(Of ProductPhoto)
 
-        For i As Integer = 0 To paths.Count - 1
-            Dim p As String = paths(i)
+        For i As Integer = 0 To items.Count - 1
+            Dim p As String = items(i).Key
+            Dim altText As String = If(items(i).Value = "", String.Empty, items(i).Value)
             Dim match As ProductPhoto = existing.FirstOrDefault(Function(x) x.ImagePath = p AndAlso Not used.Contains(x))
             If match IsNot Nothing Then
                 match.Sequence = i + 1
+                match.AltText = altText
                 used.Add(match)
             Else
-                Dim np As New ProductPhoto With {.ImagePath = p, .Sequence = i + 1}
+                Dim np As New ProductPhoto With {.ImagePath = p, .Sequence = i + 1, .AltText = altText}
                 product.ProductPhotoes.Add(np)
                 used.Add(np)
             End If
@@ -198,6 +213,20 @@ Public Class ManageProduct
         End If
         Response.Redirect("~/admin/productdetail.aspx?id=" & product.ID)
     End Sub
+
+    ' Browsers may send line breaks in hidden fields as CRLF – turn them all into LF
+    Private Shared Function NormalizeLines(s As String) As String
+        Return If(s, "").Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)
+    End Function
+
+    ' Alt text: plain text on one line, no HTML, limited length
+    Private Shared Function CleanAlt(s As String) As String
+        If String.IsNullOrWhiteSpace(s) Then Return ""
+        Dim t As String = Regex.Replace(s, "<[^>]*>", "")
+        t = Regex.Replace(t, "\s+", " ").Trim()
+        If t.Length > AltMaxLength Then t = t.Substring(0, AltMaxLength).Trim()
+        Return t
+    End Function
 
     Private Shared Function SanitizeHtmlAllowBasic(input As String) As String
         If String.IsNullOrWhiteSpace(input) Then Return ""

@@ -108,6 +108,7 @@ Public Class ProductDetail
         PhotoCountLiteral.Text = photos.Count.ToString()
         PhotoRepeater.DataSource = photos.Select(Function(x, i) New With {
             .ID = x.ID, .ImagePath = x.ImagePath, .Sequence = i + 1,
+            .AltText = If(x.AltText, ""), .HasAlt = Not String.IsNullOrWhiteSpace(x.AltText),
             .IsFirst = (i = 0), .IsLast = (i = photos.Count - 1),
             .IsThumb = String.Equals(x.ImagePath, p.ThumbPath, StringComparison.OrdinalIgnoreCase)}).ToList()
         PhotoRepeater.DataBind()

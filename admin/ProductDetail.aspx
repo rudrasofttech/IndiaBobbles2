@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="Product" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="ProductDetail.aspx.vb" Inherits="IndiaBobbles.ProductDetail" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        /* "No alt text" warning on gallery photos */
+        .pd-gallery .tag-noalt { position: absolute; left: 6px; bottom: 6px; background: #f0b429; color: #3d2a00;
+            font-size: .68rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
 
@@ -71,9 +76,11 @@
                         <asp:Repeater ID="PhotoRepeater" runat="server">
                             <ItemTemplate>
                                 <div class="ph">
-                                    <a href='<%#: Eval("ImagePath") %>' target="_blank" rel="noopener" title="Open full size">
-                                        <img src='<%#: Eval("ImagePath") %>' alt='<%# "Photo " & Eval("Sequence") %>' loading="lazy" />
+                                    <a href='<%#: Eval("ImagePath") %>' target="_blank" rel="noopener"
+                                        title='<%#: If(CBool(Eval("HasAlt")), "Alt text: " & Convert.ToString(Eval("AltText")), "No alt text – add it in Edit product") %>'>
+                                        <img src='<%#: Eval("ImagePath") %>' alt='<%#: If(CBool(Eval("HasAlt")), Convert.ToString(Eval("AltText")), "Photo " & Convert.ToString(Eval("Sequence"))) %>' loading="lazy" />
                                     </a>
+                                    <%# If(CBool(Eval("HasAlt")), "", "<span class=""tag-noalt"" title=""No alt text"">No alt</span>") %>
                                     <span class='<%# If(CBool(Eval("IsFirst")), "tag-main", "tag-seq") %>'><%# If(CBool(Eval("IsFirst")), "Main", Eval("Sequence").ToString()) %></span>
                                     <%# If(CBool(Eval("IsThumb")), "<span class=""tag-thumb"" title=""Used as thumbnail""><i class=""fa fa-star""></i></span>", "") %>
                                     <div class="tools">
@@ -102,7 +109,7 @@
                         </div>
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="PhotoPathTextBox" ValidationGroup="photogrp"
                             ErrorMessage="Enter the photo path" CssClass="val" Display="Dynamic" />
-                        <div class="hint">Hover a photo to reorder, set it as the thumbnail ★ or remove it. The first photo is the main one on the website.</div>
+                        <div class="hint">Hover a photo to reorder, set it as the thumbnail ★ or remove it. The first photo is the main one on the website. Hover a photo to see its alt text; edit alt text in <b>Edit product</b>.</div>
                     </div>
                 </div>
 

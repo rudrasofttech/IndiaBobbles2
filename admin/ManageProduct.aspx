@@ -1,6 +1,15 @@
 ﻿<%@ Page Title="Manage Product" Language="vb" AutoEventWireup="false" MasterPageFile="~/admin/Admin.Master" CodeBehind="ManageProduct.aspx.vb" Inherits="IndiaBobbles.ManageProduct" ValidateRequest="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        /* Alt text box under each gallery photo */
+        .gallery .ph-wrap { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+        .gallery .ph-alt { font-size: .8rem; padding: .3rem .5rem; }
+        .gallery .ph-alt.empty { border-color: #f0b429; background: #fffaf0; }
+        .alt-status { font-size: .82rem; }
+        .alt-status.warn { color: #9a6700; }
+        .alt-status.ok { color: #157a3c; }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Body" runat="server">
     <!-- ============ Heading ============ -->
@@ -54,10 +63,16 @@
                         <button type="button" class="btn btn-ib-o btn-sm" id="addUrlBtn"><i class="fa fa-link"></i> Add by URL</button>
                     </div>
                 </div>
-                <p class="hint mb-3">These appear in the gallery on the product page. <b>Drag to reorder</b>, the first photo is shown first. JPG, PNG or WebP, up to 5 MB each.</p>
+                <p class="hint mb-2">These appear in the gallery on the product page. <b>Drag to reorder</b>, the first photo is shown first. JPG, PNG or WebP, up to 5 MB each.</p>
+                <p class="hint mb-3">Type <b>alt text</b> under each photo: a short description such as "Nazarbattu figurine on a car dashboard". Google and screen readers use it.
+                    <span class="alt-status" id="altStatus"></span>
+                    <button type="button" class="btn btn-link btn-sm p-0 align-baseline" id="fillAltBtn">Fill empty ones with the product name</button>
+                </p>
 
                 <asp:FileUpload ID="PhotoUpload" runat="server" ClientIDMode="Static" AllowMultiple="true" accept="image/jpeg,image/png,image/webp,image/gif" CssClass="d-none" />
                 <asp:HiddenField ID="PhotosHidden" runat="server" ClientIDMode="Static" />
+                <%-- Alt text for newly picked files, one line per file, same order as the upload --%>
+                <asp:HiddenField ID="PendingAltHidden" runat="server" ClientIDMode="Static" />
 
                 <div class="url-row d-none" id="urlRow">
                     <input type="text" class="form-control" id="urlInput" placeholder="Paste image URL, e.g. /drive/theme/khichdi/img/photo.jpg" />
@@ -234,32 +249,56 @@
             img();
 
             // ================= Photo gallery =================
-            var photos = ($('#PhotosHidden').val() || '').split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
-            var pending = [];   // File objects waiting to be uploaded on Save
+            // Each saved photo is { p: path, a: alt text }. Hidden field format: one photo per line, "path<TAB>alt".
+            var photos = ($('#PhotosHidden').val() || '').replace(/\r/g, '').split('\n').map(function (line) {
+                var t = line.indexOf('\t');
+                return { p: (t < 0 ? line : line.substring(0, t)).trim(), a: t < 0 ? '' : line.substring(t + 1).trim() };
+            }).filter(function (x) { return x.p; });
+            var pending = [];      // File objects waiting to be uploaded on Save
+            var pendingAlt = [];   // alt text for each pending file (same index)
             var MAX = 5 * 1024 * 1024, OK = /^image\/(jpeg|png|webp|gif)$/;
+            var ALT_MAX = 250;     // keep in step with AltMaxLength in ManageProduct.aspx.vb
 
             function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-            function sync() { $('#PhotosHidden').val(photos.join('\n')); }
+            function cleanAlt(t) { return String(t || '').replace(/[\t\r\n]+/g, ' ').trim().substring(0, ALT_MAX); }
+            function sync() {
+                $('#PhotosHidden').val(photos.map(function (x) { return x.p + '\t' + cleanAlt(x.a); }).join('\n'));
+                $('#PendingAltHidden').val(pendingAlt.map(cleanAlt).join('\n'));
+            }
+            function altStatus() {
+                var all = photos.map(function (x) { return x.a; }).concat(pendingAlt);
+                var missing = all.filter(function (a) { return !String(a || '').trim(); }).length;
+                $('#altStatus').toggleClass('warn', missing > 0).toggleClass('ok', all.length > 0 && missing === 0)
+                    .text(!all.length ? '' : missing ? missing + ' of ' + all.length + ' photos have no alt text.' : 'All photos have alt text.');
+                $('#fillAltBtn').toggleClass('d-none', missing === 0);
+            }
+            function altBox(attr, idx, val) {
+                var name = $('#NameTextBox').val().trim() || 'Product name';
+                return '<input type="text" class="form-control form-control-sm ph-alt' + (String(val || '').trim() ? '' : ' empty') + '" ' +
+                    attr + '="' + idx + '" maxlength="' + ALT_MAX + '" value="' + esc(val || '') + '" ' +
+                    'placeholder="Alt text, e.g. ' + esc(name) + ' front view" aria-label="Alt text for photo ' + (idx + 1) + '" />';
+            }
             function syncFiles() {
                 try { var dt = new DataTransfer(); pending.forEach(function (f) { dt.items.add(f); }); document.getElementById('PhotoUpload').files = dt.files; } catch (e) { }
             }
             function render() {
                 var thumb = $('#ThumbPathTextBox').val().trim(), h = '';
-                photos.forEach(function (p, i) {
-                    h += '<div class="ph" draggable="true" data-i="' + i + '">' +
-                        '<img src="' + esc(p) + '" alt="" loading="lazy" />' +
+                photos.forEach(function (x, i) {
+                    h += '<div class="ph-wrap"><div class="ph" draggable="true" data-i="' + i + '">' +
+                        '<img src="' + esc(x.p) + '" alt="' + esc(x.a) + '" loading="lazy" />' +
                         (i === 0 ? '<span class="tag-main">Main</span>' : '') +
-                        (p === thumb ? '<span class="tag-thumb"><i class="fa fa-star"></i></span>' : '') +
+                        (x.p === thumb ? '<span class="tag-thumb"><i class="fa fa-star"></i></span>' : '') +
                         '<div class="tools">' +
                         '<button type="button" data-act="left" title="Move left"' + (i === 0 ? ' disabled' : '') + '><i class="fa fa-chevron-left"></i></button>' +
                         '<button type="button" data-act="thumb" title="Use as thumbnail"><i class="fa fa-star"></i></button>' +
                         '<button type="button" data-act="del" title="Remove"><i class="fa fa-trash"></i></button>' +
                         '<button type="button" data-act="right" title="Move right"' + (i === photos.length - 1 ? ' disabled' : '') + '><i class="fa fa-chevron-right"></i></button>' +
-                        '</div></div>';
+                        '</div></div>' + altBox('data-ai', i, x.a) + '</div>';
                 });
                 pending.forEach(function (f, i) {
-                    h += '<div class="ph pend" data-p="' + i + '"><img data-pf="' + i + '" alt="" /><span class="tag-new">New</span>' +
-                        '<div class="tools"><button type="button" data-act="delp" title="Remove"><i class="fa fa-trash"></i></button></div></div>';
+                    h += '<div class="ph-wrap"><div class="ph pend" data-p="' + i + '"><img data-pf="' + i + '" alt="" /><span class="tag-new">New</span>' +
+                        '<div class="tools"><button type="button" data-act="delp" title="Remove"><i class="fa fa-trash"></i></button></div></div>' +
+                        altBox('data-ap', i, pendingAlt[i]) + '</div>';
                 });
                 $('#gallery').html(h);
                 pending.forEach(function (f, i) {
@@ -268,7 +307,7 @@
                 var n = photos.length + pending.length;
                 $('#photoCount').text(n ? '(' + n + ')' : '');
                 $('#dropZone').toggleClass('small', n > 0);
-                sync(); syncFiles();
+                sync(); syncFiles(); altStatus();
             }
 
             function addFiles(list) {
@@ -276,7 +315,7 @@
                 Array.prototype.forEach.call(list, function (f) {
                     if (!OK.test(f.type)) bad.push(f.name + ' (not an image)');
                     else if (f.size > MAX) bad.push(f.name + ' (over 5 MB)');
-                    else pending.push(f);
+                    else { pending.push(f); pendingAlt.push(''); }
                 });
                 if (bad.length) alert('Skipped:\n' + bad.join('\n'));
                 render(); dirty = true;
@@ -296,19 +335,19 @@
             $('#addUrlBtn').on('click', function () { $('#urlRow').toggleClass('d-none'); $('#urlInput').focus(); });
             $('#urlAdd').on('click', function () {
                 var v = $('#urlInput').val().trim(); if (!v) return;
-                photos.push(v); $('#urlInput').val(''); render(); dirty = true;
+                photos.push({ p: v, a: '' }); $('#urlInput').val(''); render(); dirty = true;
             });
             $('#urlInput').on('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('#urlAdd').click(); } });
 
             // Tile buttons
             $('#gallery').on('click', 'button', function () {
                 var tile = $(this).closest('.ph'), act = $(this).data('act');
-                if (act === 'delp') { pending.splice(+tile.data('p'), 1); render(); return; }
+                if (act === 'delp') { var k = +tile.data('p'); pending.splice(k, 1); pendingAlt.splice(k, 1); render(); return; }
                 var i = +tile.data('i');
                 if (act === 'del') { if (confirm('Remove this photo from the gallery?')) photos.splice(i, 1); }
                 if (act === 'left' && i > 0) photos.splice(i - 1, 0, photos.splice(i, 1)[0]);
                 if (act === 'right' && i < photos.length - 1) photos.splice(i + 1, 0, photos.splice(i, 1)[0]);
-                if (act === 'thumb') { $('#ThumbPathTextBox').val(photos[i]); img(); }
+                if (act === 'thumb') { $('#ThumbPathTextBox').val(photos[i].p); img(); }
                 render(); dirty = true;
             });
 
@@ -322,7 +361,28 @@
                     var to = +$(this).data('i'); photos.splice(to, 0, photos.splice(dragFrom, 1)[0]); dragFrom = null; render(); dirty = true;
                 });
 
-            $('#useFirstBtn').on('click', function () { if (photos[0]) { $('#ThumbPathTextBox').val(photos[0]); img(); render(); } else alert('Add a gallery photo first.'); });
+            $('#useFirstBtn').on('click', function () { if (photos[0]) { $('#ThumbPathTextBox').val(photos[0].p); img(); render(); } else alert('Add a gallery photo first.'); });
+
+            // Alt text: update the model as you type (no re-render, so the cursor stays put)
+            $('#gallery').on('input', '.ph-alt', function () {
+                var v = this.value;
+                if (this.hasAttribute('data-ai')) photos[+this.getAttribute('data-ai')].a = v;
+                else pendingAlt[+this.getAttribute('data-ap')] = v;
+                $(this).toggleClass('empty', !v.trim());
+                $(this).prev('.ph').find('img').not('[data-pf]').attr('alt', v);
+                sync(); altStatus(); dirty = true;
+            }).on('keydown', '.ph-alt', function (e) {
+                if (e.key === 'Enter') e.preventDefault();   // don't submit the form
+            });
+
+            // Fill empty alt text with the product name (edit them afterwards to describe each photo)
+            $('#fillAltBtn').on('click', function () {
+                var n = $('#NameTextBox').val().trim();
+                if (!n) { alert('Enter the product name first.'); return; }
+                photos.forEach(function (x, i) { if (!x.a.trim()) x.a = i === 0 ? n : n + ' - photo ' + (i + 1); });
+                pendingAlt = pendingAlt.map(function (a, i) { return String(a || '').trim() ? a : n + ' - photo ' + (photos.length + i + 1); });
+                render(); dirty = true;
+            });
             $('#ThumbPathTextBox').on('input', render);
             render();
 

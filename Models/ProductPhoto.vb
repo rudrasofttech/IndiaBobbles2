@@ -15,6 +15,7 @@ Partial Public Class ProductPhoto
     Public Property ProductID As Integer
     Public Property ImagePath As String
     Public Property Sequence As Integer
+    Public Property AltText As String
 
     Public Overridable Property Product As Product
 

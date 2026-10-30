@@ -77,6 +77,15 @@ Partial Public Class ManageProduct
     Protected WithEvents PhotosHidden As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''PendingAltHidden control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PendingAltHidden As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''PhotoErrorLabel control.
     '''</summary>
     '''<remarks>

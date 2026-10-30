@@ -301,6 +301,7 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="ImagePath" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="Sequence" Type="int" Nullable="false" />
+          <Property Name="AltText" Type="nvarchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductTag">
           <Key>
@@ -1472,6 +1473,7 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Sequence" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="IBModel.FK_ProductPhoto_Product" FromRole="ProductPhoto" ToRole="Product" />
+          <Property Name="AltText" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductTag">
           <Key>
@@ -1905,6 +1907,7 @@ warning 6002: The table/view 'indiabobbles.dbo.PostStatus' does not have a prima
           <EntitySetMapping Name="ProductPhotoes">
             <EntityTypeMapping TypeName="IBModel.ProductPhoto">
               <MappingFragment StoreEntitySet="ProductPhoto">
+                <ScalarProperty Name="AltText" ColumnName="AltText" />
                 <ScalarProperty Name="Sequence" ColumnName="Sequence" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />

@@ -7,6 +7,14 @@
     Dim photos = Model.ProductPhotoes.OrderBy(Function(t) t.Sequence).ToList()
     Dim mainPhoto As String = If(photos.Count > 0, photos(0).ImagePath, "")
 
+    ' Alt text for each photo: what the admin typed, or the product name as a fallback
+    Dim altFor As Func(Of Integer, String) = Function(i)
+                                                 Dim a As String = photos(i).AltText
+                                                 If Not String.IsNullOrWhiteSpace(a) Then Return a.Trim()
+                                                 Return If(i = 0, Model.Name, Model.Name & " - photo " & (i + 1))
+                                             End Function
+    Dim mainAlt As String = If(photos.Count > 0, altFor(0), Model.Name)
+
     ' Indian number format: 1,000 / 1,00,000
     Dim inr = New System.Globalization.CultureInfo("en-IN")
     Dim salePrice As String = Model.SalePrice.ToString("#,##0.##", inr)
@@ -72,7 +80,7 @@ End Functions
       "@@context": "https://schema.org",
       "@@type": "Product",
       "name": "@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(Model.Name))",
-      "image": "@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(mainPhoto))",
+      "image": "@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(metaImage))",
       "description": "@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(teaser))",
       "brand": { "@@type": "Brand", "name": "India Bobbles" },
       "offers": {
@@ -87,17 +95,17 @@ End Section
 
 @section scripts
     <script>
-        // Thumbnails: swap the main photo
+        // Thumbnails: swap the main photo (and its alt text)
         $(document).on('click', '.ib-pdp .thumbs button', function () {
             var src = $(this).data('src');
-            $('#ibMainImg').attr('src', src);
+            $('#ibMainImg').attr('src', src).attr('alt', $(this).data('alt') || '');
             $('.ib-pdp .thumbs button').removeClass('sel');
             $(this).addClass('sel');
         });
 
         // Click main photo: open large view
         $(document).on('click', '#ibMainWrap', function () {
-            $('#ibZoomImg').attr('src', $('#ibMainImg').attr('src'));
+            $('#ibZoomImg').attr('src', $('#ibMainImg').attr('src')).attr('alt', $('#ibMainImg').attr('alt'));
             bootstrap.Modal.getOrCreateInstance(document.getElementById('ibZoom')).show();
         });
 
@@ -186,7 +194,7 @@ End Section
     <meta property="og:description" content="@metaDescription" />
     <meta property="og:url" content="@productUrl" />
     <meta property="og:image" content="@metaImage" />
-    <meta property="og:image:alt" content="@Model.Name" />
+    <meta property="og:image:alt" content="@mainAlt" />
 
     <meta property="product:price:amount" content="@Model.SalePrice.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)" />
     <meta property="product:price:currency" content="INR" />
@@ -196,6 +204,7 @@ End Section
     <meta name="twitter:title" content="@metaTitle" />
     <meta name="twitter:description" content="@metaDescription" />
     <meta name="twitter:image" content="@metaImage" />
+    <meta name="twitter:image:alt" content="@mainAlt" />
 End Section
 
 <div class="ib-pdp container bg-white py-4 px-3 px-md-4">
@@ -218,7 +227,7 @@ End Section
                         @If Model.OutofStock Then
                             @<span class="img-badge badge-oos">Out of stock</span>
                         End If
-                        <img id="ibMainImg" src="@mainPhoto" alt="@Model.Name" />
+                        <img id="ibMainImg" src="@mainPhoto" alt="@mainAlt" />
                         <span class="zoom-hint"><i class="fa fa-search-plus" aria-hidden="true"></i> Click to zoom</span>
                     </div>
 
@@ -226,8 +235,9 @@ End Section
                         @<div class="thumbs">
                             @For i As Integer = 0 To photos.Count - 1
                                 Dim pp = photos(i)
-                                @<button type="button" class="@(If(i = 0, "sel", ""))" data-src="@pp.ImagePath" aria-label="Photo @(i + 1)">
-                                    <img src="@pp.ImagePath" alt="@Model.Name photo @(i + 1)" loading="lazy" />
+                                Dim ppAlt As String = altFor(i)
+                                @<button type="button" class="@(If(i = 0, "sel", ""))" data-src="@pp.ImagePath" data-alt="@ppAlt" aria-label="Show photo @(i + 1): @ppAlt">
+                                    <img src="@pp.ImagePath" alt="@ppAlt" loading="lazy" />
                                 </button>
                             Next
                         </div>
@@ -259,8 +269,8 @@ End Section
                 End If
             </div>
             @*@If bestOne IsNot Nothing AndAlso bestOnePrice < Model.SalePrice Then
-                @<div class="lowest"><i class="fa fa-tag" aria-hidden="true"></i> Get it for <b>₹@(bestOnePrice.ToString("#,##0", inr))</b> with @bestOne.Code</div>
-            End If*@
+                    @<div class="lowest"><i class="fa fa-tag" aria-hidden="true"></i> Get it for <b>₹@(bestOnePrice.ToString("#,##0", inr))</b> with @bestOne.Code</div>
+                End If*@
             <div class="tax mb-3">Inclusive of all taxes · Free shipping across India</div>
 
             <!-- Offers -->
@@ -412,7 +422,7 @@ End Section
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img id="ibZoomImg" src="" alt="@Model.Name" style="max-width:100%; max-height:75vh;" />
+                <img id="ibZoomImg" src="" alt="@mainAlt" style="max-width:100%; max-height:75vh;" />
             </div>
         </div>
     </div>
